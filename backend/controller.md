@@ -33,12 +33,11 @@
 3. remove_thread_on_info_page(thread_id)
 
 # Search_Function
-1.
+1. general_search()
 
 # Profile Management
 1. edit_user(User Object)
 
-9. change user
 10. rate professional
 11. comment on professional
 12. Make appointment
