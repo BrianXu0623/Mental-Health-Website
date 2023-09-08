@@ -33,17 +33,24 @@
 3. remove_thread_on_info_page(thread_id)
 
 # Search_Function
-1. general_search()
+1. search_by_title(title)
+2. search_by_title_with_filters(title, list of filters)
 
 # Profile Management
 1. edit_user(User Object)
 
-10. rate professional
-11. comment on professional
-12. Make appointment
-13. Cancel appointment ()
-14. Change tag (thread_id, List of tags)
-15. Follow User (current_user_id, followed_user_id)
-16. Complete appointment (appointment_id)
-17. get_patients_list_of_appointments(user_id)
-18. get_professional_list_of_appointments(user_id)
+# Thread Management
+1. force_thread_edit(admin_id, thread_id, content)
+
+# Appointment Management
+1. Make_appointment(
+    user_id, professional_id,
+    symptom description, 
+    appointment_datetime
+)
+2. Complete_appointment(professional_id, appointment_id)
+3. Cancel_appoitnment(user_id, appointment_id, reason)
+
+# User Feedback on Professional
+1. rate_professional(user_id, professional_id, rating)
+2. comment_on_professioal(user_id, professional_id, comment)
