@@ -1,6 +1,6 @@
-package elec5619.sydney.edu.au.mental_health_support_website;
+package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
-import elec5619.sydney.edu.au.mental_health_support_website.models.repository.UserRepository;
+import elec5619.sydney.edu.au.mental_health_support_website.db.models.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
