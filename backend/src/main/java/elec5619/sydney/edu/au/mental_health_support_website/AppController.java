@@ -49,5 +49,58 @@ public class AppController {
 
     }
 
+    // Post Thread
+    @PostMapping("new_thread")
+    public void createThread(
+            @RequestBody int userId,
+            @RequestBody String title,
+            @RequestBody String content,
+            @RequestBody List<String> tags
+    ) {
+
+    }
+
+    // Comment on thread
+    @PostMapping("thread/{thread_id}/comment")
+    public void commentOnThread(
+            @PathVariable Integer threadId,
+            @RequestBody Integer userId,
+            @RequestBody String comment
+    ) {
+
+    }
+
+    @PutMapping("thread/{thread_id}/comment")
+    public void editThreadComment(
+            @PathVariable Integer threadId,
+            @RequestBody Integer userId,
+            @RequestBody String comment
+    ) {
+
+    }
+
+    @PutMapping("thread/{thread_id}/{comment_id}")
+    public void deleteThreadComment(
+            @PathVariable Integer threadId,
+            @PathVariable Integer commentId
+    ) {
+
+    }
+
+    @GetMapping("thread/{thread_id}/comment")
+    public Map<String, String> getThreadComments(
+            @PathVariable Integer threadID
+    ) {
+        return null;
+    }
+
+    // Profile Management
+    @GetMapping("user/{username}")
+    public void editUserProfile(
+            @RequestBody Integer userId,
+            @RequestBody Map<String, String> values
+    ) {
+    }
+
 
 }

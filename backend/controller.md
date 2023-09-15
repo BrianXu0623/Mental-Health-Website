@@ -16,6 +16,7 @@
 1. Comment on thread(user_id, thread_id, comment)
 2. Edit thread comment(user_id, thread_id, comment)
 3. Delete thread comment(user_id, thread_id)
+4. Get thread comments(thread_id)
 
 # Linking Thread With Tags
 1. link_tag_to_thread(thread_id, tag)
