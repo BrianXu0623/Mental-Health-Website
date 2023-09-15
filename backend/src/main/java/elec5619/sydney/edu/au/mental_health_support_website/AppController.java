@@ -112,9 +112,64 @@ public class AppController {
 
     }
 
-    
+    // Following Others
+    @PostMapping("user/{username}/following")
+    public void userFollowAnotherUser(
+            @RequestBody Integer userId,
+            @RequestBody Integer followerId
+    ) {
 
+    }
 
+    // Different Tier of User
+    @PutMapping("userType/edit")
+    public void editUserType(
+            @RequestBody Integer editorId,
+            @RequestBody Integer userId,
+            @RequestBody String userType
+    ) {
+
+    }
+
+    // Information Page
+    @PostMapping("information_page/create")
+    public void createInformationPage(
+            @RequestBody List<Integer> threadIds
+    ) {
+
+    }
+
+     @PutMapping("information_page/{informationPageId}/add")
+     public void addThreadToInformationPage(
+             @PathVariable Integer informationPageId,
+             @RequestBody Integer threadId
+     ) {
+
+     }
+
+     @PutMapping("information_page/{informationPageId}/remove")
+     public void removeThreadToInformationPage(
+             @PathVariable Integer informationPageId,
+             @RequestBody Integer threadId
+     ) {
+
+     }
+
+     @GetMapping("information_page/get/{informationPageId}")
+     public Map<String, Object> getInformationPageById(
+             @PathVariable Integer informationPageId
+     ) {
+       return null;
+     }
+
+     @GetMapping("information_page/get/{date}")
+     public Map<String, Object> getInformationPageByDate(
+             @PathVariable String date
+     ) {
+        return null;
+     }
+
+    // Search Function
 
     // Profile Management
     @GetMapping("user/{username}")
@@ -123,6 +178,13 @@ public class AppController {
             @RequestBody Map<String, String> values
     ) {
     }
+
+    // Thread Management
+
+
+    // Appointment Management
+
+    // User Feedback on Professional
 
 
 }

@@ -32,6 +32,8 @@
 1. set_threads_on_info_page(list of thread ids)
 2. add_thread_on_info_page(thread_id)
 3. remove_thread_on_info_page(thread_id)
+4. Get Information Page by Id(informationPageID)
+5. Get Information Page by Date(informationPageID)
 
 # Search_Function
 1. search_by_title(title)
