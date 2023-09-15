@@ -22,7 +22,7 @@ enum AppointmentStatus {
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
+    private Long id;
     private AppointmentStatus status;
     private LocalDate date;
     private LocalTime time;
