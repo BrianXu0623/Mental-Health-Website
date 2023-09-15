@@ -10,8 +10,6 @@ public class MentalHealthSupportWebsiteApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(MentalHealthSupportWebsiteApplication.class, args);
-//        DatabaseHandler.connect();
-//        DatabaseHandler.create_table();
     }
 
 }

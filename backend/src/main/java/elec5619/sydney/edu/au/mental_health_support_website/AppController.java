@@ -1,10 +1,10 @@
 package elec5619.sydney.edu.au.mental_health_support_website;
 
-import elec5619.sydney.edu.au.mental_health_support_website.models.User;
+import elec5619.sydney.edu.au.mental_health_support_website.models.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -12,11 +12,11 @@ import java.util.Map;
 @RequestMapping("/api/mhswa")
 public class AppController {
     @Autowired
-    private User user;
+    private UserRepository user;
 
     @GetMapping("viewall")
     public List<String> viewAllMapping() {
-        return null;
+        return Arrays.asList("Hello", "World");
     }
 
     // Login/Sign up
@@ -170,6 +170,12 @@ public class AppController {
      }
 
     // Search Function
+    @GetMapping("thread/search/")
+    public List<Map<Integer, Object>> getThreadsByTitle(
+            @RequestBody String title
+    ) {
+        return null;
+    }
 
     // Profile Management
     @GetMapping("user/{username}")

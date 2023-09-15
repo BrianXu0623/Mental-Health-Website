@@ -8,9 +8,9 @@ import java.sql.Statement;
 
 
 public class DatabaseHandler {
-    static String jdbcUrl = "jdbc:sqlserver://elec5619mental.database.windows.net:1433;database=ELEC5619;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;Authentication=ActiveDirectoryIntegrated";
-    static String username = "ylay3633";
-    static String password = "Simon2998";
+    static String jdbcUrl = "jdbc:mysql://localhost:3306/my_local_db";
+    static String username = "simon";
+    static String password = "#Hello12345";
     public static void connect() {
 
         try {
