@@ -11,13 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
-enum ThreadTag {
-    ANXIETY,
-    DEPRESSION,
-    GENERAL,
-    DISCUSSION
-}
-
 @Entity
 @Getter
 @Setter

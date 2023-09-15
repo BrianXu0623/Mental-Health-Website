@@ -1,4 +1,4 @@
-package elec5619.sydney.edu.au.mental_health_support_website.db.models;
+package elec5619.sydney.edu.au.mental_health_support_website.db.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
