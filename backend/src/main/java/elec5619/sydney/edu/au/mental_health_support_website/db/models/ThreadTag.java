@@ -7,20 +7,13 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.ArrayList;
-
 @Entity
 @Getter
 @Setter
-public class Thread {
+public class ThreadTag {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
-    private String title;
-    private String content;
-    private List<ThreadTag> tags = new ArrayList<>();
-    private Integer authorID;
-    private LocalDateTime timestamp;
+    private String name;
+
 }
