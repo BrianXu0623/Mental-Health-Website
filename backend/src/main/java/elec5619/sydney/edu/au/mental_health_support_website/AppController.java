@@ -18,12 +18,21 @@ public class AppController {
         return null;
     }
 
-    @PostMapping("newUser")
-    public void addNewUser(
+    // Login/Sign up
+    @PostMapping("signup")
+    public void signupUser(
             @RequestBody Map<String, String> userInfo
     ) {
         return;
     }
 
+    @GetMapping("login")
+    public void loginUser(
+            @RequestBody Map<String, String> userInfo
+    ) {
+        // Expected a map of email: ".." & password "..."
+    }
+
+    
 
 }
