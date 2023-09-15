@@ -33,6 +33,21 @@ public class AppController {
         // Expected a map of email: ".." & password "..."
     }
 
-    
+    // Administration
+    @PutMapping("user/mute")
+    public void muteUser(
+        @RequestBody int userID
+    ) {
+
+    }
+
+    @PutMapping("delete_thread")
+    public void deleteThread(
+            @RequestBody int userID,
+            @RequestBody int threadID
+    ) {
+
+    }
+
 
 }
