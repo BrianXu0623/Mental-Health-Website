@@ -2,6 +2,7 @@ package elec5619.sydney.edu.au.mental_health_support_website;
 
 import elec5619.sydney.edu.au.mental_health_support_website.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -93,6 +94,27 @@ public class AppController {
     ) {
         return null;
     }
+
+    // Linking Thread with tags
+    @PutMapping("thread/{thread_id}/tag")
+    public void addTagToThread(
+            @PathVariable Integer threadId,
+            @RequestBody String tag
+    ) {
+
+    }
+
+    @PutMapping("thread/{thread_id}/tags")
+    public void updateThreadTags(
+            @PathVariable Integer threadId,
+            @RequestBody List<String> tags
+    ) {
+
+    }
+
+    
+
+
 
     // Profile Management
     @GetMapping("user/{username}")
