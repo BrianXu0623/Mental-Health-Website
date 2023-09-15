@@ -1,9 +1,6 @@
 package elec5619.sydney.edu.au.mental_health_support_website.db.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +17,7 @@ public class Thread {
     private Long id;
     private String title;
     private String content;
-    private List<ThreadTag> tags = new ArrayList<>();
+    private String tags;
     private Long authorID;
     private Date timestamp;
 }
