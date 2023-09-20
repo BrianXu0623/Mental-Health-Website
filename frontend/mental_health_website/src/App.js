@@ -14,7 +14,7 @@ export default function App() {
   return (
     
     <BrowserRouter>
-    <Navbar />
+    <Navbar /> b
       <div>
       <Routes>
           <Route path="/information" element={<Information />}>
@@ -39,6 +39,22 @@ export default function App() {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
 
-
+// import './App.css';
+// function App(){
+//     const [currentForm, setCurrentForm] = useState('login')
+//
+//     const toggleForm = (formName) =>{
+//         setCurrentForm(formName);
+//     }
+//     return (
+//         <div className= "App">
+//             {
+//                 currentForm ==="login" ? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>
+//             }
+//         </div>
+//     );
+// }
+//
+// export default App;
 
 
