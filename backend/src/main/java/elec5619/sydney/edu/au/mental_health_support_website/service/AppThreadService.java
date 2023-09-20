@@ -27,4 +27,8 @@ public class AppThreadService {
         threadRepository.save(edittedThread);
     }
 
+    public AppThread getThread(Long threadId) {
+        return threadRepository.findById(threadId).orElse(null);
+    }
+
 }
