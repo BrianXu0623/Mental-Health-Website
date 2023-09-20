@@ -1,16 +1,16 @@
 package elec5619.sydney.edu.au.mental_health_support_website.service;
 
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.AppThread;
-import elec5619.sydney.edu.au.mental_health_support_website.db.repository.ThreadRepository;
+import elec5619.sydney.edu.au.mental_health_support_website.db.repository.AppThreadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class ThreadService {
+public class AppThreadService {
     @Autowired
-    private ThreadRepository threadRepository;
+    private AppThreadRepository threadRepository;
 
     public AppThread createThread(AppThread thread) {
         return threadRepository.save(thread);
