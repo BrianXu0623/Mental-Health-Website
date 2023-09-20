@@ -1,6 +1,7 @@
 package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
-import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
+import elec5619.sydney.edu.au.mental_health_support_website.service.UserService;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +12,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/mhswa")
 public class AppController {
-    @Autowired
-    private UserRepository user;
+    @Resource
+    private UserService user;
 
     @GetMapping("viewall")
     public List<String> viewAllMapping() {
@@ -20,20 +21,19 @@ public class AppController {
     }
 
     // Login/Sign up
-    @PostMapping("signup")
-    public void signupUser(
-            @RequestBody Map<String, String> userInfo
-    ) {
-        return;
-    }
-
-    @GetMapping("login")
-    public void loginUser(
-            @RequestBody Map<String, String> userInfo
-    ) {
-        // Expected a map of email: ".." & password "..."
-    }
-
+//    @PostMapping("signup")
+//    public void signupUser(
+//            @RequestBody Map<String, String> userInfo
+//    ) {
+//    }
+//
+//    @GetMapping("login")
+//    public void loginUser(
+//            @RequestBody Map<String, String> userInfo
+//    ) {
+//        // Expected a map of email: ".." & password "..."
+//    }
+//
     // Administration
     @PutMapping("user/mute")
     public void muteUser(

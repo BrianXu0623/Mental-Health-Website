@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("api/users")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -17,9 +17,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public User login(@RequestParam String username, @RequestParam String password) {
-        return userService.loginUser(username, password);
+    public User login(
+            @RequestParam String username,
+            @RequestParam String password) {
+        User user = userService.loginUser(username, password);
+        getFollowers(user);
+        return user;
     }
 
     // Add other user-related endpoints
+    private void getFollowers(User user) {
+
+    }
 }
