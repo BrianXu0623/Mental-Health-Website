@@ -96,3 +96,15 @@ input[type="text"], input[type="email"], input[type="password"] {
 .nav li:hover{
   background-color: antiquewhite;
 }
+
+  .forgot-password-button {
+    display: block;
+    margin-top: 5px;
+  }
+
+  .register-button {
+    display: block;
+    margin-top: 5px;
+
+  }
+

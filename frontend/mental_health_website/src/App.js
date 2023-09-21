@@ -8,13 +8,14 @@ import Information from "./pages/Information";
 import Forum from "./pages/Forum";
 import Appointment from "./pages/Appointment";
 import "./App.css";
+import Register from "./pages/Register";
 
 
 export default function App() {
   return (
     
     <BrowserRouter>
-    <Navbar /> b
+    <Navbar />
       <div>
       <Routes>
           <Route path="/information" element={<Information />}>
@@ -24,6 +25,8 @@ export default function App() {
           <Route path="/appointment" element={<Appointment />}>
           </Route>
           <Route path="/login" element={<Login />}>
+          </Route>
+          <Route path="/register" element={<Register />}>
           </Route>
           <Route path="/" element={<Home />}>
           </Route>
