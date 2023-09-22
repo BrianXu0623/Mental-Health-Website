@@ -15,10 +15,12 @@
 .card-list-left{
     justify-self: left;
     align-items: left;
+    padding-left: 80px;
 }
 
 .card-list-right{
     justify-self: right;
     align-items: end;
+    padding-right: 80px;
     transition: left 0.3s ease-in-out;
 }

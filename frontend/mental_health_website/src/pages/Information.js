@@ -10,7 +10,7 @@ const Information = () => {
         <div className='card-container'>
         <ul className='card-list-left'>
           <InformationCard 
-            path='/0'
+            path='/information/0'
             title='This is card 1'
             text='this is the first information card'
             author='Stack Overflow' />

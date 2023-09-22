@@ -73,3 +73,7 @@
     height: 20px;
     padding-top:20px;
  }
+
+ .search-bar input[type='text']{
+    width:400px;
+ }
