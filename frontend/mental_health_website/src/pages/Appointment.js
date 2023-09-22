@@ -1,5 +1,17 @@
+import React from 'react';
+import Hero from './Hero.js';
+
+
 const Appointment = () => {
-    return <h1>This is the Appointment page</h1>;
+    
+    return (
+      <>
+        <Hero />
+        <div className='appointment-card-container'>
+
+        </div>
+      </>
+    )
   };
   
   export default Appointment;
