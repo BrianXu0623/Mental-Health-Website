@@ -1,9 +1,9 @@
 .nav {
-    background-color: aquamarine;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     position: sticky;
   }
   
@@ -14,10 +14,12 @@
   }
   
   .website-title {
-    color: #fff;
+    color: rgb(111, 111, 111);
     justify-self: start;
     cursor: pointer;
     text-decoration: none;
+    font-family:sans-serif;
+    font-weight: 1000;
     font-size: 2rem;
     display: flex;
     align-items: left;
@@ -39,16 +41,18 @@
   }
   
   .nav-links {
-    color: #fff;
+    color: rgb(111, 111, 111);
     display: flex;
     align-items: center;
+    font-family:sans-serif;
+    font-weight: 1000;
     text-decoration: none;
     padding: 0.5rem 1rem;
     height: 100%;
   }
   
   .nav-links:hover {
-    border-bottom: 4px solid #fff;
+    border-bottom: 4px solid darkgray;
     transition: all 0.2s ease-out;
   }
   

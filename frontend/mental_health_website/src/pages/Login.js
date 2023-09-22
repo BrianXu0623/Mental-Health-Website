@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import "./Login.css";
+
 export default function Login() {
 
   const [email, setEmail] = useState("");
@@ -17,40 +19,41 @@ export default function Login() {
     console.log(email);
   };
   return (
-      <> <h1 className="pageTitle">USYD Mental Health Support</h1>
-    <div className="Login">
-      <Form onSubmit={handleSubmit}>
-        <Form.Group size="lg" controlId="email">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            autoFocus
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group size="lg" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-        <Button block size="lg" type="submit" disabled={!validateForm()}>
-          Login
-        </Button>
-      </Form>
-      <div className="forgot-password-button">
-        <Button>Forgot Password</Button>
-      </div>
+    <div className='loginPage'> 
+      <div className="loginPageTitle">USYD Mental Health Support</div>
+      <div className="loginForm">
+        <Form onSubmit={handleSubmit}>
+          <Form.Group size="lg" controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              autoFocus
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group size="lg" controlId="password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Group>
+          <Button block size="lg" type="submit" disabled={!validateForm()}>
+            Login
+          </Button>
+        </Form>
+        <div className="forgot-password-button">
+          <Button>Forgot Password</Button>
+        </div>
 
-      <div className="register-button">
-        <ButtonLink to="/register" className="btn btn-outline-secondary">
-          Don't have an account? Register
-        </ButtonLink>
+        <div className="register-button">
+          <ButtonLink to="/register" className="btn btn-outline-secondary">
+            Don't have an account? Register
+          </ButtonLink>
+        </div>
       </div>
     </div>
-        </>
   );
 }

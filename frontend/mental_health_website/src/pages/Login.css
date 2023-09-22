@@ -1,0 +1,17 @@
+.loginPage{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    position: inherit;
+    height: 100vh;
+}
+
+    .loginPageTitle{
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .loginForm{
+        align-self: center;
+    }
