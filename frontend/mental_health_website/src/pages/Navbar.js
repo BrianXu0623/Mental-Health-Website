@@ -4,47 +4,37 @@ import "./Navbar.css"
 
 
 function Navbar() {
-
-  const [click, setClick] = useState(false);
-
-  const menuIconClick = () => setClick(!click);
-
-  const closeMenu = () => setClick(false);
-
   return (
     <>
       <nav className="nav">
         <div className='navbar-container'>
           <Link to="/" className="website-title">USYD Mental<br />Health Support</Link>
-          <div className='menu-icon' onClick={menuIconClick}>
-            <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
-          </div>
-          <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+          <ul className='nav-menu'>
             <li className='nav-item'>
-              <Link to='/' className='nav-links' onClick={closeMenu}>
+              <Link to='/' className='nav-links'>
                 Home
               </Link>
             </li>
             <li className='nav-item'>
-              <Link to='/information' className='nav-links' onClick={closeMenu}>
+              <Link to='/information' className='nav-links'>
                 Information
               </Link>
             </li>
             <li className='nav-item'>
-              <Link to='/forum' className='nav-links' onClick={closeMenu}>
+              <Link to='/forum' className='nav-links'>
                 Forum
               </Link>
             </li>
             <li className='nav-item'>
-              <Link to='/appointment' className='nav-links' onClick={closeMenu}>
+              <Link to='/appointment' className='nav-links'>
                 Appointment
               </Link>
             </li>
             
           </ul>
-          <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+          <ul className='nav-menu'>
             <li className='nav-item'>
-              <Link to='/login' className='nav-links' onClick={closeMenu}>
+              <Link to='/login' className='nav-links'>
                 Login
               </Link>
             </li>
