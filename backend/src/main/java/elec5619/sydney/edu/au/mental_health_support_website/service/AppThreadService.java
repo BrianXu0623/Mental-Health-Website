@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
 
 @Service
 public class AppThreadService {
@@ -13,7 +15,11 @@ public class AppThreadService {
     private AppThreadRepository threadRepository;
 
     public AppThread createThread(AppThread thread) {
-        return threadRepository.save(thread);
+        AppThread result = threadRepository.findById(thread.getId()).orElse(null);
+        if (result == null) {
+            result = threadRepository.save(thread);
+        }
+        return result;
     }
 
     public AppThread removeThread(Long threadId) {
@@ -31,4 +37,7 @@ public class AppThreadService {
         return threadRepository.findById(threadId).orElse(null);
     }
 
+    public List<AppThread> getThreads(List<Long> threadIds) {
+        return threadRepository.findAllById(threadIds);
+    }
 }
