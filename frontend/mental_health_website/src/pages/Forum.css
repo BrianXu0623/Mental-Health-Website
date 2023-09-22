@@ -1,0 +1,25 @@
+.post-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 2000px;
+    margin: 0 auto;
+    padding: 10px;
+    max-height: 800px;
+    overflow-y: scroll;
+    text-decoration: none;
+    list-style: none;
+
+}
+
+.post-item-ul{
+    list-style-type: none;
+}
+.post-item {
+    border: 1px solid #ccc;
+    text-decoration: none;
+    padding: 10px;
+    width: 1000px;
+    list-style-type: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
