@@ -4,17 +4,17 @@ import "./Navbar.css"
 
 
 function Navbar() {
+
+  const search = () => {
+
+  }
+
   return (
     <>
       <nav className="nav">
         <div className='navbar-container'>
           <Link to="/" className="website-title">USYD Mental<br />Health Support</Link>
           <ul className='nav-menu'>
-            <li className='nav-item'>
-              <Link to='/' className='nav-links'>
-                Home
-              </Link>
-            </li>
             <li className='nav-item'>
               <Link to='/information' className='nav-links'>
                 Information
@@ -33,6 +33,15 @@ function Navbar() {
             
           </ul>
           <ul className='nav-menu'>
+            <li className='search-bar-container'>
+              <form className='search-bar' onSubmit={search}>
+                <input type='text' id='search-content'>
+                  
+                </input>
+                
+              </form>
+              
+            </li>
             <li className='nav-item'>
               <Link to='/login' className='nav-links'>
                 Login

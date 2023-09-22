@@ -63,5 +63,13 @@
   .menu-icon {
     display: none;
   }
+
+  .search-bar-container{
+    align-items: center;
+  }
   
- 
+ .search-bar{
+    align-self: center;
+    height: 20px;
+    padding-top:20px;
+ }

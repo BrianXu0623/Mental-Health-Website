@@ -1,9 +1,12 @@
-import React from 'react'
-import "./Information.css"
+import React from 'react';
+import "./Information.css";
+import Hero from "./Hero.js";
 
 const Information = () => {
     return (
-      <div className='card-container'>
+      <>
+        <Hero />
+        <div className='card-container'>
         <ul className='card-list-left'>
           <div className="information-card">
             <h2>Title</h2>
@@ -32,6 +35,8 @@ const Information = () => {
           </div>
         </ul>
       </div>
+      </>
+      
       
     );
   };
