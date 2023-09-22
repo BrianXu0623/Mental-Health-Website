@@ -8,6 +8,7 @@ import Information from "./pages/Information";
 import Forum from "./pages/Forum";
 import Appointment from "./pages/Appointment";
 import "./App.css";
+import Register from "./pages/Register";
 
 
 export default function App() {
@@ -26,6 +27,8 @@ export default function App() {
           </Route>
           <Route path="/login" element={<Login />}>
           </Route>
+          <Route path="/register" element={<Register />}>
+          </Route>
           <Route path="/" element={<Home />}>
           </Route>
           <Route path="*" element={<NoPage />}>
@@ -40,6 +43,22 @@ export default function App() {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
 
-
+// import './App.css';
+// function App(){
+//     const [currentForm, setCurrentForm] = useState('login')
+//
+//     const toggleForm = (formName) =>{
+//         setCurrentForm(formName);
+//     }
+//     return (
+//         <div className= "App">
+//             {
+//                 currentForm ==="login" ? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>
+//             }
+//         </div>
+//     );
+// }
+//
+// export default App;
 
 
