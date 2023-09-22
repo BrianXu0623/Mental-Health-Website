@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
 
@@ -27,6 +28,10 @@ public class User {
     private String email;
     private String password;
     private LocalDate birthday; 
-    private String phonenumber;
+    private String phoneNumber;
     private UserType userType;
+    private String followerIds;
+    private String followedIds;
+    private String likedThreadIds;
+
 }

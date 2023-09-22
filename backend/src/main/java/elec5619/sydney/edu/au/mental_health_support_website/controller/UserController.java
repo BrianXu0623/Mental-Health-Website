@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/mhswa/users")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -20,6 +20,4 @@ public class UserController {
     public User login(@RequestParam String username, @RequestParam String password) {
         return userService.loginUser(username, password);
     }
-
-    // Add other user-related endpoints
 }

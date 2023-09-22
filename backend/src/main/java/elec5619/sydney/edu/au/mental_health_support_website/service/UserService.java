@@ -2,12 +2,12 @@ package elec5619.sydney.edu.au.mental_health_support_website.service;
 
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.User;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    @Autowired
+    @Resource
     private UserRepository userRepository;
 
     public User registerUser(User user) {
