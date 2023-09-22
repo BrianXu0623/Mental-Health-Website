@@ -16,6 +16,7 @@ export default function App() {
     <BrowserRouter>
     <Navbar />
       <div>
+      
       <Routes>
           <Route path="/information" element={<Information />}>
           </Route>
