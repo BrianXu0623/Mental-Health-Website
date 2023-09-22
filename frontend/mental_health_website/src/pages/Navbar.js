@@ -15,7 +15,7 @@ function Navbar() {
     <>
       <nav className="nav">
         <div className='navbar-container'>
-          <Link to="/" className="website_title">USYD Mental<br />Health Support</Link>
+          <Link to="/" className="website-title">USYD Mental<br />Health Support</Link>
           <div className='menu-icon' onClick={menuIconClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
@@ -40,8 +40,11 @@ function Navbar() {
                 Appointment
               </Link>
             </li>
-            <li className='login-button'>
-              <Link to='/login' className='nav-links-mobile' onClick={closeMenu}>
+            
+          </ul>
+          <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+            <li className='nav-item'>
+              <Link to='/login' className='nav-links' onClick={closeMenu}>
                 Login
               </Link>
             </li>
