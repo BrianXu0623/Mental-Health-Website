@@ -28,8 +28,7 @@ public class AppThreadService {
         return optThread.orElse(null);
     }
 
-    // Do we even need id
-    public void editThread(Long threadId, AppThread edittedThread) {
+    public void editThread(AppThread edittedThread) {
         threadRepository.save(edittedThread);
     }
 

@@ -18,4 +18,5 @@ public class AppThread {
     private String tags;
     private Long authorID;
     private Date timestamp;
+
 }
