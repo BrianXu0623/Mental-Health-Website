@@ -2,9 +2,20 @@ package elec5619.sydney.edu.au.mental_health_support_website.db.repository;
 
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
-    default User findByUsername(String username) {
-        return null;
-    }
+
+import java.util.List;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByEmail(String email);
+    User findByUsername(String username);
+    List<User> findAllByIdIn(@Param("ids") List<Long> ids);
+//    int updateEmailById(Long id, String newEmail);
+//    int updateFollowedIdsById(Long id, String newFollowedIds);
+//    int updateFollowerIdsById(Long id, String newFollowerIds);
+//    int updateLikedThreadIdsById(Long id, String newLikedThreadIds);
+//    int updateUsernameById(Long id, String newUsername);
+//    int updatePasswordById(Long id, String newPassword);
+    User save(User user);
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-public class Thread {
+public class AppThread {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
