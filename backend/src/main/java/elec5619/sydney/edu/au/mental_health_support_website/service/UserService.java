@@ -105,10 +105,10 @@ public class UserService {
         return false;
     }
 
-    public User updateProfile(String userName, String email, String phoneNumber, String birthday) {
+    public User updateProfile(String userName, String newUsername, String email, String phoneNumber, String birthday) {
         User user = userRepository.findByUsername(userName);
-        if(StringUtils.isNotBlank(userName)) {
-            user.setUsername(userName);
+        if(StringUtils.isNotBlank(newUsername)) {
+            user.setUsername(newUsername);
         }
         if(StringUtils.isNotBlank(email)) {
             user.setEmail(email);

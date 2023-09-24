@@ -3,6 +3,7 @@ package elec5619.sydney.edu.au.mental_health_support_website.controller;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.User;
 import elec5619.sydney.edu.au.mental_health_support_website.service.UserService;
 import elec5619.sydney.edu.au.mental_health_support_website.util.EncryptionUtil;
+import elec5619.sydney.edu.au.mental_health_support_website.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,6 +65,7 @@ public class UserController {
         String encrypted = EncryptionUtil.encrypt(password);
         User user = User.builder().username(username).password(encrypted).
                 email(email).build();
+        user.setToken(TokenUtil.generateToken(username));
         return userService.registerUser(user);
     }
 
@@ -72,11 +74,13 @@ public class UserController {
             @RequestParam String email,
             @RequestParam String password) {
         User user = userService.loginUser(email, password);
+        user.setToken(TokenUtil.generateToken(user.getUsername()));
         return user;
     }
 
     @GetMapping("followers")
-    private List<User> getFollowers(@RequestParam String username) {
+    private List<User> getFollowers(@RequestParam("token") String token) {
+        String username = TokenUtil.getUsernameFromToken(token);
         if(username == null || username.length() == 0) {
             return new ArrayList<>();
         }
@@ -84,7 +88,8 @@ public class UserController {
     }
 
     @GetMapping("followed")
-    private List<User> getFollowed(@RequestParam String username) {
+    private List<User> getFollowed(@RequestParam("token") String token) {
+        String username = TokenUtil.getUsernameFromToken(token);
         if(username == null || username.length() == 0) {
             return new ArrayList<>();
         }
@@ -92,32 +97,38 @@ public class UserController {
     }
 
     @PostMapping("follow")
-    private boolean follow(@RequestParam String fromUsername, String toUsername) {
+    private boolean follow(@RequestParam("token") String token, String toUsername) {
+        String fromUsername = TokenUtil.getUsernameFromToken(token);
         return userService.follow(fromUsername, toUsername);
     }
 
     @PostMapping("mute")
-    private boolean mute(@RequestParam String fromUsername, String toUsername) {
+    private boolean mute(@RequestParam("token") String token, String toUsername) {
+        String fromUsername = TokenUtil.getUsernameFromToken(token);
         return userService.mute(fromUsername, toUsername);
     }
 
     @PostMapping("updateProfile")
-    private User updateProfile(@RequestParam String userName,
-                           @RequestParam String email,
-                           @RequestParam String phoneNumber,
-                           @RequestParam String birthday) {
-        return userService.updateProfile(userName, email, phoneNumber, birthday);
+    private User updateProfile(@RequestParam("token") String token,
+                            @RequestParam String newUsername,
+                           @RequestParam String newEmail,
+                           @RequestParam String newPhoneNumber,
+                           @RequestParam String newBirthday) {
+        String userName = TokenUtil.getUsernameFromToken(token);
+        return userService.updateProfile(userName, newUsername, newEmail, newPhoneNumber, newBirthday);
     }
 
     @PostMapping("updatePassword")
-    private boolean updatePassword(@RequestParam String userName,
+    private boolean updatePassword(@RequestParam("token") String token,
                         @RequestParam String oldPassword,
                         @RequestParam String newPassword) throws IOException, InterruptedException {
+        String userName = TokenUtil.getUsernameFromToken(token);
         return userService.updatePassword(userName, oldPassword, newPassword);
     }
 
     @GetMapping("profile")
-    private User getProfile(@RequestParam String userName) {
+    private User getProfile(@RequestParam("token") String token) {
+        String userName = TokenUtil.getUsernameFromToken(token);
         return userService.getUserByUsername(userName);
     }
 

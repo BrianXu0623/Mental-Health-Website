@@ -1,9 +1,6 @@
 package elec5619.sydney.edu.au.mental_health_support_website.db.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -27,6 +24,8 @@ public class User {
     private String followedIds;
     private String likedThreadIds;
     private boolean isMuted = false;
+    @Transient
+    private String token;
     public User() {}
 //    CREATE TABLE User (
 //    id BIGINT AUTO_INCREMENT PRIMARY KEY,
