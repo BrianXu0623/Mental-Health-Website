@@ -18,15 +18,22 @@ enum UserType {
 @Entity
 @Getter
 @Setter
-public class User {
-    
+public class Users {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String email;
     private String password;
-    private LocalDate birthday; 
+    private LocalDate birthday;
     private String phonenumber;
     private UserType userType;
+
+    public Users(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+
 }

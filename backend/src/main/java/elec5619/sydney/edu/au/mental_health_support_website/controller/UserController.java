@@ -1,6 +1,6 @@
 package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
-import elec5619.sydney.edu.au.mental_health_support_website.db.entities.User;
+import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
 import elec5619.sydney.edu.au.mental_health_support_website.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,21 +12,28 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
+    public Users register(@RequestBody Users user) {
         return userService.registerUser(user);
     }
 
     @PostMapping("/login")
-    public User login(
+    public Users login(
             @RequestParam String username,
             @RequestParam String password) {
-        User user = userService.loginUser(username, password);
+        Users user = userService.loginUser(username, password);
         getFollowers(user);
         return user;
     }
 
+    @GetMapping("/test")
+    public Users test() {
+        Users user = new Users("Simon", "Yuan");
+        userService.registerUser(user);
+        return user;
+    }
+
     // Add other user-related endpoints
-    private void getFollowers(User user) {
+    private void getFollowers(Users user) {
 
     }
 }
