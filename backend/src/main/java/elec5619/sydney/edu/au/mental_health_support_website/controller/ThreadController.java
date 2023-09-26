@@ -2,7 +2,8 @@ package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.AppThread;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.ThreadTag;
-import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
+import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
+import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
 import elec5619.sydney.edu.au.mental_health_support_website.service.AppThreadService;
 import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadCommentService;
 import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadTagService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/threads/")
@@ -27,8 +29,10 @@ public class ThreadController {
 
     @Resource
     private UserRepository userRepository;
+    private ArrayList<ThreadTag> tags = new ArrayList<>();
 
     public ThreadController() {
+        tags = (ArrayList<ThreadTag>) threadTagService.getAllTags();
     }
 
     // For testing purposes
@@ -54,7 +58,19 @@ public class ThreadController {
     public AppThread createThread(
         @RequestBody AppThread thread
     ) {
+        if (verifyTags(thread.getTags())) {
+            return null;
+        }
         return threadService.createThread(thread);
+    }
+
+    private boolean verifyTags(String tags) {
+        for (String tag : tags.split(",")) {
+            if (!tags.contains(tag)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // Requesting materials for thread
@@ -86,17 +102,21 @@ public class ThreadController {
     /**
      * Put method for requesting a change in thread content, this ranging from
      * thread content, a number of thread tags provided
+     * only the requested user, who created the thread, can edit the thread content
      * @param threadId the id of the thread to be changed
      * @param thread the thread that the requested thread object to change to
      */
     @PutMapping("/update/{threadId}")
-    public void editThread(
+    public boolean editThread(
             @PathVariable Long threadId,
             @RequestBody Long userId,
             @RequestBody AppThread thread
     ) {
-        if (!userId.equals(thread.getAuthorID())) return;
-        threadService.editThread(thread);
+        if (isUserEligibleToModifyThread(userId, threadId) && verifyTags(thread.getTags())) {
+            threadService.editThread(thread);
+           return true;
+        }
+        return false;
     }
 
     /**
@@ -106,17 +126,32 @@ public class ThreadController {
      * @param userId the user id who requested the thread to be deleted
      */
     @PutMapping("/delete/{threadId}")
-    public void removeThread(
+    public boolean removeThread(
             @PathVariable Long threadId,
             @RequestBody Long userId
     ) {
-        Users user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
-            return;
-        } else if (user.getUserType().equals("admin")) {
-            // if the user requested is an admin, make a force delete
+        if (isUserEligibleToModifyThread(userId, threadId)) {
             threadService.removeThread(threadId);
+            return true;
         }
+        return false;
+    }
+
+    private boolean isUserEligibleToModifyThread(Long userId, Long threadId) {
+        Users user = userRepository.findById(userId).orElse(null);
+        AppThread thr = threadService.getThread(threadId);
+        if (user == null || thr == null) {
+            // the user and thread has to exists
+            return false;
+        } else if (user.getUserType().equals("admin")) {
+            // the user is an admin, force delete
+            return true;
+        } else if (!thr.getAuthorID().equals(userId)) {
+            // if the user id is not the same as the author id, not allowed
+            return false;
+        }
+        // otherwise delete
+        return true;
     }
 
     // Request Methods for thread tags
@@ -130,7 +165,9 @@ public class ThreadController {
     public ThreadTag addNewTag(
             @RequestBody ThreadTag tag
     ) {
-        return threadTagService.createThreadTag(tag);
+        ThreadTag newTag = threadTagService.createThreadTag(tag);
+        tags = (ArrayList<ThreadTag>) getAllTags();
+        return newTag;
     }
 
     /**

@@ -5,7 +5,6 @@ import elec5619.sydney.edu.au.mental_health_support_website.db.repository.AppThr
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.List;
 
 @Service
