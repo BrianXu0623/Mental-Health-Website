@@ -2,9 +2,11 @@ package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.AppThread;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.ThreadTag;
+import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
 import elec5619.sydney.edu.au.mental_health_support_website.service.AppThreadService;
 import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadCommentService;
 import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadTagService;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +16,20 @@ import java.util.List;
 @RequestMapping("/api/threads/")
 
 public class ThreadController {
-//    @Autowired
-//    private ThreadCommentService threadCommentService;
+    @Autowired
+    private ThreadCommentService threadCommentService;
 
     @Autowired
     private AppThreadService threadService;
-//    @Autowired
-//    private ThreadTagService threadTagService;
+
+    @Autowired
+    private ThreadTagService threadTagService;
+
+    @Resource
+    private UserRepository userRepository;
+
+    public ThreadController() {
+    }
 
     // For testing purposes
     @GetMapping("/test-create")
@@ -34,18 +43,6 @@ public class ThreadController {
         .build();
         return threadService.createThread(aThread);
     }
-    /**
-     * create table AppThread (
-     * 	id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-     * 	title varchar(500),
-     * 	content TEXT,
-     * 	tags varchar(500),
-     * 	authorId BIGINT,
-     * 	timestamp DATE,
-     *
-     * 	FOREIGN KEY (authorId) REFERENCES [dbo].[Users](id)
-     * );
-     */
 
 
     /**
@@ -80,7 +77,7 @@ public class ThreadController {
      * @return a list of thread objects associated with their ids, otherwise an empty list
      */
     @GetMapping("/get/ids")
-    public List<AppThread> getThread(
+    public List<AppThread> getThreads(
             @RequestBody List<Long> threadIds
     ) {
         return threadService.getThreads(threadIds);
@@ -95,9 +92,31 @@ public class ThreadController {
     @PutMapping("/update/{threadId}")
     public void editThread(
             @PathVariable Long threadId,
+            @RequestBody Long userId,
             @RequestBody AppThread thread
     ) {
+        if (!userId.equals(thread.getAuthorID())) return;
         threadService.editThread(thread);
+    }
+
+    /**
+     * Put method for removing a certain thread, only the user created the thread and the admin
+     * can remove the thread
+     * @param threadId the id of the thread requested to be deleted
+     * @param userId the user id who requested the thread to be deleted
+     */
+    @PutMapping("/delete/{threadId}")
+    public void removeThread(
+            @PathVariable Long threadId,
+            @RequestBody Long userId
+    ) {
+        Users user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            return;
+        } else if (user.getUserType().equals("admin")) {
+            // if the user requested is an admin, make a force delete
+            threadService.removeThread(threadId);
+        }
     }
 
     // Request Methods for thread tags
@@ -107,56 +126,56 @@ public class ThreadController {
      * @param tag the tag to be added to the system
      * @return the newly created tag or not exists, otherwise return existing tag
      */
-//    @PostMapping("/tag/add")
-//    public ThreadTag addNewTag(
-//            @RequestBody ThreadTag tag
-//    ) {
-//        return threadTagService.createThreadTag(tag);
-//    }
-//
-//    /**
-//     * Get method for getting all the tags in the database
-//     * @return a list of tags available in the system associated with thread
-//     */
-//    @GetMapping("/tag/getAll")
-//    public List<ThreadTag> getAllTags() {
-//       return threadTagService.getAllTags();
-//    }
-//
-//    /**
-//     * Get method for getting a single thread tag from the database
-//     * @param tagId the id of the tag requested
-//     * @return a single tag associated with the provided id
-//     */
-//    @GetMapping("/tag/get")
-//    public ThreadTag getTag(
-//            @RequestBody Long tagId
-//    ) {
-//       return threadTagService.getTag(tagId);
-//    }
-//
-//    /**
-//     * Put method for editing the existing thread tag
-//     * @param tag the edit thread tag
-//     */
-//    @PutMapping("/tag/{tagId}/edit")
-//    public void editTag(
-//            @PathVariable Long tagId,
-//            @RequestBody ThreadTag tag
-//    ) {
-//        threadTagService.editThreadTag(tagId, tag);
-//    }
-//
-//    /**
-//     * Delete method for removing thread tag
-//     * @param tagId the id of thread tag to be removed
-//     */
-//    @DeleteMapping("/tag/{tagId}/remove")
-//    public void removeTag(
-//            @PathVariable Long tagId
-//    ) {
-//        threadTagService.removeThreadTag(tagId);
-//    }
+    @PostMapping("/tag/add")
+    public ThreadTag addNewTag(
+            @RequestBody ThreadTag tag
+    ) {
+        return threadTagService.createThreadTag(tag);
+    }
+
+    /**
+     * Get method for getting all the tags in the database
+     * @return a list of tags available in the system associated with thread
+     */
+    @GetMapping("/tag/getAll")
+    public List<ThreadTag> getAllTags() {
+       return threadTagService.getAllTags();
+    }
+
+    /**
+     * Get method for getting a single thread tag from the database
+     * @param tagId the id of the tag requested
+     * @return a single tag associated with the provided id
+     */
+    @GetMapping("/tag/get")
+    public ThreadTag getTag(
+            @RequestBody Long tagId
+    ) {
+       return threadTagService.getTag(tagId);
+    }
+
+    /**
+     * Put method for editing the existing thread tag
+     * @param tag the edit thread tag
+     */
+    @PutMapping("/tag/{tagId}/edit")
+    public void editTag(
+            @PathVariable Long tagId,
+            @RequestBody ThreadTag tag
+    ) {
+        threadTagService.editThreadTag(tagId, tag);
+    }
+
+    /**
+     * Delete method for removing thread tag
+     * @param tagId the id of thread tag to be removed
+     */
+    @DeleteMapping("/tag/{tagId}/remove")
+    public void removeTag(
+            @PathVariable Long tagId
+    ) {
+        threadTagService.removeThreadTag(tagId);
+    }
 
     // Request methods for thread comment
 
