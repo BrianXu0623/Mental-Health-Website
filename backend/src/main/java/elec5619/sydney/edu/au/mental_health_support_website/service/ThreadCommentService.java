@@ -5,6 +5,8 @@ import elec5619.sydney.edu.au.mental_health_support_website.db.repository.Thread
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ThreadCommentService {
     @Autowired
@@ -21,4 +23,17 @@ public class ThreadCommentService {
     public void editThreadComment(ThreadComment threadComment) {
         respository.save(threadComment);
     }
+
+    public List<ThreadComment> getThreadComments(Long threadId) {
+        return respository.findAllByThreadId(threadId);
+    }
+
+    public ThreadComment getThreadComment(Long commentId) {
+        return respository.findById(commentId).orElse(null);
+    }
+
+    public List<ThreadComment> getAllComments() {
+        return respository.findAll();
+    }
 }
+

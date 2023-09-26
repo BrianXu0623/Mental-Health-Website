@@ -10,11 +10,6 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-enum AppointmentStatus {
-    PENDING,
-    COMPLETED,
-    CANCELLED
-};
 
 @Entity
 @Getter
@@ -23,11 +18,26 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private AppointmentStatus status;
+    private String status;
     private LocalDate date;
     private LocalTime time;
     private Integer professionUserId;
     private Integer userId;
     private String appointmentTopic;
+
+    /**
+     * CREATE TABLE Appointment (
+     * 	id BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     * 	status VARCHAR(500),
+     * 	date DATE,
+     * 	time TIME,
+     * 	professional_user_id BIGINT,
+     * 	user_id BIGINT,
+     * 	appointment_topic TEXT,
+     *
+     * 	FOREIGN KEY (professional_user_id) REFERENCES [dbo].[Users](id),
+     * 	FOREIGN KEY (user_id) REFERENCES [dbo].[Users](id)
+     * );
+     */
 
 }

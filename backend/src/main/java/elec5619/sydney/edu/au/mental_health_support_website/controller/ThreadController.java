@@ -1,6 +1,7 @@
 package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.AppThread;
+import elec5619.sydney.edu.au.mental_health_support_website.db.entities.ThreadComment;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.ThreadTag;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/threads/")
@@ -29,11 +29,6 @@ public class ThreadController {
 
     @Resource
     private UserRepository userRepository;
-    private ArrayList<ThreadTag> tags = new ArrayList<>();
-
-    public ThreadController() {
-        tags = (ArrayList<ThreadTag>) threadTagService.getAllTags();
-    }
 
     // For testing purposes
     @GetMapping("/test-create")
@@ -65,8 +60,9 @@ public class ThreadController {
     }
 
     private boolean verifyTags(String tags) {
+        List<ThreadTag> allTags = threadTagService.getAllTags();
         for (String tag : tags.split(",")) {
-            if (!tags.contains(tag)) {
+            if (!allTags.contains(tag)) {
                 return false;
             }
         }
@@ -166,7 +162,6 @@ public class ThreadController {
             @RequestBody ThreadTag tag
     ) {
         ThreadTag newTag = threadTagService.createThreadTag(tag);
-        tags = (ArrayList<ThreadTag>) getAllTags();
         return newTag;
     }
 
@@ -215,6 +210,10 @@ public class ThreadController {
     }
 
     // Request methods for thread comment
+    @GetMapping("/comment/getAll")
+    public List<ThreadComment> getAllComments() {
+        return threadCommentService.getAllComments();
+    }
 
 
 }
