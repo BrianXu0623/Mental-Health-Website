@@ -6,7 +6,6 @@ import elec5619.sydney.edu.au.mental_health_support_website.util.EncryptionUtil;
 import io.micrometer.common.util.StringUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.time.LocalDate;

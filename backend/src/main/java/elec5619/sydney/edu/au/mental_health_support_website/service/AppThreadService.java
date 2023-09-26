@@ -2,24 +2,19 @@ package elec5619.sydney.edu.au.mental_health_support_website.service;
 
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.AppThread;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.AppThreadRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.List;
-import java.util.ArrayList;
 
 @Service
 public class AppThreadService {
-    @Autowired
+    @Resource
     private AppThreadRepository threadRepository;
 
     public AppThread createThread(AppThread thread) {
-        AppThread result = threadRepository.findById(thread.getId()).orElse(null);
-        if (result == null) {
-            result = threadRepository.save(thread);
-        }
-        return result;
+        return threadRepository.save(thread);
     }
 
     public AppThread removeThread(Long threadId) {

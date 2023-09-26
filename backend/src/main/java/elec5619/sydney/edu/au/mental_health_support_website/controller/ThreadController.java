@@ -5,7 +5,7 @@ import elec5619.sydney.edu.au.mental_health_support_website.db.entities.ThreadTa
 import elec5619.sydney.edu.au.mental_health_support_website.service.AppThreadService;
 import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadCommentService;
 import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadTagService;
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,13 +14,39 @@ import java.util.List;
 @RequestMapping("/api/threads/")
 
 public class ThreadController {
-    @Resource
-    private ThreadCommentService threadCommentService;
+//    @Autowired
+//    private ThreadCommentService threadCommentService;
 
-    @Resource
+    @Autowired
     private AppThreadService threadService;
-    @Resource
-    private ThreadTagService threadTagService;
+//    @Autowired
+//    private ThreadTagService threadTagService;
+
+    // For testing purposes
+    @GetMapping("/test-create")
+    public AppThread testCreate() {
+        AppThread aThread = AppThread.builder().title(
+                "Body Dismorphic Disorder").content(
+                "\uD83D\uDD25 Body Dysmorphic Disorder (BDD) - is another mental health condition included in the Obsessive-Compulsive & Related disorders category. Individuals with this disorder tend to have excessive concern over a body part because they believe that the body part appears abnormal, defective or embarrassing in some way.")
+                .tags(
+                "anxiety,disorder,obsessive-compulsive")
+                .authorID(2L)
+        .build();
+        return threadService.createThread(aThread);
+    }
+    /**
+     * create table AppThread (
+     * 	id BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     * 	title varchar(500),
+     * 	content TEXT,
+     * 	tags varchar(500),
+     * 	authorId BIGINT,
+     * 	timestamp DATE,
+     *
+     * 	FOREIGN KEY (authorId) REFERENCES [dbo].[Users](id)
+     * );
+     */
+
 
     /**
      * Post method for creating new thread
@@ -81,56 +107,56 @@ public class ThreadController {
      * @param tag the tag to be added to the system
      * @return the newly created tag or not exists, otherwise return existing tag
      */
-    @PostMapping("/tag/add")
-    public ThreadTag addNewTag(
-            @RequestBody ThreadTag tag
-    ) {
-        return threadTagService.createThreadTag(tag);
-    }
-
-    /**
-     * Get method for getting all the tags in the database
-     * @return a list of tags available in the system associated with thread
-     */
-    @GetMapping("/tag/getAll")
-    public List<ThreadTag> getAllTags() {
-       return threadTagService.getAllTags();
-    }
-
-    /**
-     * Get method for getting a single thread tag from the database
-     * @param tagId the id of the tag requested
-     * @return a single tag associated with the provided id
-     */
-    @GetMapping("/tag/get")
-    public ThreadTag getTag(
-            @RequestBody Long tagId
-    ) {
-       return threadTagService.getTag(tagId);
-    }
-
-    /**
-     * Put method for editing the existing thread tag
-     * @param tag the edit thread tag
-     */
-    @PutMapping("/tag/{tagId}/edit")
-    public void editTag(
-            @PathVariable Long tagId,
-            @RequestBody ThreadTag tag
-    ) {
-        threadTagService.editThreadTag(tagId, tag);
-    }
-
-    /**
-     * Delete method for removing thread tag
-     * @param tagId the id of thread tag to be removed
-     */
-    @DeleteMapping("/tag/{tagId}/remove")
-    public void removeTag(
-            @PathVariable Long tagId
-    ) {
-        threadTagService.removeThreadTag(tagId);
-    }
+//    @PostMapping("/tag/add")
+//    public ThreadTag addNewTag(
+//            @RequestBody ThreadTag tag
+//    ) {
+//        return threadTagService.createThreadTag(tag);
+//    }
+//
+//    /**
+//     * Get method for getting all the tags in the database
+//     * @return a list of tags available in the system associated with thread
+//     */
+//    @GetMapping("/tag/getAll")
+//    public List<ThreadTag> getAllTags() {
+//       return threadTagService.getAllTags();
+//    }
+//
+//    /**
+//     * Get method for getting a single thread tag from the database
+//     * @param tagId the id of the tag requested
+//     * @return a single tag associated with the provided id
+//     */
+//    @GetMapping("/tag/get")
+//    public ThreadTag getTag(
+//            @RequestBody Long tagId
+//    ) {
+//       return threadTagService.getTag(tagId);
+//    }
+//
+//    /**
+//     * Put method for editing the existing thread tag
+//     * @param tag the edit thread tag
+//     */
+//    @PutMapping("/tag/{tagId}/edit")
+//    public void editTag(
+//            @PathVariable Long tagId,
+//            @RequestBody ThreadTag tag
+//    ) {
+//        threadTagService.editThreadTag(tagId, tag);
+//    }
+//
+//    /**
+//     * Delete method for removing thread tag
+//     * @param tagId the id of thread tag to be removed
+//     */
+//    @DeleteMapping("/tag/{tagId}/remove")
+//    public void removeTag(
+//            @PathVariable Long tagId
+//    ) {
+//        threadTagService.removeThreadTag(tagId);
+//    }
 
     // Request methods for thread comment
 
