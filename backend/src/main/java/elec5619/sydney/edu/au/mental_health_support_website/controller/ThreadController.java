@@ -210,9 +210,91 @@ public class ThreadController {
     }
 
     // Request methods for thread comment
-    @GetMapping("/comment/getAll")
-    public List<ThreadComment> getAllComments() {
-        return threadCommentService.getAllComments();
+
+    /**
+     * Get method for acquiring all comments associated with a specific thread id
+     * @param threadId the thread id for the comments to be requested
+     * @return a list of comments associated with the thread id
+     */
+    @GetMapping("/comment/{threadId}/getAll")
+    public List<ThreadComment> getAllCommentsByThreadId(
+            @PathVariable Long threadId
+    ) {
+        return threadCommentService.getThreadComments(threadId);
+    }
+
+    /**
+     * a post method for creating a thread comment associated with a specific threac
+     * @param comment the comment to be created
+     * @return the newly created comment from the database
+     */
+    @PostMapping("/comment/create")
+    public ThreadComment createThreadComment(
+            @RequestBody ThreadComment comment
+    ) {
+       return threadCommentService.createThreadComment(comment);
+    }
+
+    /**
+     * a put method that allows eligible user to edit the thread comment
+     * @param commentId the requested comment id
+     * @param userId the user id requested for the edit
+     * @param newComment the changed or altered comment
+     * @return true if the operation is successful otherwise false
+     */
+    @PutMapping("/comment/{commentId}/edit")
+    public boolean editThreadComment(
+            @PathVariable Long commentId,
+            @RequestBody Long userId,
+            @RequestBody ThreadComment newComment
+    ) {
+        if (!isUserEligibleToModifyThreadComment(userId, commentId)) {
+           return false;
+        }
+        threadCommentService.editThreadComment(newComment);
+        return true;
+    }
+
+    /**
+     * a put method that allows eligible user to remove the thread comment
+     * @param commentId the requested comment id
+     * @param userId the user id requested for the edit
+     * @return true if the operation is successful otherwise false
+     */
+    @PutMapping("/comment/{commentId}/delete")
+    public boolean removeThreadComment(
+            @PathVariable Long commentId,
+            @RequestBody Long userId
+    ) {
+        if (!isUserEligibleToModifyThreadComment(userId, commentId)) {
+            return false;
+        }
+        threadCommentService.removeThreadComment(commentId);
+        return true;
+    }
+
+    /**
+     * used to check if the user are allowed to alter or delete a thread comment.
+     * Eligible users must be either an admin or the original creator of the comment
+     * @param userId the id of user requested for the changed
+     * @param commentId the id of thread comment to be changed
+     * @return true if the user is eligible, false otherwise
+     */
+    private boolean isUserEligibleToModifyThreadComment(Long userId, Long commentId) {
+        Users user = userRepository.findById(userId).orElse(null);
+        ThreadComment thrComment = threadCommentService.getThreadComment(commentId);
+        if (user == null || thrComment == null) {
+            // the user and thread has to exists
+            return false;
+        } else if (user.getUserType().equals("admin")) {
+            // the user is an admin, force delete
+            return true;
+        } else if (!thrComment.getUserId().equals(userId)) {
+            // if the user id is not the same as the author id, not allowed
+            return false;
+        }
+        // otherwise delete
+        return true;
     }
 
 

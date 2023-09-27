@@ -16,8 +16,8 @@ public class ThreadCommentService {
         return respository.save(threadComment);
     }
 
-    public void removeThreadComment(ThreadComment threadComment) {
-        respository.delete(threadComment);
+    public void removeThreadComment(Long commentId) {
+        respository.deleteById(commentId);
     }
 
     public void editThreadComment(ThreadComment threadComment) {
