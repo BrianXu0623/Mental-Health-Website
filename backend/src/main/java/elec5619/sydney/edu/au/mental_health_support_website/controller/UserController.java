@@ -4,11 +4,14 @@ import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
 import elec5619.sydney.edu.au.mental_health_support_website.service.UserService;
 import elec5619.sydney.edu.au.mental_health_support_website.util.EncryptionUtil;
 import elec5619.sydney.edu.au.mental_health_support_website.util.TokenUtil;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -16,6 +19,11 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @GetMapping("viewall")
+    public List<String> viewAllMapping() {
+        return Arrays.asList("Hello", "World");
+    }
 
     @GetMapping("testRegister1")
     public Users testRegister1() throws IOException, InterruptedException {
@@ -59,23 +67,38 @@ public class UserController {
     }
 
     @PostMapping("register")
-    public Users register(@RequestParam String email,
+    public String register(@RequestParam String email,
                          @RequestParam String username,
                          @RequestParam String password) throws IOException, InterruptedException {
+        if(Strings.isEmpty(email) || Strings.isEmpty(username) || Strings.isEmpty(password)) {
+            return ErrorsEnum.PARAMETER_ERROR.getErrorMessage();
+        }
+        if(! EncryptionUtil.validatePassword(password)) {
+            return ErrorsEnum.PASSWORD_FORMAT_ERROR.getErrorMessage();
+        }
         String encrypted = EncryptionUtil.encrypt(password);
         Users user = Users.builder().username(username).password(encrypted).
                 email(email).build();
         user.setToken(TokenUtil.generateToken(username));
-        return userService.registerUser(user);
+        if(userService.registerUser(user) != null) {
+            return user.getToken();
+        }
+        return ErrorsEnum.DATABASE_ERROR.getErrorMessage();
     }
 
     @PostMapping("login")
-    public Users login(
+    public String login(
             @RequestParam String email,
             @RequestParam String password) {
+        if(Strings.isEmpty(email) || Strings.isEmpty(password)) {
+            return ErrorsEnum.PARAMETER_ERROR.getErrorMessage();
+        }
         Users user = userService.loginUser(email, password);
+        if(user == null) {
+            return ErrorsEnum.PASSWORD_WRONG_ERROR.getErrorMessage();
+        }
         user.setToken(TokenUtil.generateToken(user.getUsername()));
-        return user;
+        return user.getToken();
     }
 
     @GetMapping("followers")
