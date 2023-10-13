@@ -16,7 +16,6 @@ public class AppThread {
     private Long id;
     private String title;
     private String content;
-    private String tags;
     private Long authorID;
     private Date timestamp;
 
