@@ -2,12 +2,10 @@ package elec5619.sydney.edu.au.mental_health_support_website;
 
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
 import elec5619.sydney.edu.au.mental_health_support_website.service.UserService;
-import elec5619.sydney.edu.au.mental_health_support_website.util.EncryptionUtil;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

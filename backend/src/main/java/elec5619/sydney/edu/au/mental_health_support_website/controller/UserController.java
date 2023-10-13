@@ -6,7 +6,6 @@ import elec5619.sydney.edu.au.mental_health_support_website.util.EncryptionUtil;
 import elec5619.sydney.edu.au.mental_health_support_website.util.TokenUtil;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
