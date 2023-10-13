@@ -1,0 +1,17 @@
+.detailed-information-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px; 
+}
+
+.detailed-information {
+    width: 70%; 
+    height: 80%; 
+    background-color: #f0f0f0; 
+    border: 1px solid #ccc; 
+    padding: 20px; 
+    overflow-y: auto; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+}
