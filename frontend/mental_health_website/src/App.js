@@ -13,15 +13,15 @@ import DetailedThread from "./pages/DetailedThread";
 import ProfilePage from "./pages/ProfilePage";
 import UserProfile from "./pages/UserProfile";
 import NewPost from "./pages/NewPost";
-
+import NewAppointment from "./pages/NewAppointment";
 
 export default function App() {
   return (
-    
+
     <BrowserRouter>
     <Navbar />
       <div>
-      
+
       <Routes>
           <Route path="/information" element={<Information />} />
           <Route path="/information/:id" element={<DetailedInformation />} />
@@ -35,8 +35,8 @@ export default function App() {
           <Route path="/" element={<Information />} />
           <Route path="*" element={<NoPage />} />
           <Route path="/newPost" element={<NewPost />} />
-        </Routes>
-        
+          <Route path="/bookappointment/:doctorId" element={<NewAppointment />} />
+      </Routes>
       </div>
     </BrowserRouter>
   );
