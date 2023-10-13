@@ -172,7 +172,7 @@ public class ThreadController {
      * @param tagId the id of the tag requested
      * @return a single tag associated with the provided id
      */
-    @GetMapping("/tag/get/{}")
+    @GetMapping("/tag/get/{tagId}")
     public ThreadTag getTag(
             @PathVariable Long tagId
     ) {
