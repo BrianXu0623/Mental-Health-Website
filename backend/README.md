@@ -57,7 +57,6 @@ The backend application are using 3 Controllers for handling endpoints for impor
 
 
 ---
-<head>
 <style> 
     body { 
         font-family: "Space Grotesk";
@@ -83,8 +82,6 @@ The backend application are using 3 Controllers for handling endpoints for impor
     }
 
 </style>
-    </head>
-
 ---
 [//]: # (table template)
 [//]: # (<table> )
