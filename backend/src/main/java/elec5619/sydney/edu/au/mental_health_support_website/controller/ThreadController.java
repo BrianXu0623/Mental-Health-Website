@@ -36,12 +36,11 @@ public class ThreadController {
         AppThread aThread = AppThread.builder().title(
                 "Body Dismorphic Disorder").content(
                 "\uD83D\uDD25 Body Dysmorphic Disorder (BDD) - is another mental health condition included in the Obsessive-Compulsive & Related disorders category. Individuals with this disorder tend to have excessive concern over a body part because they believe that the body part appears abnormal, defective or embarrassing in some way.")
-                .tags(
-                "anxiety,disorder,obsessive-compulsive")
                 .authorID(2L)
         .build();
         return threadService.createThread(aThread);
     }
+     
 
 
     /**
@@ -51,23 +50,16 @@ public class ThreadController {
      */
     @PostMapping("/create")
     public AppThread createThread(
-        @RequestBody AppThread thread
+        @RequestBody AppThread thread,
+        @RequestBody List<String> tagNames
     ) {
-        if (verifyTags(thread.getTags())) {
-            return null;
-        }
+        List<ThreadTag> tags = threadTagService.getTagByNames(tagNames);
         return threadService.createThread(thread);
     }
 
-    private boolean verifyTags(String tags) {
-        List<ThreadTag> allTags = threadTagService.getAllTags();
-        for (String tag : tags.split(",")) {
-            if (!allTags.contains(tag)) {
-                return false;
-            }
-        }
-        return true;
+    private void insertThreadTagRelationship(Long threadId, List<ThreadTag> tags) {
     }
+
 
     // Requesting materials for thread
 
@@ -106,9 +98,10 @@ public class ThreadController {
     public boolean editThread(
             @PathVariable Long threadId,
             @RequestBody Long userId,
-            @RequestBody AppThread thread
+            @RequestBody AppThread thread,
+            @RequestBody List<String> tagIds
     ) {
-        if (isUserEligibleToModifyThread(userId, threadId) && verifyTags(thread.getTags())) {
+        if (isUserEligibleToModifyThread(userId, threadId)) {
             threadService.editThread(thread);
            return true;
         }
@@ -199,10 +192,10 @@ public class ThreadController {
     }
 
     /**
-     * Delete method for removing thread tag
+     * Put method for removing thread tag
      * @param tagId the id of thread tag to be removed
      */
-    @DeleteMapping("/tag/{tagId}/remove")
+    @PutMapping("/tag/{tagId}/remove")
     public void removeTag(
             @PathVariable Long tagId
     ) {
@@ -224,7 +217,7 @@ public class ThreadController {
     }
 
     /**
-     * a post method for creating a thread comment associated with a specific threac
+     * a post method for creating a thread comment associated with a specific thread
      * @param comment the comment to be created
      * @return the newly created comment from the database
      */

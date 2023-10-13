@@ -13,6 +13,7 @@ public class ThreadTagService {
     @Autowired
     private ThreadTagRepository repository;
 
+
     public ThreadTag createThreadTag(ThreadTag tag) {
         ThreadTag result = repository.findById(tag.getId()).orElse(null);
         if (result == null) {
@@ -25,7 +26,11 @@ public class ThreadTagService {
         return repository.findAll();
     }
 
-    public ThreadTag getTag(Long tagId) {
+    public List<ThreadTag> getTagByNames(List<String> tagNames) {
+        return repository.findAllByNames(tagNames);
+    }
+
+     public ThreadTag getTag(Long tagId) {
         return repository.findById(tagId).orElse(null);
     }
 
