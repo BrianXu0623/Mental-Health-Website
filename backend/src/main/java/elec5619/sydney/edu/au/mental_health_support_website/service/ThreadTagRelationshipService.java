@@ -1,7 +1,6 @@
 package elec5619.sydney.edu.au.mental_health_support_website.service;
 
 
-import elec5619.sydney.edu.au.mental_health_support_website.db.entities.ThreadTag;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.ThreadTagRelationship;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.ThreadTagRelationshipRepository;
 import jakarta.annotation.Resource;

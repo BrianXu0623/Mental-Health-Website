@@ -1,12 +1,14 @@
 package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
-import elec5619.sydney.edu.au.mental_health_support_website.db.entities.AppThread;
-import elec5619.sydney.edu.au.mental_health_support_website.db.entities.ThreadComment;
-import elec5619.sydney.edu.au.mental_health_support_website.db.entities.ThreadTag;
-import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import elec5619.sydney.edu.au.mental_health_support_website.db.entities.*;
+import elec5619.sydney.edu.au.mental_health_support_website.db.repository.ThreadTagRelationshipRepository;
+import elec5619.sydney.edu.au.mental_health_support_website.db.repository.ThreadTagRepository;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
 import elec5619.sydney.edu.au.mental_health_support_website.service.AppThreadService;
 import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadCommentService;
+import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadTagRelationshipService;
 import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadTagService;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +29,15 @@ public class ThreadController {
     @Autowired
     private ThreadTagService threadTagService;
 
+    @Autowired
+    private ThreadTagRelationshipService threadTagRelationshipService;
+
     @Resource
     private UserRepository userRepository;
 
     // For testing purposes
     @GetMapping("/test-create")
-    public AppThread testCreate() {
+    public AppThread testCreate() throws JsonProcessingException {
         AppThread aThread = AppThread.builder().title(
                 "Body Dismorphic Disorder").content(
                 "\uD83D\uDD25 Body Dysmorphic Disorder (BDD) - is another mental health condition included in the Obsessive-Compulsive & Related disorders category. Individuals with this disorder tend to have excessive concern over a body part because they believe that the body part appears abnormal, defective or embarrassing in some way.")
@@ -54,12 +59,19 @@ public class ThreadController {
         @RequestBody List<String> tagNames
     ) {
         List<ThreadTag> tags = threadTagService.getTagByNames(tagNames);
+        insertThreadTagRelationship(thread, tags);
         return threadService.createThread(thread);
     }
 
-    private void insertThreadTagRelationship(Long threadId, List<ThreadTag> tags) {
-    }
+    private void insertThreadTagRelationship(AppThread thr , List<ThreadTag> tags) {
+        for (ThreadTag tag : tags) {
+            ThreadTagRelationship obj = ThreadTagRelationship.builder()
+                                                            .threadId(thr.getId())
+                                                            .tagId(tag.getId()).build();
 
+            threadTagRelationshipService.insertThreadTagRelationship(obj);
+        }
+    }
 
     // Requesting materials for thread
 
@@ -75,6 +87,14 @@ public class ThreadController {
         return threadService.getThread(threadId);
     }
 
+    @GetMapping("/get/tag/id/{threadId}")
+    public List<ThreadTag> getThreadTags(
+            @PathVariable Long threadId
+    ) {
+        List<Long> tagIds = threadTagRelationshipService.getTags(threadId);
+        return threadTagService.findAllByIdIn(tagIds);
+    }
+
     /**
      * Get method for getting a list of threads provided by their ids
      * @param threadIds a list of thread ids requested
@@ -86,6 +106,7 @@ public class ThreadController {
     ) {
         return threadService.getThreads(threadIds);
     }
+
 
     /**
      * Put method for requesting a change in thread content, this ranging from
@@ -153,8 +174,7 @@ public class ThreadController {
     public ThreadTag addNewTag(
             @RequestBody ThreadTag tag
     ) {
-        ThreadTag newTag = threadTagService.createThreadTag(tag);
-        return newTag;
+        return threadTagService.createThreadTag(tag);
     }
 
     /**

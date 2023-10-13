@@ -26,6 +26,10 @@ public class ThreadTagService {
         return repository.findAll();
     }
 
+    public List<ThreadTag> findAllByIdIn(List<Long> ids) {
+        return repository.findAllByIdIn(ids);
+    }
+
     public List<ThreadTag> getTagByNames(List<String> tagNames) {
         return repository.findByNameIn(tagNames);
     }
