@@ -30,6 +30,9 @@ public class UserService {
         } catch (IOException | InterruptedException e) {
             return null;
         }
+        if(user == null) {
+            return null;
+        }
         if(user.getPassword().equals(password)) {
             return user;
         }
