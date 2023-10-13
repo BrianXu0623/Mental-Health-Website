@@ -1,0 +1,49 @@
+.newPostForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: auto;
+    margin-top: 20px;
+    margin-left: 20px; /* 向右偏移 20px */
+}
+
+/* 其他样式... */
+
+#title {
+    width: 200px;
+    height: 40px;
+    padding: 10px;
+    margin: 5px 0 5px 0; /* 左边不再偏移 */
+    resize: none;
+}
+
+.create-post-container {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+#text {
+    width: 700px;
+    min-height: 500px;
+    padding: 10px;
+    margin: 5px 0 5px 0; /* 左边不再偏移 */
+    resize: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-container button:first-child {
+    margin-right: 10px; /* 两个按钮之间的间隔 */
+    align-self: flex-end; /* 垂直底部对齐 */
+}
+
+/* 添加高度和对齐方式以使按钮与文本框对齐 */
+.button-container textarea {
+    height: 38px; /* 调整这个值以匹配按钮的高度 */
+    align-self: flex-end;
+}

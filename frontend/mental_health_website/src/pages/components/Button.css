@@ -1,0 +1,23 @@
+.circle-button {
+    width: 50px; /* Adjust the width as needed to make it a circle */
+    height: 50px; /* Same value as width to make it a circle */
+    background-color: #007bff; /* Change the background color as desired */
+    color: #fff; /* Text color */
+    border: none; /* No border */
+    border-radius: 50%; /* Make it a circle */
+    font-size: 24px; /* Adjust the font size */
+    text-align: center;
+    line-height: 50px; /* Center the text vertically */
+    cursor: pointer;
+}
+
+.circle-button:hover {
+    background-color: #0056b3; /* Change the background color on hover */
+}
+
+.bottom-right-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000; /* Ensure the button is above other elements */
+}

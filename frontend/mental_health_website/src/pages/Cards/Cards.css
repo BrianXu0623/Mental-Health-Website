@@ -76,4 +76,44 @@
     text-decoration: underline;
     cursor: pointer;
   }
+
+.forum-card {
+    border: 1px solid #e0e0e0;
+    background-color: #fff;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.forum-card-item {
+    list-style: none;
+    padding: 0;
+}
+
+.forum-card-link {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.forum-card-left {
+    flex: 3;
+    padding-right: 20px;
+}
+
+.forum-card-title h3 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.forum-card-text {
+    font-size: 14px;
+}
+
+.forum-card-right {
+    flex: 1;
+    text-align: right;
+}
   

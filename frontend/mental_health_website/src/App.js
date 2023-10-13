@@ -12,6 +12,7 @@ import DetailedInformation from "./pages/DetailedInformation";
 import DetailedThread from "./pages/DetailedThread";
 import ProfilePage from "./pages/ProfilePage";
 import UserProfile from "./pages/UserProfile";
+import NewPost from "./pages/NewPost";
 
 
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Information />} />
           <Route path="*" element={<NoPage />} />
+          <Route path="/newPost" element={<NewPost />} />
         </Routes>
         
       </div>
