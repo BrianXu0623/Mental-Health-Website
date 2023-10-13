@@ -60,22 +60,11 @@ public class UserController {
         return userService.loginUser("testEmail@gmail.com", "testPassword");
     }
 
-    // ---- Actual Mappings
-
-
-
     @PostMapping("register")
-<<<<<<< HEAD
     public String register(@RequestBody String email,
                          @RequestBody String username,
                          @RequestBody String password) throws IOException, InterruptedException {
         if(Strings.isEmpty(email) || Strings.isEmpty(username) || Strings.isEmpty(password)) {
-=======
-    public String register(@RequestParam String email,
-                         @RequestParam String username,
-                         @RequestParam String password) throws IOException, InterruptedException {
-        if (Strings.isEmpty(email) || Strings.isEmpty(username) || Strings.isEmpty(password)) {
->>>>>>> readme_add
             return ErrorsEnum.PARAMETER_ERROR.getErrorMessage();
         }
 
