@@ -189,6 +189,32 @@ public class AppController {
 
 
     // Appointment Management
+    @PostMapping("new_appointment")
+    public void makeAppointment(
+            @RequestBody int userId,
+            @RequestBody int professionalID,
+            @RequestBody String symptomDescription,
+            @RequestBody String appointmentDateTime
+    ) {
+
+    }
+
+    @PutMapping("cancel_appointment")
+    public void completeAppointment(
+            @RequestBody Integer professionalId,
+            @RequestBody Integer appointmentId,
+            @RequestBody String reason
+    ) {
+
+    }
+
+    @PutMapping("complete_appointment")
+    public void cancelAppointment(
+            @RequestBody Integer userId,
+            @RequestBody Integer appointmentId
+    ) {
+
+    }
 
     // User Feedback on Professional
 
