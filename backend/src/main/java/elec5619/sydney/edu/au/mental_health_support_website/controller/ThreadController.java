@@ -68,9 +68,9 @@ public class ThreadController {
      * @param threadId the id of the thread requested
      * @return the thread object associated with the requested id otherwise null
      */
-    @GetMapping("/get/id")
+    @GetMapping("/get/id/{threadId}")
     public AppThread getThread(
-            @RequestBody Long threadId
+            @PathVariable Long threadId
     ) {
         return threadService.getThread(threadId);
     }
@@ -171,9 +171,9 @@ public class ThreadController {
      * @param tagId the id of the tag requested
      * @return a single tag associated with the provided id
      */
-    @GetMapping("/tag/get")
+    @GetMapping("/tag/get/{tagId}")
     public ThreadTag getTag(
-            @RequestBody Long tagId
+            @PathVariable Long tagId
     ) {
        return threadTagService.getTag(tagId);
     }
