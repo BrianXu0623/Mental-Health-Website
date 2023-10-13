@@ -49,13 +49,6 @@ class MentalHealthSupportWebsiteApplicationTests {
     }
 
     @Test
-    void testPasswordEncryption() throws IOException, InterruptedException {
-        String encrypted = EncryptionUtil.encrypt("abcd1234");
-        System.out.println(encrypted);
-        assertEquals(encrypted, "");
-    }
-
-    @Test
     void testFollow() {
         boolean ifSuccess = userService.follow("testRegister1", "testRegister2");
         assertTrue(ifSuccess);
