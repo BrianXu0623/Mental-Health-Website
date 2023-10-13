@@ -199,10 +199,10 @@ public class ThreadController {
     }
 
     /**
-     * Delete method for removing thread tag
+     * Put method for removing thread tag
      * @param tagId the id of thread tag to be removed
      */
-    @DeleteMapping("/tag/{tagId}/remove")
+    @PutMapping("/tag/{tagId}/remove")
     public void removeTag(
             @PathVariable Long tagId
     ) {
@@ -224,7 +224,7 @@ public class ThreadController {
     }
 
     /**
-     * a post method for creating a thread comment associated with a specific threac
+     * a post method for creating a thread comment associated with a specific thread
      * @param comment the comment to be created
      * @return the newly created comment from the database
      */
