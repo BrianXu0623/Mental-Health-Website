@@ -2,6 +2,7 @@ package elec5619.sydney.edu.au.mental_health_support_website;
 
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
 import elec5619.sydney.edu.au.mental_health_support_website.service.UserService;
+import elec5619.sydney.edu.au.mental_health_support_website.util.EncryptionUtil;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -59,5 +60,16 @@ class MentalHealthSupportWebsiteApplicationTests {
             }
         }
         assertTrue(ifContains);
+    }
+
+    @Test
+    void testValidatePasswordFail() {
+        boolean isValidate = EncryptionUtil.validatePassword("123456");
+        assertFalse(isValidate);
+    }
+    @Test
+    void testValidatePasswordSuccess() {
+        boolean isValidate = EncryptionUtil.validatePassword("Xxx.1234.xxx");
+        assertTrue(isValidate);
     }
 }
