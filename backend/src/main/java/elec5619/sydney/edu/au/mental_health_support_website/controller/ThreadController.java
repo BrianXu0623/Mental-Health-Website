@@ -36,8 +36,6 @@ public class ThreadController {
         AppThread aThread = AppThread.builder().title(
                 "Body Dismorphic Disorder").content(
                 "\uD83D\uDD25 Body Dysmorphic Disorder (BDD) - is another mental health condition included in the Obsessive-Compulsive & Related disorders category. Individuals with this disorder tend to have excessive concern over a body part because they believe that the body part appears abnormal, defective or embarrassing in some way.")
-                .tags(
-                "anxiety,disorder,obsessive-compulsive")
                 .authorID(2L)
         .build();
         return threadService.createThread(aThread);
@@ -52,23 +50,17 @@ public class ThreadController {
      */
     @PostMapping("/create")
     public AppThread createThread(
-        @RequestBody AppThread thread
+        @RequestBody AppThread thread,
+        @RequestBody List<String> tagNames
     ) {
-        if (verifyTags(thread.getTags())) {
-            return null;
-        }
+        List<ThreadTag> tags = threadTagService.getTagByNames(tagNames);
         return threadService.createThread(thread);
     }
 
-    private boolean verifyTags(String tags) {
-        List<ThreadTag> allTags = threadTagService.getAllTags();
-        for (String tag : tags.split(",")) {
-            if (!allTags.contains(tag)) {
-                return false;
-            }
-        }
-        return true;
+    private void insertThreadTagRelationship(Long threadId, List<ThreadTag> tags) {
+        j
     }
+
 
     // Requesting materials for thread
 
