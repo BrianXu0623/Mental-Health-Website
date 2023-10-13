@@ -20,7 +20,10 @@ public class UserService {
 
     public Users registerUser(Users user) {
         // Add logic to validate and save the user
-        return userRepository.save(user);
+        Users ret = userRepository.save(user);
+        ret.setPassword("");
+        ret.setToken("");
+        return ret;
     }
 
     public Users loginUser(String email, String password) {
@@ -52,7 +55,12 @@ public class UserService {
             longArray[i] = Long.parseLong(array[i]);
         }
         List<Long> list = Arrays.asList(longArray);
-        return userRepository.findAllByIdIn(list);
+        List<Users> users = userRepository.findAllByIdIn(list);
+        for(Users cur : users) {
+            cur.setPassword("");
+            cur.setToken("");
+        }
+        return users;
     }
 
     public List<Users> getFollowed(String username) {
@@ -68,7 +76,12 @@ public class UserService {
             longArray[i] = Long.parseLong(array[i]);
         }
         List<Long> list = Arrays.asList(longArray);
-        return userRepository.findAllByIdIn(list);
+        List<Users> users = userRepository.findAllByIdIn(list);
+        for(Users cur : users) {
+            cur.setPassword("");
+            cur.setToken("");
+        }
+        return users;
     }
 
     public boolean follow(String fromUsername, String toUsername) {
@@ -121,7 +134,10 @@ public class UserService {
         if(StringUtils.isNotBlank(birthday)) {
             user.setBirthday(LocalDate.parse(birthday));
         }
-        return userRepository.save(user);
+        Users ret = userRepository.save(user);
+        ret.setPassword("");
+        ret.setToken("");
+        return ret;
     }
 
     public boolean updatePassword(String userName, String oldPassword, String newPassword) throws IOException, InterruptedException {
@@ -141,6 +157,9 @@ public class UserService {
     }
 
     public Users getUserByUsername(String userName) {
-        return userRepository.findByUsername(userName);
+        Users user = userRepository.findByUsername(userName);
+        user.setPassword("");
+        user.setToken("");
+        return user;
     }
 }
