@@ -7,5 +7,5 @@ import java.util.List;
 
 
 public interface ThreadTagRepository extends JpaRepository<ThreadTag, Long> {
-    List<ThreadTag> findAllByNames(List<String> tagNames);
+    List<ThreadTag> findAllByName(String tagName);
 }
