@@ -20,11 +20,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("viewall")
-    public List<String> viewAllMapping() {
-        return Arrays.asList("Hello", "World");
-    }
-
     @GetMapping("testRegister1")
     public Users testRegister1() throws IOException, InterruptedException {
         String testPassword = "testPassword1";
@@ -66,13 +61,17 @@ public class UserController {
         return userService.loginUser("testEmail@gmail.com", "testPassword");
     }
 
+    // ---- Actual Mappings
+
+
+
     @PostMapping("register")
     public String register(@RequestParam String email,
                          @RequestParam String username,
                          @RequestParam String password) throws IOException, InterruptedException {
         if(Strings.isEmpty(email) || Strings.isEmpty(username) || Strings.isEmpty(password)) {
             return ErrorsEnum.PARAMETER_ERROR.getErrorMessage();
-        }
+        
         if(! EncryptionUtil.validatePassword(password)) {
             return ErrorsEnum.PASSWORD_FORMAT_ERROR.getErrorMessage();
         }
