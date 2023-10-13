@@ -69,9 +69,9 @@ public class ThreadController {
      * @param threadId the id of the thread requested
      * @return the thread object associated with the requested id otherwise null
      */
-    @GetMapping("/get/id")
+    @GetMapping("/get/id/{threadId}")
     public AppThread getThread(
-            @RequestBody Long threadId
+            @PathVariable Long threadId
     ) {
         return threadService.getThread(threadId);
     }
