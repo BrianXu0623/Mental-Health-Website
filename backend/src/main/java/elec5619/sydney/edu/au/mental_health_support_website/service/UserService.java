@@ -87,6 +87,9 @@ public class UserService {
     public boolean follow(String fromUsername, String toUsername) {
         Users fromUser = userRepository.findByUsername(fromUsername);
         Users toUser = userRepository.findByUsername(toUsername);
+        if(fromUser == null || toUser == null) {
+            return false;
+        }
         if(fromUser.getFollowedIds() == null) {
             fromUser.setFollowedIds("");
         }

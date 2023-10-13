@@ -20,9 +20,7 @@ public class EncryptionUtil {
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         JSONObject jsonObject = new JSONObject(response.body());
-        Map<String, Object> map = jsonObject.toMap();
-        String encrypted = (String) map.get("encrypted_string");
-        return encrypted;
+        return jsonObject.getString("encrypted_string");
     }
 
     /**
