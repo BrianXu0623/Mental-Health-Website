@@ -19,46 +19,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("testRegister1")
-    public Users testRegister1() throws IOException, InterruptedException {
-        String testPassword = "testPassword1";
-        String encrypted = EncryptionUtil.encrypt(testPassword);
-        Users user = Users.builder().username("testUserName1").password(encrypted).
-                email("testEmail1@gmail.com").build();
-        return userService.registerUser(user);
-    }
-
-    @GetMapping("testRegister2")
-    public Users testRegister2() throws IOException, InterruptedException {
-        String testPassword = "testPassword2";
-        String encrypted = EncryptionUtil.encrypt(testPassword);
-        Users user = Users.builder().username("testUserName2").password(encrypted).
-                email("testEmail2@gmail.com").build();
-        return userService.registerUser(user);
-    }
-
-    @GetMapping("testRegisterAdmin")
-    public Users testRegisterAdmin() throws IOException, InterruptedException {
-        String testPassword = "testPasswordAdmin";
-        String encrypted = EncryptionUtil.encrypt(testPassword);
-        Users user = Users.builder().username("testUserNameAdmin").password(encrypted).
-                email("testEmailAdmin@gmail.com").userType("admin").build();
-        return userService.registerUser(user);
-    }
-
-    @GetMapping("testRegisterProf")
-    public Users testRegisterProf() throws IOException, InterruptedException {
-        String testPassword = "testPasswordProf";
-        String encrypted = EncryptionUtil.encrypt(testPassword);
-        Users user = Users.builder().username("testUserNameProf").password(encrypted).
-                email("testEmailProf@gmail.com").userType("professional").build();
-        return userService.registerUser(user);
-    }
-
-    @GetMapping("testLogin")
-    public Users testLogin() {
-        return userService.loginUser("testEmail@gmail.com", "testPassword");
-    }
 
     @PostMapping("register")
     public String register(@RequestBody String email,
@@ -155,4 +115,48 @@ public class UserController {
     private Users searchUser(@RequestBody String userName) {
         return userService.getUserByUsername(userName);
     }
+
+
+    // Testing Endpoints
+    @GetMapping("testRegister1")
+    public Users testRegister1() throws IOException, InterruptedException {
+        String testPassword = "testPassword1";
+        String encrypted = EncryptionUtil.encrypt(testPassword);
+        Users user = Users.builder().username("testUserName1").password(encrypted).
+                email("testEmail1@gmail.com").build();
+        return userService.registerUser(user);
+    }
+
+    @GetMapping("testRegister2")
+    public Users testRegister2() throws IOException, InterruptedException {
+        String testPassword = "testPassword2";
+        String encrypted = EncryptionUtil.encrypt(testPassword);
+        Users user = Users.builder().username("testUserName2").password(encrypted).
+                email("testEmail2@gmail.com").build();
+        return userService.registerUser(user);
+    }
+
+    @GetMapping("testRegisterAdmin")
+    public Users testRegisterAdmin() throws IOException, InterruptedException {
+        String testPassword = "testPasswordAdmin";
+        String encrypted = EncryptionUtil.encrypt(testPassword);
+        Users user = Users.builder().username("testUserNameAdmin").password(encrypted).
+                email("testEmailAdmin@gmail.com").userType("admin").build();
+        return userService.registerUser(user);
+    }
+
+    @GetMapping("testRegisterProf")
+    public Users testRegisterProf() throws IOException, InterruptedException {
+        String testPassword = "testPasswordProf";
+        String encrypted = EncryptionUtil.encrypt(testPassword);
+        Users user = Users.builder().username("testUserNameProf").password(encrypted).
+                email("testEmailProf@gmail.com").userType("professional").build();
+        return userService.registerUser(user);
+    }
+
+    @GetMapping("testLogin")
+    public Users testLogin() {
+        return userService.loginUser("testEmail@gmail.com", "testPassword");
+    }
 }
+
