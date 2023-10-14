@@ -16,11 +16,23 @@ public class ThreadTagRelationshipService {
     public void insertThreadTagRelationship(ThreadTagRelationship obj) {
         repository.save(obj);
     }
-    public List<Long> getTags(Long threadId) {
+    public List<ThreadTagRelationship> getTags(Long threadId) {
         return repository.findAllByThreadId(threadId);
     }
 
-    public List<Long> getThread(Long tagId) {
+    public void removeThreadTagRelationship(ThreadTagRelationship obj) {
+        repository.delete(obj);
+    }
+
+    public void deleteByThreadId(Long threadId) {
+        repository.deleteByThreadId(threadId);
+    }
+
+    public ThreadTagRelationship findByThreadIdAndTagId(Long threadId, Long tagId) {
+        return repository.findByThreadIdAndTagId(threadId, tagId);
+    }
+
+    public List<ThreadTagRelationship> getThread(Long tagId) {
         return repository.findAllByTagId(tagId);
     }
 

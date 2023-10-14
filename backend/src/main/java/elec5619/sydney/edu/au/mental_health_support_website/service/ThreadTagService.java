@@ -30,6 +30,10 @@ public class ThreadTagService {
         return repository.findAllByIdIn(ids);
     }
 
+    public ThreadTag getTagByName(String name) {
+        return repository.findOneByName(name);
+    }
+
     public List<ThreadTag> getTagByNames(List<String> tagNames) {
         return repository.findByNameIn(tagNames);
     }
