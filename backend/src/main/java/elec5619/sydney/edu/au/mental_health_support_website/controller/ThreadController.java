@@ -1,17 +1,20 @@
 package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
-import elec5619.sydney.edu.au.mental_health_support_website.db.entities.AppThread;
-import elec5619.sydney.edu.au.mental_health_support_website.db.entities.ThreadComment;
-import elec5619.sydney.edu.au.mental_health_support_website.db.entities.ThreadTag;
-import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import elec5619.sydney.edu.au.mental_health_support_website.db.entities.*;
+import elec5619.sydney.edu.au.mental_health_support_website.db.repository.ThreadTagRelationshipRepository;
+import elec5619.sydney.edu.au.mental_health_support_website.db.repository.ThreadTagRepository;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
 import elec5619.sydney.edu.au.mental_health_support_website.service.AppThreadService;
 import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadCommentService;
+import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadTagRelationshipService;
 import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadTagService;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,12 +30,15 @@ public class ThreadController {
     @Autowired
     private ThreadTagService threadTagService;
 
+    @Autowired
+    private ThreadTagRelationshipService threadTagRelationshipService;
+
     @Resource
     private UserRepository userRepository;
 
     // For testing purposes
     @GetMapping("/test-create")
-    public AppThread testCreate() {
+    public AppThread testCreate() throws JsonProcessingException {
         AppThread aThread = AppThread.builder().title(
                 "Body Dismorphic Disorder").content(
                 "\uD83D\uDD25 Body Dysmorphic Disorder (BDD) - is another mental health condition included in the Obsessive-Compulsive & Related disorders category. Individuals with this disorder tend to have excessive concern over a body part because they believe that the body part appears abnormal, defective or embarrassing in some way.")
@@ -54,13 +60,24 @@ public class ThreadController {
         @RequestBody List<String> tagNames
     ) {
         List<ThreadTag> tags = threadTagService.getTagByNames(tagNames);
+        insertThreadTagRelationship(thread, tags);
         return threadService.createThread(thread);
     }
 
-    private void insertThreadTagRelationship(Long threadId, List<ThreadTag> tags) {
+    /**
+     * Inserting (threadId, tagId) into ThreadTagRelationship table to keep track of what tags are linked to what threads
+     * @param thr the thread object
+     * @param tags a list of tags
+     */
+    private void insertThreadTagRelationship(AppThread thr , List<ThreadTag> tags) {
+        for (ThreadTag tag : tags) {
+            ThreadTagRelationship obj = ThreadTagRelationship.builder()
+                                                            .threadId(thr.getId())
+                                                            .tagId(tag.getId()).build();
 
+            threadTagRelationshipService.insertThreadTagRelationship(obj);
+        }
     }
-
 
     // Requesting materials for thread
 
@@ -77,6 +94,28 @@ public class ThreadController {
     }
 
     /**
+     * Get method for getting a list of tags associated with a thread id
+     * @param threadId the requested thread id
+     * @return a list of threads if exists, otherwise an empty list
+     */
+    @GetMapping("/get/tag/id/{threadId}")
+    public List<ThreadTag> getThreadTags(
+            @PathVariable Long threadId
+    ) {
+        List<ThreadTagRelationship> tagIds = threadTagRelationshipService.getTags(threadId);
+        return threadTagService.findAllByIdIn(getTagIdFromTagRelationship(tagIds));
+    }
+
+    private List<Long> getTagIdFromTagRelationship(List<ThreadTagRelationship> lst) {
+        List<Long> ids = new ArrayList<>();
+        for (ThreadTagRelationship obj : lst)  {
+            ids.add(obj.getTagId());
+        }
+        return ids;
+    }
+
+
+    /**
      * Get method for getting a list of threads provided by their ids
      * @param threadIds a list of thread ids requested
      * @return a list of thread objects associated with their ids, otherwise an empty list
@@ -87,6 +126,7 @@ public class ThreadController {
     ) {
         return threadService.getThreads(threadIds);
     }
+
 
     /**
      * Put method for requesting a change in thread content, this ranging from
@@ -99,13 +139,98 @@ public class ThreadController {
     public boolean editThread(
             @PathVariable Long threadId,
             @RequestBody Long userId,
-            @RequestBody AppThread thread
+            @RequestBody AppThread thread,
+            @RequestBody List<String> tagNames
     ) {
         if (isUserEligibleToModifyThread(userId, threadId) ) {
             threadService.editThread(thread);
+            updateThreadTagRelationship(threadId, tagNames);
            return true;
         }
         return false;
+    }
+
+    /**
+     * method used to update all related information to thread, it also add & remove any relevant tags from the requested
+     * thread
+     * @param threadId the id of the thread to be updated
+     * @param tagNames a list of tag names to be updated
+     */
+    private void updateThreadTagRelationship(Long threadId, List<String> tagNames) {
+        // This would give out a list of existing tags
+        List<ThreadTagRelationship> tagIds = threadTagRelationshipService.getTags(threadId);
+
+        // Gathering a list of existing tags
+        List<ThreadTag> currentTags = new ArrayList<>();
+        for (ThreadTagRelationship tag : tagIds )
+            currentTags.add(getTag(tag.getTagId()));
+
+        this.addNewTagsToThread(threadId, currentTags, tagNames);
+        this.removeTagsFromThread(threadId, currentTags, tagNames);
+    }
+
+    /**
+     * method used to add a relationship between a thread and a list of tags id
+     * @param threadId the id the thread requested
+     * @param currentTags the current list of tags that the thread has
+     * @param tagNames  a list of tag names associated with the requested thread to be updated
+     */
+    private void addNewTagsToThread(Long threadId, List<ThreadTag> currentTags, List<String> tagNames) {
+        List<ThreadTag> tagsToAdd = new ArrayList<>();
+        // Filling out all the tag to adds
+        for (String name : tagNames) {
+            boolean nameFound = false;
+            for (ThreadTag tag : currentTags) {
+                if (tag.getName().equals(name)) {
+                    nameFound = true;
+                    break;
+                }
+            }
+
+            if (!nameFound) {
+                ThreadTag tmpTag = threadTagService.getTagByName(name);
+                if (tmpTag != null) {
+                    tagsToAdd.add(tmpTag);
+                }
+            }
+        }
+        for (ThreadTag tag : tagsToAdd) {
+            threadTagRelationshipService.insertThreadTagRelationship(
+                    ThreadTagRelationship.builder().threadId(threadId).tagId(tag.getId()).build()
+            );
+        }
+    }
+
+    /**
+     * method used to remove a relationship between a thread and a list of tags id
+     * @param threadId the id the thread requested
+     * @param currentTags the current list of tags that the thread has
+     * @param tagNames  a list of tag names associated with the requested thread to be updated
+     */
+    private void removeTagsFromThread(Long threadId, List<ThreadTag> currentTags, List<String> tagNames) {
+        List<ThreadTag> tagsToRemove = new ArrayList<>();
+
+        // Filling out all the tags to remove
+        for (ThreadTag tag : currentTags) {
+            boolean tagFound = false;
+            for (String name : tagNames) {
+                if (tag.getName().equals(name)) {
+                    tagFound = true;
+                    break;
+                }
+            }
+
+            if (!tagFound) {
+                tagsToRemove.add(tag);
+            }
+        }
+
+        // Find all the ThreadTagRelationship objects to be removed
+        for (ThreadTag tag : tagsToRemove) {
+            ThreadTagRelationship obj = threadTagRelationshipService.findByThreadIdAndTagId(threadId, tag.getId());
+            if (obj != null)
+                threadTagRelationshipService.removeThreadTagRelationship(obj);
+        }
     }
 
     /**
@@ -114,18 +239,26 @@ public class ThreadController {
      * @param threadId the id of the thread requested to be deleted
      * @param userId the user id who requested the thread to be deleted
      */
-    @PutMapping("/delete/{threadId}")
+    @DeleteMapping("/delete/{threadId}")
     public boolean removeThread(
             @PathVariable Long threadId,
             @RequestBody Long userId
     ) {
         if (isUserEligibleToModifyThread(userId, threadId)) {
             threadService.removeThread(threadId);
+            threadTagRelationshipService.deleteByThreadId(threadId);
             return true;
         }
         return false;
     }
 
+    /**
+     * method used to check if the user can edit or remove thread
+     * an eligible users are those either created the thread or has the admin user_type
+     * @param userId the id of the user
+     * @param threadId the id of the thread to be modified
+     * @return TRUE if the user meets the requirement otherwise FALSE
+     */
     private boolean isUserEligibleToModifyThread(Long userId, Long threadId) {
         Users user = userRepository.findById(userId).orElse(null);
         AppThread thr = threadService.getThread(threadId);
@@ -154,8 +287,7 @@ public class ThreadController {
     public ThreadTag addNewTag(
             @RequestBody ThreadTag tag
     ) {
-        ThreadTag newTag = threadTagService.createThreadTag(tag);
-        return newTag;
+        return threadTagService.createThreadTag(tag);
     }
 
     /**
@@ -195,7 +327,7 @@ public class ThreadController {
      * Put method for removing thread tag
      * @param tagId the id of thread tag to be removed
      */
-    @PutMapping("/tag/{tagId}/remove")
+    @DeleteMapping("/tag/{tagId}/remove")
     public void removeTag(
             @PathVariable Long tagId
     ) {
@@ -254,7 +386,7 @@ public class ThreadController {
      * @param userId the user id requested for the edit
      * @return true if the operation is successful otherwise false
      */
-    @PutMapping("/comment/{commentId}/delete")
+    @DeleteMapping("/comment/{commentId}/delete")
     public boolean removeThreadComment(
             @PathVariable Long commentId,
             @RequestBody Long userId
