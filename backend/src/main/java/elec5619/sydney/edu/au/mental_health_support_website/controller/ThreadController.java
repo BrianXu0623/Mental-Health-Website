@@ -1,15 +1,10 @@
 package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.*;
-import elec5619.sydney.edu.au.mental_health_support_website.db.repository.ThreadTagRelationshipRepository;
-import elec5619.sydney.edu.au.mental_health_support_website.db.repository.ThreadTagRepository;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
-import elec5619.sydney.edu.au.mental_health_support_website.service.AppThreadService;
-import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadCommentService;
-import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadTagRelationshipService;
-import elec5619.sydney.edu.au.mental_health_support_website.service.ThreadTagService;
+import elec5619.sydney.edu.au.mental_health_support_website.service.*;
+import elec5619.sydney.edu.au.mental_health_support_website.util.TokenUtil;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,25 +18,26 @@ import java.util.List;
 public class ThreadController {
     @Autowired
     private ThreadCommentService threadCommentService;
-
     @Autowired
     private AppThreadService threadService;
-
     @Autowired
     private ThreadTagService threadTagService;
-
     @Autowired
     private ThreadTagRelationshipService threadTagRelationshipService;
-
     @Resource
     private UserRepository userRepository;
+    @Autowired
+    private UserService userService;
 
     // For testing purposes
     @GetMapping("/test-create")
     public AppThread testCreate() throws JsonProcessingException {
         AppThread aThread = AppThread.builder().title(
                 "Body Dismorphic Disorder").content(
-                "\uD83D\uDD25 Body Dysmorphic Disorder (BDD) - is another mental health condition included in the Obsessive-Compulsive & Related disorders category. Individuals with this disorder tend to have excessive concern over a body part because they believe that the body part appears abnormal, defective or embarrassing in some way.")
+                "\uD83D\uDD25 Body Dysmorphic Disorder (BDD) - is another mental health condition included in " +
+                        "the Obsessive-Compulsive & Related disorders category. Individuals with this disorder " +
+                        "tend to have excessive concern over a body part because they believe that the body " +
+                        "part appears abnormal, defective or embarrassing in some way.")
                 .authorID(2L)
         .build();
         return threadService.createThread(aThread);
@@ -137,11 +133,13 @@ public class ThreadController {
     @PutMapping("/update/{threadId}")
     public boolean editThread(
             @PathVariable Long threadId,
-            @RequestBody Long userId,
+            @RequestHeader("token") String token,
             @RequestBody AppThread thread,
             @RequestBody List<String> tagNames
     ) {
-        if (isUserEligibleToModifyThread(userId, threadId) ) {
+        String userName = TokenUtil.getUsernameFromToken(token);
+        Users user = userService.getUserByUsername(userName);
+        if (user != null && isUserEligibleToModifyThread(user.getId(), threadId) ) {
             threadService.editThread(thread);
             updateThreadTagRelationship(threadId, tagNames);
            return true;
@@ -236,14 +234,16 @@ public class ThreadController {
      * Put method for removing a certain thread, only the user created the thread and the admin
      * can remove the thread
      * @param threadId the id of the thread requested to be deleted
-     * @param userId the user id who requested the thread to be deleted
+     * @param token the token of the user
      */
     @DeleteMapping("/delete/{threadId}")
     public boolean removeThread(
             @PathVariable Long threadId,
-            @RequestBody Long userId
+            @RequestHeader("token") String token
     ) {
-        if (isUserEligibleToModifyThread(userId, threadId)) {
+        String userName = TokenUtil.getUsernameFromToken(token);
+        Users user = userService.getUserByUsername(userName);
+        if (user != null && isUserEligibleToModifyThread(user.getId(), threadId)) {
             threadService.removeThread(threadId);
             threadTagRelationshipService.deleteByThreadId(threadId);
             return true;
@@ -362,17 +362,19 @@ public class ThreadController {
     /**
      * a put method that allows eligible user to edit the thread comment
      * @param commentId the requested comment id
-     * @param userId the user id requested for the edit
+     * @param token the token of the user
      * @param newComment the changed or altered comment
      * @return true if the operation is successful otherwise false
      */
     @PutMapping("/comment/{commentId}/edit")
     public boolean editThreadComment(
             @PathVariable Long commentId,
-            @RequestBody Long userId,
+            @RequestHeader("token") String token,
             @RequestBody ThreadComment newComment
     ) {
-        if (!isUserEligibleToModifyThreadComment(userId, commentId)) {
+        String userName = TokenUtil.getUsernameFromToken(token);
+        Users user = userService.getUserByUsername(userName);
+        if (user != null && !isUserEligibleToModifyThreadComment(user.getId(), commentId)) {
            return false;
         }
         threadCommentService.editThreadComment(newComment);
@@ -382,15 +384,17 @@ public class ThreadController {
     /**
      * a put method that allows eligible user to remove the thread comment
      * @param commentId the requested comment id
-     * @param userId the user id requested for the edit
+     * @param token the token of the user
      * @return true if the operation is successful otherwise false
      */
     @DeleteMapping("/comment/{commentId}/delete")
     public boolean removeThreadComment(
             @PathVariable Long commentId,
-            @RequestBody Long userId
+            @RequestHeader("token") String token
     ) {
-        if (!isUserEligibleToModifyThreadComment(userId, commentId)) {
+        String userName = TokenUtil.getUsernameFromToken(token);
+        Users user = userService.getUserByUsername(userName);
+        if (user != null && !isUserEligibleToModifyThreadComment(user.getId(), commentId)) {
             return false;
         }
         threadCommentService.removeThreadComment(commentId);
