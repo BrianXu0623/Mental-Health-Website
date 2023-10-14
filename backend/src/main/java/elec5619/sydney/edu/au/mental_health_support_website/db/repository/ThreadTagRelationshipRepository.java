@@ -5,7 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 public interface ThreadTagRelationshipRepository extends JpaRepository<ThreadTagRelationship, Long> {
-    List<Long> findAllByThreadId(Long threadId);
-    List<Long> findAllByTagId(Long tagId);
+    List<ThreadTagRelationship> findAllByThreadId(Long threadId);
+    List<ThreadTagRelationship> findAllByTagId(Long tagId);
+    ThreadTagRelationship findByThreadIdAndTagId(Long threadId, Long tagId);
 
+    void deleteByThreadId(Long threadId);
 }
+
