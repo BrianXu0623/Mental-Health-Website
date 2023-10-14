@@ -15,16 +15,36 @@ The backend application are using 3 Controllers for handling endpoints for impor
 2. 🔥**ThreadController (/api/threads/)** - is used for handling everything related to thread, thread tag and thread comment.
 3. 🔥**AppointmentController (/api/appointments/)** - is used for handling everything related to appointments.
 
+
+
+### 2.1) UserController - (/api/users/)
+
+> ❗<a>Note</a><br>
+> All the parameters described in each controller should be passed from the frontend as *@RequestHeader("token")* for token<br>
+> Otherwise *@RequestBody* by default
+
+
+| EndPoint        | Method   | Parameters                                                                                                  | Return                                                                                                          | Description                                                            |
+|:----------------|:---------|:------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------|
+| /register       | POST     | email: `String`, username: `String`, password: `String`                                                     | `String`: user token if the registration process success, otherwise descriptive error messages will be provided | Post method that allows user to register his/her account to the system |
+| /login          | POST     | email: `String`, password: `String`                                                                         | `String`: user token if the registration process success, otherwise descriptive error messages will be provided | Post method for verifying and log the user into the system             |
+| /followers      | GET      | token: `String`                                                                                             | `List<Users>`: a list of users that followed the requested user, otherwise an empty list                        | Get method for getting a list of followers given a user token          |
+| /followed       | GET      | token: `String`                                                                                             | `List<Users>`: a list of users that the requested user followed, otherwise an empty list                        | Get method for getting a list of users that the requester has followed |
+| /follow         | POST     | token: `String`, toUsername: `String`                                                                       | `Boolean`: TRUE if the operation was successful, otherwise FALSE                                                | Post method that allows a user to follow another user                  |
+| /mute           | POST     | token: `String`, toUsername: `String`                                                                       | `Boolean`: TRUE if the operation was successful, otherwise FALSE                                                | Post method that allows a user to mute another user                    |
+| /updateProfile  | POST     | token: `String`, newUsername: `String`, newEmail: `String`, newPhoneNumber: `String`, newBirthday: `String` | `Users`: a user object corresponded to all these changes                                                        | Post method that allows the user to update his/her profile             |
+| /updatePassword | POST     | token: `String`, oldPassword: `String`, newPassword: `String`                                               | `Boolean`: TRUE if the operation was successful, otherwise FALSE                                                | Post method that allows the user to update his/her password            |
+| /profile        | GET      | token: `String`                                                                                             | `Users`: the user object requested if found, otherwise null                                                     | Get method for getting the user profile                                |
+| /searchIUser    | GET      | username: `String`                                                                                          | `Users`: the user object requested if found, otherwise null                                                     | Get method for searching a specific user based on the username         |
+
+
+### 2.2) ThreadController - (/api/threads/)
+
 > ❗<a>Note</a><br>
 > All the parameters described in each controller should be passed from the frontend as *@RequestBody*<br>
 > The {attribute} is interpreted to be part of the url, and will be used to run certain query. For example:
 > /api/threads/update/{threadId} - Using the provided threadId in the url, update its content
 
-
-### 2.1) UserController - (/api/users/)
-
-
-### 2.2) ThreadController - (/api/threads/)
 
 | Endpoint                    | Method | Parameters                                                    | Return                                                                                         | Description                                                                                                                                                                                                                                 |
 |-----------------------------|--------|---------------------------------------------------------------|------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
