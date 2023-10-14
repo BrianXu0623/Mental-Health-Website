@@ -58,7 +58,7 @@ public class ThreadController {
     }
 
     private void insertThreadTagRelationship(Long threadId, List<ThreadTag> tags) {
-        j
+
     }
 
 
@@ -101,7 +101,7 @@ public class ThreadController {
             @RequestBody Long userId,
             @RequestBody AppThread thread
     ) {
-        if (isUserEligibleToModifyThread(userId, threadId) && verifyTags(thread.getTags())) {
+        if (isUserEligibleToModifyThread(userId, threadId) ) {
             threadService.editThread(thread);
            return true;
         }

@@ -9,7 +9,7 @@ public class MentalHealthSupportWebsiteApplication {
 
     public static void main(String[] args) {
 
-        SpringApplication.run(MentalHealthSupportWebsiteApplication.class, args);
+        SpringApplication. run(MentalHealthSupportWebsiteApplication.class, args);
     }
 
 }
