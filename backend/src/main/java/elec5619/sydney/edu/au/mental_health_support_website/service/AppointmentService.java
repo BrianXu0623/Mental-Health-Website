@@ -15,11 +15,11 @@ public class AppointmentService {
     @Resource
     private AppointmentRepository appointmentRepository;
 
-    public Appointment createAppointment(Appointment appointment) {
+    public Appointment makeAppointment(Appointment appointment) {
         return appointmentRepository.save(appointment);
     }
 
-    public boolean cancelAppointment(Long appointmentId) {
+    public boolean deleteAppointment(Long appointmentId) {
         Appointment apm = appointmentRepository.findById(appointmentId).orElse(null);
         if (apm == null) {
             return false;
@@ -29,9 +29,16 @@ public class AppointmentService {
     }
 
     public boolean editAppointment(Appointment edittedAppointment) {
-        Appointment thr = appointmentRepository.findById(edittedAppointment.getId()).orElse(null);
+        Appointment apm = appointmentRepository.findById(edittedAppointment.getId()).orElse(null);
         appointmentRepository.save(edittedAppointment);
-        return thr != null;
+        return apm != null;
+    }
+
+    public boolean editStatusAppointment(String status, Appointment updatedAppointment) {
+        Appointment apm = appointmentRepository.findById(updatedAppointment.getId()).orElse(null);
+        apm.setStatus(status);
+        appointmentRepository.save(updatedAppointment);
+        return apm != null;
     }
 
     public Appointment getAppointment(Long appointmentId) {

@@ -4,16 +4,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@Builder
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,6 +27,9 @@ public class Appointment {
     private Integer professionUserId;
     private Integer userId;
     private String appointmentTopic;
+
+    public Appointment() {
+    }
 
     /**
      * CREATE TABLE Appointment (
