@@ -8,15 +8,34 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
+
   function validateForm() {
     return email.length > 5 && password.length > 6;
   }
   function ButtonLink({ to, children }) {
     return <Link to={to}><button>{children}</button></Link>;
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email);
+    try{
+      const response = await fetch('http://localhost:8080/api/users/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password
+        }) 
+    });
+
+      history.push('/information');
+    }catch (error){
+      console.error('There was an error!', error);
+      setError('Login failed. Please check your username and password.');
+    }
+    
   };
   return (
     <div className='loginPage'> 

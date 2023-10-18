@@ -12,9 +12,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/users")
-@CrossOrigin(origins = "http://localhost:3000")
+
 public class UserController {
     @Autowired
     private UserService userService;
