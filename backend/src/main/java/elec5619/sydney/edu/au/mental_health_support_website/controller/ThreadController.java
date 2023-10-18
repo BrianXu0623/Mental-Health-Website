@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/threads/")
-
+@CrossOrigin(origins = "http://localhost:3000")
 public class ThreadController {
     @Autowired
     private ThreadCommentService threadCommentService;
