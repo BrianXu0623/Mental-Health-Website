@@ -66,16 +66,20 @@ The backend application are using 3 Controllers for handling endpoints for impor
 
 ### 2.3) AppointmentController - (/api/appointments/)
 
-<table> 
-    <thead>
-        <th>EndPoint</th>
-        <th>Method</th>
-        <th>Parameters</th>
-        <th>Description</th>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+> ❗<a>Note</a><br>
+> All the parameters described in each controller should be passed from the frontend as *@RequestHeader("token")* for token, otherwise *@RequestBody* by default
+> The {attribute} is interpreted to be part of the url, and will be used to run certain query. For example:
+> /api/threads/update/{threadId} - Using the provided threadId in the url, update its content
+
+| Endpoint                    | Method | Parameters                          | Return                                                                                                | Description                                                                                                                                                    |
+|-----------------------------|--------|-------------------------------------|-------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| /make                       | POST   | appointment: `Appointment`          | `Appointment`: a newly created appointment with status 'In progress' if possible                      | Post method for creating a new appointment                                                                                                                     |
+| /cancel/{appointmentID}     | PUT    | token: `String`                     | `Boolean`: TRUE if the user is eligible to cancel the appointment, otherwise FALSE                    | PUT method for setting the status of a certain appointment as 'cancelled'. Only the admin, professional and the user who created the appointment can cancel it |
+| /complete/{appointmentID}   | PUT    | token: `String`                     | `Boolean`: TRUE if the user is eligible to complete the appointment, otherwise FALSE                  | PUT method for setting the status of a certain appointment as 'completed'. Only the admin, professional of the certain appointment can complete it             |
+| /get/{appointmentID}        | GET    | None                                | `Appointment`: the appointment object associated with the requested id, otherwise null                | Get method for getting a single appointment object from database                                                                                               |
+| /get/ids                    | GET    | appointmentIds: `List<Long>`        | `List<Appointment>`: a list of appointment objects associated with their ids, otherwise an empty list | Get method for getting a list of appointments provided by their ids                                                                                            |
+| /edit/{appointmentId}       | PUT    | token: `String`, apm: `Appointment` | `Boolean`: TRUE if the user is eligible to edit the appointment, otherwise FALSE                      | Put method for editing a certain appointment. Only the admin, professional and the user who created the appointment can edit it                                |
+| /delete/{appointmentId}     | DELETE | token: `String`                     | `Boolean`: TRUE if the operation is successful otherwise FALSE                                        | DELETE method that allows admin to remove a certain appointment                                                                                                |
 
 
 
