@@ -39,20 +39,20 @@
   .icon {
     width: 250px;
     display: flex;
-    justify-content: center; /* Center the icon horizontally */
-    align-items: center; /* Center the icon vertically */
+    justify-content: center; 
+    align-items: center; 
   }
   
   .icon img {
-    max-width: 50px; /* Adjust as needed */
-    border-radius: 50%;  /* Optional, for circular icons */
+    max-width: 50px; 
+    border-radius: 50%;  
   }
   
   .information {
     width: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;  /* This property will space the rows evenly */
+    justify-content: space-between;  
   }
   
   .options {
