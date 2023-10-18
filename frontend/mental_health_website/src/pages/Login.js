@@ -14,9 +14,27 @@ export default function Login() {
   function ButtonLink({ to, children }) {
     return <Link to={to}><button>{children}</button></Link>;
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email);
+    console.log("login!");
+
+    try {
+      const response = await fetch('http://localhost:8080/api/user/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: email,
+                    password: password
+                }) 
+            });
+      console.log('Login successful', response.data);
+      
+    } catch (error) {
+        console.error('There was an error logging in!', error);
+        
+    }
   };
   return (
     <div className='loginPage'> 
