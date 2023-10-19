@@ -1,28 +1,3 @@
-.information-card-link{
-    display: flex;
-    border: 1px solid #ccc;
-    padding: '16px';
-    margin: '16px';
-    width: 1700px;
-    height: 350px;
-}
-
-.information-card{
-    list-style-type: none;
-    display: grid;
-    grid-gap: 20px;
-    border-radius: 10px;
-}
-
-.information-card-left{
-    width: 1400px;
-    background-color: white;
-}
-
-.information-card-right{
-    width: 300px;
-    background-color: #ccc;
-}
 
 
 

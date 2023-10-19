@@ -16,9 +16,9 @@ import java.util.List;
 
 
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/threads/")
-@CrossOrigin(origins = "http://localhost:3000")
 public class ThreadController {
     @Autowired
     private ThreadCommentService threadCommentService;
@@ -165,7 +165,7 @@ public class ThreadController {
      * @param threadIds a list of thread ids requested
      * @return a list of thread objects associated with their ids, otherwise an empty list
      */
-    @GetMapping("/get/ids")
+    @PostMapping("/get/ids")
     public List<AppThread> getThreads(
             @RequestBody List<Long> threadIds
     ) {
