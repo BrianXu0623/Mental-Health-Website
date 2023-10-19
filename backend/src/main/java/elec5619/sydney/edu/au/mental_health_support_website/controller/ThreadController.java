@@ -1,6 +1,7 @@
 package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.param.AppThreadInfo;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.*;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
 import elec5619.sydney.edu.au.mental_health_support_website.service.*;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 @RestController
 @RequestMapping("/api/threads/")
@@ -47,15 +50,15 @@ public class ThreadController {
 
     /**
      * Post method for creating new thread
-     * @param thread a thread object with all required information for creating thread
+     * @param context a thread object & a list of tags of type string, with all required information for creating thread
      * @return a newly created thread if not exists
      */
     @PostMapping("/create")
     public AppThread createThread(
-        @RequestBody AppThread thread,
-        @RequestBody List<String> tagNames
+        @RequestBody AppThreadInfo context
     ) {
-        List<ThreadTag> tags = threadTagService.getTagByNames(tagNames);
+        AppThread thread = context.getThread();
+        List<ThreadTag> tags = threadTagService.getTagByNames(context.getTagNames());
         insertThreadTagRelationship(thread, tags);
         return threadService.createThread(thread);
     }
@@ -128,18 +131,19 @@ public class ThreadController {
      * thread content, a number of thread tags provided
      * only the requested user, who created the thread, can edit the thread content
      * @param threadId the id of the thread to be changed
-     * @param thread the thread that the requested thread object to change to
+     * @param context the thread that the requested thread object to change to
      */
     @PutMapping("/update/{threadId}")
     public boolean editThread(
             @PathVariable Long threadId,
             @RequestHeader("token") String token,
-            @RequestBody AppThread thread,
-            @RequestBody List<String> tagNames
+            @RequestBody AppThreadInfo context
     ) {
         String userName = TokenUtil.getUsernameFromToken(token);
         Users user = userService.getUserByUsername(userName);
         if (user != null && isUserEligibleToModifyThread(user.getId(), threadId) ) {
+            AppThread thread = context.getThread();
+            List<String> tagNames = context.getTagNames();
             threadService.editThread(thread);
             updateThreadTagRelationship(threadId, tagNames);
            return true;
