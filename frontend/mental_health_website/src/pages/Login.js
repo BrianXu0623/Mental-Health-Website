@@ -32,8 +32,8 @@ export default function Login() {
       }).then(response => response.json())
       .then(data => {
         if (data.token) {
-          console.log(data)
           localStorage.setItem('token', data.token);
+          localStorage.setItem('username', data.username);
         } else {
           console.error('No token received');
         }

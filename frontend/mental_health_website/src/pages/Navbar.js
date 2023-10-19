@@ -43,9 +43,18 @@ function Navbar() {
               
             </li>
             <li className='nav-item'>
-              <Link to='/login' className='nav-links'>
-                Login
-              </Link>
+              {localStorage.getItem('username') !== null ? (
+                <div className='welcome-user'>
+                  <div>Welcome, </div>
+                  <div>{localStorage.getItem('username')}!</div>
+                </div>
+                
+              ) : (
+                <Link to='/login' className='nav-links'>
+                  Login
+                </Link>
+              )}
+              
             </li>
           </ul>
         </div>

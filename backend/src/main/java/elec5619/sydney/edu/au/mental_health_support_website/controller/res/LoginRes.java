@@ -10,5 +10,6 @@ import lombok.Setter;
 public class LoginRes {
     boolean isSuccess;
     String token;
+    String username;
     String error;
 }
