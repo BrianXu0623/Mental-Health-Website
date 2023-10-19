@@ -166,10 +166,47 @@ public class ThreadController {
      * @return a list of thread objects associated with their ids, otherwise an empty list
      */
     @PostMapping("/get/ids")
-    public List<AppThread> getThreads(
+    public List<AppThreadInfo> getThreads(
             @RequestBody List<Long> threadIds
     ) {
-        return threadService.getThreads(threadIds);
+        List<AppThread> threads = threadService.getThreads(threadIds);
+        List<AppThreadInfo> threadInfos = new ArrayList<>();
+        for (AppThread thread : threads) {
+            List<ThreadTag> tags = getThreadTagsFromThreadId(thread.getId());
+            List<String> tagNames = getTagNamesFromThreadTags(tags);
+            String authorName = userService.getUserByUserId(thread.getAuthorID()).getUsername();
+            threadInfos.add(
+                    AppThreadInfo.builder()
+                            .thread(thread)
+                            .tagNames(tagNames)
+                            .authorName(authorName)
+                            .build()
+            );
+        }
+        return threadInfos;
+    }
+
+    /**
+     * Get method for getting all existing threads from the systems
+     * @return a list of AppThreadInfo
+     */
+    @GetMapping("/get/all")
+    public List<AppThreadInfo> getAllExistingThreads() {
+        List<AppThread> threads = threadService.getAllExistingThreads();
+        List<AppThreadInfo> threadInfos = new ArrayList<>();
+        for (AppThread thread : threads) {
+            List<ThreadTag> tags = getThreadTagsFromThreadId(thread.getId());
+            List<String> tagNames = getTagNamesFromThreadTags(tags);
+            String authorName = userService.getUserByUserId(thread.getAuthorID()).getUsername();
+            threadInfos.add(
+                    AppThreadInfo.builder()
+                            .thread(thread)
+                            .tagNames(tagNames)
+                            .authorName(authorName)
+                            .build()
+            );
+        }
+        return threadInfos;
     }
 
 

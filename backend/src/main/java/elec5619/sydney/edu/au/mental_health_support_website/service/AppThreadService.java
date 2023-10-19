@@ -63,4 +63,8 @@ public class AppThreadService {
     public List<AppThread> getThreads(List<Long> threadIds) {
         return threadRepository.findAllById(threadIds);
     }
+
+    public List<AppThread> getAllExistingThreads() {
+        return threadRepository.findAll();
+    }
 }
