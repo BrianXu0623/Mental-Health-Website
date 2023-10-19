@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -34,7 +35,7 @@ public class ThreadController {
 
     // For testing purposes
     @GetMapping("/test-create")
-    public AppThread testCreate() throws JsonProcessingException {
+    public AppThreadInfo testCreate() throws JsonProcessingException {
         AppThread aThread = AppThread.builder().title(
                 "Body Dismorphic Disorder").content(
                 "\uD83D\uDD25 Body Dysmorphic Disorder (BDD) - is another mental health condition included in " +
@@ -43,7 +44,9 @@ public class ThreadController {
                         "part appears abnormal, defective or embarrassing in some way.")
                 .authorID(2L)
         .build();
-        return threadService.createThread(aThread);
+        AppThread thr = threadService.createThread(aThread);
+        String authorName = userService.getUserByUserId(thr.getAuthorID()).getUsername();
+        return AppThreadInfo.builder().thread(thr).tagNames(Arrays.asList(new String[]{"depression", "anxiety"})).authorName(authorName).build();
     }
      
 
@@ -70,6 +73,11 @@ public class ThreadController {
                 .build();
     }
 
+    /**
+     * Method for getting a list of tagNames from a list of tag object
+     * @param tags a list of tag objects
+     * @return a list of tag names
+     */
     private List<String> getTagNamesFromThreadTags(List<ThreadTag> tags) {
         List<String> tagNames = new ArrayList<>();
         for (ThreadTag tag : tags) {
@@ -107,7 +115,7 @@ public class ThreadController {
         List<ThreadTag> tags = getThreadTagsFromThreadId(threadId);
         List<String> tagNames = getTagNamesFromThreadTags(tags);
         String authorName = userService.getUserByUserId(thread.getAuthorID()).getUsername();
-        
+
         return AppThreadInfo.builder()
                 .thread(thread)
                 .tagNames(tagNames)
