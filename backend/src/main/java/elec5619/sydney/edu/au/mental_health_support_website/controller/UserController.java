@@ -1,5 +1,9 @@
 package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
+import elec5619.sydney.edu.au.mental_health_support_website.controller.param.LoginInfo;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.param.PasswordUpdateInfo;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.param.ProfileInfo;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.param.RegisterInfo;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
 import elec5619.sydney.edu.au.mental_health_support_website.service.UserService;
 import elec5619.sydney.edu.au.mental_health_support_website.util.EncryptionUtil;
@@ -20,48 +24,46 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     /**
      * Post method that allows user to register his/her account to the system
-     * @param email the email of the user
-     * @param username the username that the user wished to be identified with
-     * @param password the non-encrypted password
+     * @param registerInfo the register information of the user
      * @return user token if the registration process success, otherwise descriptive error messages will be provided
      * @throws IOException if the encryption url is invalid
      * @throws InterruptedException if there is a connection interruption between the system and the encryption api server
      */
     @PostMapping("register")
-    public String register(@RequestBody String email,
-                         @RequestBody String username,
-                         @RequestBody String password) throws IOException, InterruptedException {
+    public String register(@RequestBody RegisterInfo registerInfo) throws IOException, InterruptedException {
 
-            if(Strings.isEmpty(email) || Strings.isEmpty(username) || Strings.isEmpty(password)) {
-                return ErrorsEnum.PARAMETER_ERROR.getErrorMessage();
-            }
-
-            if (!EncryptionUtil.validatePassword(password)) {
-                return ErrorsEnum.PASSWORD_FORMAT_ERROR.getErrorMessage();
-            }
-            String encrypted = EncryptionUtil.encrypt(password);
-            Users user = Users.builder().username(username).password(encrypted).
-                    email(email).build();
-            user.setToken(TokenUtil.generateToken(username));
-            if (userService.registerUser(user) != null) {
-                return user.getToken();
-            }
-            return ErrorsEnum.DATABASE_ERROR.getErrorMessage();
+        String email = registerInfo.getEmail();
+        String password = registerInfo.getPassword();
+        String username = registerInfo.getUsername();
+        if(Strings.isEmpty(email) || Strings.isEmpty(username) || Strings.isEmpty(password)) {
+            return ErrorsEnum.PARAMETER_ERROR.getErrorMessage();
         }
+
+        if (!EncryptionUtil.validatePassword(password)) {
+            return ErrorsEnum.PASSWORD_FORMAT_ERROR.getErrorMessage();
+        }
+        String encrypted = EncryptionUtil.encrypt(password);
+        Users user = Users.builder().username(username).password(encrypted).
+                email(email).build();
+        user.setToken(TokenUtil.generateToken(username));
+        if (userService.registerUser(user) != null) {
+            return user.getToken();
+        }
+        return ErrorsEnum.DATABASE_ERROR.getErrorMessage();
+    }
 
     /**
      * Post method for verifying and log the user into the system
-     * @param email the provided email for logging in
-     * @param password the non-encrypted password that is used to verified
+     * @param loginInfo the login information of the user for logging in
      * @return user token if the registration process success, otherwise descriptive error messages will be provided
      */
     @PostMapping("login")
     public String login(
-            @RequestBody String email,
-            @RequestBody String password) {
+            @RequestBody LoginInfo loginInfo) {
+        String email = loginInfo.getEmail();
+        String password = loginInfo.getPassword();
         if(Strings.isEmpty(email) || Strings.isEmpty(password)) {
             return ErrorsEnum.PARAMETER_ERROR.getErrorMessage();
         }
@@ -129,36 +131,35 @@ public class UserController {
     /**
      * Post method that allows the user to update his/her profile
      * @param token the requester user token
-     * @param newUsername the new username to be changed into
-     * @param newEmail the new email to be changed into
-     * @param newPhoneNumber the new phone number to be changed into
-     * @param newBirthday the new birthday to be changed into
+     * @param profileInfo the new profile information to be changed into
      * @return a user object corresponded to all those changes
      */
     @PostMapping("updateProfile")
     private Users updateProfile(@RequestHeader("token") String token,
-                            @RequestBody String newUsername,
-                           @RequestBody String newEmail,
-                           @RequestBody String newPhoneNumber,
-                           @RequestBody String newBirthday) {
+                                @RequestBody ProfileInfo profileInfo) {
         String userName = TokenUtil.getUsernameFromToken(token);
+        String newUsername = profileInfo.getNewUsername();
+        String newEmail = profileInfo.getNewEmail();
+        String newPhoneNumber = profileInfo.getNewPhoneNumber();
+        String newBirthday = profileInfo.getNewBirthday();
         return userService.updateProfile(userName, newUsername, newEmail, newPhoneNumber, newBirthday);
     }
 
     /**
      * Post method that allows a user to update his/her password
      * @param token the requester user token
-     * @param oldPassword the non-encrypted current password
-     * @param newPassword new non-encrypted password to be updated
+     * @param passwordUpdateInfo current password and updated password
      * @return TRUE if the operation was successful, otherwise FALSE
      * @throws IOException if the encryption url is invalid
      * @throws InterruptedException if there is a connection interruption between the system and the encryption api server
      */
     @PostMapping("updatePassword")
     private boolean updatePassword(@RequestHeader("token") String token,
-                        @RequestBody String oldPassword,
-                        @RequestBody String newPassword) throws IOException, InterruptedException {
+                                   @RequestBody PasswordUpdateInfo passwordUpdateInfo)
+            throws IOException, InterruptedException {
         String userName = TokenUtil.getUsernameFromToken(token);
+        String oldPassword = passwordUpdateInfo.getOldPassword();
+        String newPassword = passwordUpdateInfo.getNewPassword();
         return userService.updatePassword(userName, oldPassword, newPassword);
     }
 
