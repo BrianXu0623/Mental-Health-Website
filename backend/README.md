@@ -81,8 +81,6 @@ The backend application are using 3 Controllers for handling endpoints for impor
 | /edit/{appointmentId}       | PUT    | token: `String`, apm: `Appointment` | `Boolean`: TRUE if the user is eligible to edit the appointment, otherwise FALSE                      | Put method for editing a certain appointment. Only the admin, professional and the user who created the appointment can edit it                                |
 | /delete/{appointmentId}     | DELETE | token: `String`                     | `Boolean`: TRUE if the operation is successful otherwise FALSE                                        | DELETE method that allows admin to remove a certain appointment                                                                                                |
 
-
-
 ---
 <style> 
     body { 
