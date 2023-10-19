@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   function validateForm() {
     return email.length > 5 && password.length > 6;
@@ -19,7 +20,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const response = await fetch('http://localhost:8080/api/users/login', {
+      await fetch('http://localhost:8080/api/users/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -28,9 +29,17 @@ export default function Login() {
             email: email,
             password: password
         }) 
-    });
-
-      history.push('/information');
+      }).then(response => response.json())
+      .then(data => {
+        if (data.token) {
+          console.log(data)
+          localStorage.setItem('token', data.token);
+        } else {
+          console.error('No token received');
+        }
+      });
+      navigate('/information');
+    
     }catch (error){
       console.error('There was an error!', error);
       setError('Login failed. Please check your username and password.');
