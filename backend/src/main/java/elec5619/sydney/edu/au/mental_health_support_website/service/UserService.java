@@ -159,6 +159,10 @@ public class UserService {
         return false;
     }
 
+    public Users getUserByUserId(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
+
     public Users getUserByUsername(String userName) {
         Users user = userRepository.findByUsername(userName);
         user.setPassword("");

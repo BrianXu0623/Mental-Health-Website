@@ -54,13 +54,28 @@ public class ThreadController {
      * @return a newly created thread if not exists
      */
     @PostMapping("/create")
-    public AppThread createThread(
+    public AppThreadInfo createThread(
         @RequestBody AppThreadInfo context
     ) {
         AppThread thread = context.getThread();
         List<ThreadTag> tags = threadTagService.getTagByNames(context.getTagNames());
         insertThreadTagRelationship(thread, tags);
-        return threadService.createThread(thread);
+        String username  = TokenUtil.getUsernameFromToken(context.getUserToken());
+
+        thread = threadService.createThread(thread);
+        return AppThreadInfo.builder()
+                .thread(thread)
+                .tagNames(getTagNamesFromThreadTags(tags))
+                .authorName(username)
+                .build();
+    }
+
+    private List<String> getTagNamesFromThreadTags(List<ThreadTag> tags) {
+        List<String> tagNames = new ArrayList<>();
+        for (ThreadTag tag : tags) {
+            tagNames.add(tag.getName());
+        }
+        return tagNames;
     }
 
     /**
@@ -85,10 +100,34 @@ public class ThreadController {
      * @return the thread object associated with the requested id otherwise null
      */
     @GetMapping("/get/id/{threadId}")
-    public AppThread getThread(
+    public AppThreadInfo getThread(
             @PathVariable Long threadId
     ) {
-        return threadService.getThread(threadId);
+        AppThread thread = threadService.getThread(threadId);
+        List<ThreadTag> tags = getThreadTagsFromThreadId(threadId);
+        List<String> tagNames = getTagNamesFromThreadTags(tags);
+        String authorName = userService.getUserByUserId(thread.getAuthorID()).getUsername();
+        
+        return AppThreadInfo.builder()
+                .thread(thread)
+                .tagNames(tagNames)
+                .authorName(authorName)
+                .build();
+    }
+
+    /**
+     * method for getting a list of ThreadTag objects associated with a threadId
+     * @param threadId the requested thread id
+     * @return a list of ThreadTag objects
+     */
+    private List<ThreadTag> getThreadTagsFromThreadId(Long threadId) {
+        List<ThreadTagRelationship> tagIds = threadTagRelationshipService.getTags(threadId);
+
+        // Gathering a list of existing tags
+        List<ThreadTag> currentTags = new ArrayList<>();
+        for (ThreadTagRelationship tag : tagIds )
+            currentTags.add(getTag(tag.getTagId()));
+        return currentTags;
     }
 
     /**
@@ -158,13 +197,7 @@ public class ThreadController {
      * @param tagNames a list of tag names to be updated
      */
     private void updateThreadTagRelationship(Long threadId, List<String> tagNames) {
-        // This would give out a list of existing tags
-        List<ThreadTagRelationship> tagIds = threadTagRelationshipService.getTags(threadId);
-
-        // Gathering a list of existing tags
-        List<ThreadTag> currentTags = new ArrayList<>();
-        for (ThreadTagRelationship tag : tagIds )
-            currentTags.add(getTag(tag.getTagId()));
+        List<ThreadTag> currentTags = getThreadTagsFromThreadId(threadId);
 
         this.addNewTagsToThread(threadId, currentTags, tagNames);
         this.removeTagsFromThread(threadId, currentTags, tagNames);
