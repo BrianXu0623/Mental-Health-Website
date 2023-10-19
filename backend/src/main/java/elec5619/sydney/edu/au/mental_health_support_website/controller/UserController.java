@@ -4,13 +4,18 @@ import elec5619.sydney.edu.au.mental_health_support_website.controller.param.Log
 import elec5619.sydney.edu.au.mental_health_support_website.controller.param.PasswordUpdateInfo;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.param.ProfileInfo;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.param.RegisterInfo;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.res.LoginRes;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.res.RegisterRes;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
 import elec5619.sydney.edu.au.mental_health_support_website.service.UserService;
 import elec5619.sydney.edu.au.mental_health_support_website.util.EncryptionUtil;
 import elec5619.sydney.edu.au.mental_health_support_website.util.TokenUtil;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,26 +37,33 @@ public class UserController {
      * @throws InterruptedException if there is a connection interruption between the system and the encryption api server
      */
     @PostMapping("register")
-    public String register(@RequestBody RegisterInfo registerInfo) throws IOException, InterruptedException {
+    public ResponseEntity<RegisterRes> register(@RequestBody RegisterInfo registerInfo) throws IOException,
+            InterruptedException {
 
         String email = registerInfo.getEmail();
         String password = registerInfo.getPassword();
         String username = registerInfo.getUsername();
+        RegisterRes registerRes = new RegisterRes(false, null, null);
         if(Strings.isEmpty(email) || Strings.isEmpty(username) || Strings.isEmpty(password)) {
-            return ErrorsEnum.PARAMETER_ERROR.getErrorMessage();
+            registerRes.setError(ErrorsEnum.PARAMETER_ERROR.getErrorMessage());
+            return new ResponseEntity<>(registerRes, HttpStatus.METHOD_FAILURE);
         }
 
         if (!EncryptionUtil.validatePassword(password)) {
-            return ErrorsEnum.PASSWORD_FORMAT_ERROR.getErrorMessage();
+            registerRes.setError(ErrorsEnum.PASSWORD_FORMAT_ERROR.getErrorMessage());
+            return new ResponseEntity<>(registerRes, HttpStatus.METHOD_FAILURE);
         }
         String encrypted = EncryptionUtil.encrypt(password);
         Users user = Users.builder().username(username).password(encrypted).
                 email(email).build();
         user.setToken(TokenUtil.generateToken(username));
         if (userService.registerUser(user) != null) {
-            return user.getToken();
+            registerRes.setSuccess(true);
+            registerRes.setToken(user.getToken());
+            return new ResponseEntity<>(registerRes, HttpStatus.OK);
         }
-        return ErrorsEnum.DATABASE_ERROR.getErrorMessage();
+        registerRes.setError(ErrorsEnum.DATABASE_ERROR.getErrorMessage());
+        return new ResponseEntity<>(registerRes, HttpStatus.METHOD_FAILURE);
     }
 
     /**
@@ -60,19 +72,25 @@ public class UserController {
      * @return user token if the registration process success, otherwise descriptive error messages will be provided
      */
     @PostMapping("login")
-    public String login(
+    public ResponseEntity<LoginRes> login(
             @RequestBody LoginInfo loginInfo) {
         String email = loginInfo.getEmail();
         String password = loginInfo.getPassword();
+        LoginRes loginRes = new LoginRes(false, null, null);
         if(Strings.isEmpty(email) || Strings.isEmpty(password)) {
-            return ErrorsEnum.PARAMETER_ERROR.getErrorMessage();
+            loginRes.setError(ErrorsEnum.PARAMETER_ERROR.getErrorMessage());
+            return new ResponseEntity<>(loginRes, HttpStatus.UNAUTHORIZED);
         }
         Users user = userService.loginUser(email, password);
         if(user == null) {
-            return ErrorsEnum.PASSWORD_WRONG_ERROR.getErrorMessage();
+            loginRes.setError(ErrorsEnum.PASSWORD_WRONG_ERROR.getErrorMessage());
+            return new ResponseEntity<>(loginRes, HttpStatus.UNAUTHORIZED);
         }
+
         user.setToken(TokenUtil.generateToken(user.getUsername()));
-        return user.getToken();
+        loginRes.setSuccess(true);
+        loginRes.setToken(user.getToken());
+        return new ResponseEntity<>(loginRes, HttpStatus.OK);
     }
 
     /**
