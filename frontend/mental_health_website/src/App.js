@@ -52,3 +52,13 @@ export default function App() {
     );
 }
 
+<<<<<<< HEAD
+=======
+const root = document.getElementById('root');
+ReactDOM.render(<App />, root);
+
+
+
+
+
+>>>>>>> 4712eeadaee7ba782bf4c9ae84b36fc10863206f
