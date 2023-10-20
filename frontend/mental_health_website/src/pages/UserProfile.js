@@ -1,11 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './UserProfile.css';
 
 const UserProfile = () => {
+
+    const [user, setUser] = useState([]);
+
+    useEffect(() => {
+
+    fetch('http://localhost:8080/api/users/profile', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': localStorage.getItem('token')
+        }
+        })
+        .then(response => response.json())
+        .then((data) => {
+        setUser(data);
+        })
+        .catch(error => console.error('There was an error!', error));
+    });
+
     const userInfo = {
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        icon: 'https://via.placeholder.com/50'
+        name: user.username,
+        email: user.email,
+        icon: user.avatar
     };
 
     const [isEditingName, setIsEditingName] = useState(false);

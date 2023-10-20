@@ -44,7 +44,7 @@ function Navbar() {
             </li>
             <li className='nav-item'>
               {localStorage.getItem('username') !== null ? (
-                <Link to='/ProfilePage' className='welcome-user'>
+                <Link to='/profile' className='welcome-user'>
                   <div>Welcome, </div>
                   <div>{localStorage.getItem('username')}!</div>
                 </Link>
