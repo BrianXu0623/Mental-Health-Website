@@ -27,6 +27,9 @@ public class Users {
     private boolean isMuted = false;
     @Transient
     private String token;
+    private String experience;
+    private String availableHours;
+    private String clinic;
     public Users() {}
 //    CREATE TABLE User (
 //    id BIGINT AUTO_INCREMENT PRIMARY KEY,

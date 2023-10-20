@@ -17,6 +17,6 @@ public class ProfessionalRating {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private Integer totalRating;
-    private Long professionalId;
+    private String professionalUsername;
     private Date timestamp;
 }
