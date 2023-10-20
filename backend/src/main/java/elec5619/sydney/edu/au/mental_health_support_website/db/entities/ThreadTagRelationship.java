@@ -22,6 +22,6 @@ public class ThreadTagRelationship {
     private Long tagId;
 
     public ThreadTagRelationship() {
-        
+
     }
 }
