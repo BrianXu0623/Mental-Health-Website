@@ -28,37 +28,28 @@ export default function App() {
         localStorage.clear();
     };
 
-    return (
-        <BrowserRouter>
-            <Navbar />
-            <div>
-                <Routes>
-                    <Route path="/information" element={<Information />} />
-                    <Route path="/information/:id" element={<DetailedInformation />} />
-                    <Route path="/forum" element={<Forum />} />
-                    <Route path="/forum/:id" element={<DetailedThread />} />
-                    <Route path="/appointment" element={<Appointment />} />
-                    <Route path="/profile/:id" element={<ProfilePage />} />
-                    <Route path="/account" element={<UserProfile />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/" element={<Information />} />
-                    <Route path="*" element={<NoPage />} />
-                    <Route path="/newPost" element={<NewPost />} />
-                    <Route path="/bookappointment/:doctorId" element={<NewAppointment />} />
-                </Routes>
-            </div>
-        </BrowserRouter>
-    );
+  return (
+    
+    <BrowserRouter>
+    <Navbar />
+      <div>
+      
+      <Routes>
+          <Route path="/information" element={<Information />} />
+          <Route path="/information/:id" element={<DetailedInformation />} />
+          <Route path="/forum" element={<Forum />} />
+          <Route path="/forum/:id" element={< DetailedThread />} />
+          <Route path="/appointment" element={<Appointment />} />
+          <Route path="/profile/:id" element={<ProfilePage />} />
+          <Route path="/account" element={<UserProfile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Information />} />
+          <Route path="*" element={<NoPage />} />
+        </Routes>
+        
+      </div>
+    </BrowserRouter>
+  );
 }
 
-<<<<<<< HEAD
-=======
-const root = document.getElementById('root');
-ReactDOM.render(<App />, root);
-
-
-
-
-
->>>>>>> 4712eeadaee7ba782bf4c9ae84b36fc10863206f

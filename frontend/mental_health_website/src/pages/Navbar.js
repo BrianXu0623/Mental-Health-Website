@@ -43,11 +43,6 @@ function Navbar() {
               
             </li>
             <li className='nav-item'>
-<<<<<<< HEAD
-              <Link to='/login' className='nav-links'>
-                Login
-              </Link>
-=======
               {localStorage.getItem('username') !== null ? (
                 <div className='welcome-user'>
                   <div>Welcome, </div>
@@ -60,7 +55,6 @@ function Navbar() {
                 </Link>
               )}
               
->>>>>>> c6e22db9da70d7d1645bd1e6084dde7d63847fac
             </li>
           </ul>
         </div>
