@@ -26,6 +26,11 @@ public class AppointmentController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Post method for making an appointment
+     * @param appointment the appointment object that encapsulates all required information
+     * @return the appointment object
+     */
     @PostMapping("/make")
     public Appointment makeAppointment(
             @RequestBody Appointment appointment
@@ -36,6 +41,12 @@ public class AppointmentController {
         return appointment;
     }
 
+    /**
+     * Put method for cancelling appointment
+     * @param appointmentId the id of the appointment
+     * @param token token of user requested to cancel the appointment
+     * @return TRUE if the operation was successful otherwise FALSE
+     */
     @PutMapping("/cancel/{appointmentID}")
     public boolean cancelAppointment(
             @RequestBody Long appointmentId,
@@ -50,6 +61,12 @@ public class AppointmentController {
         return false;
     }
 
+    /**
+     * PUT method for completing the appointment
+     * @param appointmentId the id of the appointment to be completed
+     * @param token the token of user requested
+     * @return TRUE if the operation was successful otherwise FALSE
+     */
     @PutMapping("/complete/{appointmentID}")
     public boolean completeAppointment(
             @RequestBody Long appointmentId,
@@ -64,6 +81,11 @@ public class AppointmentController {
         return false;
     }
 
+    /**
+     * Get method for getting the appointment information
+     * @param appointmentId the id of the appointment requested
+     * @return the appointment object associated with the id
+     */
     @GetMapping("/get/{appointmentID}")
     public Appointment getAppointment(
             @RequestBody Long appointmentId
@@ -71,6 +93,11 @@ public class AppointmentController {
         return appointmentService.getAppointment(appointmentId);
     }
 
+    /**
+     * GET a list of appointments given a list of appointments' id
+     * @param appointmentIds a list of appointment ids
+     * @return a list of appointment object associated a list of ids
+     */
     @GetMapping("/get/ids")
     public List<Appointment> getAppointments(
             @RequestBody List<Long> appointmentIds
@@ -78,6 +105,14 @@ public class AppointmentController {
         return appointmentService.getAppointments(appointmentIds);
     }
 
+
+    /**
+     * Put method for modifying the appointment objects
+     * @param appointmentId the id of the appointment to be edited
+     * @param token the user token requested
+     * @param apm the newly updated appointment to be updated
+     * @return TRUE if the operation was successful otherwise FALSE
+     */
     @PutMapping("/edit/{appointmentId}")
     public boolean editAppointment(
             @PathVariable Long appointmentId,
@@ -93,6 +128,12 @@ public class AppointmentController {
         return false;
     }
 
+    /**
+     * Delete mapping for removing appointment
+     * @param appointmentId the id of the appointment to be removed
+     * @param token the user token requested
+     * @return TRUE if the operation was successful otherwise FALSE
+     */
     @DeleteMapping("/delete/{appointmentId}")
     public boolean removeAppointment(
             @PathVariable Long appointmentId,
@@ -107,6 +148,12 @@ public class AppointmentController {
         return false;
     }
 
+    /**
+     * method to check if the user is eligible to complete an appointment - changing it to complete
+     * @param userId the id of the user requested
+     * @param appointmentId the id of the appointment to be verified
+     * @return TRUE if the user is eligible otherwise FALSE
+     */
     private boolean isUserEligibleToCompleteAppointment(Long userId, Long appointmentId) {
         Users user = userRepository.findById(userId).orElse(null);
         Appointment apm = appointmentService.getAppointment(appointmentId);
@@ -120,6 +167,12 @@ public class AppointmentController {
         return true;
     }
 
+    /**
+     * method to check if the user is eligible to cancel an appointment - changing it to cancel
+     * @param userId the id of the user requested
+     * @param appointmentId the id of the appointment to be verified
+     * @return TRUE if the user is eligible otherwise FALSE
+     */
     private boolean isUserEligibleToCancelAppointment(Long userId, Long appointmentId) {
         Users user = userRepository.findById(userId).orElse(null);
         Appointment apm = appointmentService.getAppointment(appointmentId);

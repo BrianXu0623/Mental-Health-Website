@@ -24,6 +24,19 @@
     display: flex;
     align-items: left;
   }
+
+  .welcome-user {
+    color: rgb(111, 111, 111);
+    justify-self: right;
+    cursor: pointer;
+    text-decoration: none;
+    font-family:sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+  }
   
   .nav-menu {
     display: grid;

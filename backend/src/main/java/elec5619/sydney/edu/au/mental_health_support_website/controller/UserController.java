@@ -43,7 +43,7 @@ public class UserController {
         String email = registerInfo.getEmail();
         String password = registerInfo.getPassword();
         String username = registerInfo.getUsername();
-        RegisterRes registerRes = new RegisterRes(false, null, null);
+        RegisterRes registerRes = new RegisterRes(false, null, null, null);
         if(Strings.isEmpty(email) || Strings.isEmpty(username) || Strings.isEmpty(password)) {
             registerRes.setError(ErrorsEnum.PARAMETER_ERROR.getErrorMessage());
             return new ResponseEntity<>(registerRes, HttpStatus.METHOD_FAILURE);
@@ -60,6 +60,7 @@ public class UserController {
         if (userService.registerUser(user) != null) {
             registerRes.setSuccess(true);
             registerRes.setToken(user.getToken());
+            registerRes.setUsername(user.getUsername());
             return new ResponseEntity<>(registerRes, HttpStatus.OK);
         }
         registerRes.setError(ErrorsEnum.DATABASE_ERROR.getErrorMessage());
@@ -76,7 +77,7 @@ public class UserController {
             @RequestBody LoginInfo loginInfo) {
         String email = loginInfo.getEmail();
         String password = loginInfo.getPassword();
-        LoginRes loginRes = new LoginRes(false, null, null);
+        LoginRes loginRes = new LoginRes(false, null, null, null);
         if(Strings.isEmpty(email) || Strings.isEmpty(password)) {
             loginRes.setError(ErrorsEnum.PARAMETER_ERROR.getErrorMessage());
             return new ResponseEntity<>(loginRes, HttpStatus.UNAUTHORIZED);
@@ -90,6 +91,7 @@ public class UserController {
         user.setToken(TokenUtil.generateToken(user.getUsername()));
         loginRes.setSuccess(true);
         loginRes.setToken(user.getToken());
+        loginRes.setUsername(user.getUsername());
         return new ResponseEntity<>(loginRes, HttpStatus.OK);
     }
 

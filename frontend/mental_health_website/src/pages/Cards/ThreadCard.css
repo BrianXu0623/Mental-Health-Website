@@ -1,0 +1,42 @@
+/* ThreadCard.css */
+.thread-card {
+    max-width: 600px;
+    border: 1px solid #ccc;
+    padding: 16px;
+    margin: 16px auto;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;  /* Adjust the space between elements */
+}
+
+.thread-header, .thread-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.thread-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.thread-tags {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.thread-content {
+    flex-grow: 1;
+    font-size: 1em;
+}
+
+.thread-comments {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.thread-time {
+    font-size: 0.9em;
+    color: #888;
+}
