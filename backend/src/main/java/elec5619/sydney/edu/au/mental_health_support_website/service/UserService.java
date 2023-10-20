@@ -123,7 +123,7 @@ public class UserService {
         return false;
     }
 
-    public Users updateProfile(String userName, String newUsername, String email, String phoneNumber, String birthday) {
+    public Users updateProfile(String userName, String newUsername, String email, String phoneNumber, String birthday, String avatar) {
         Users user = userRepository.findByUsername(userName);
         if(StringUtils.isNotBlank(newUsername)) {
             user.setUsername(newUsername);
@@ -136,6 +136,9 @@ public class UserService {
         }
         if(StringUtils.isNotBlank(birthday)) {
             user.setBirthday(LocalDate.parse(birthday));
+        }
+        if(StringUtils.isNotBlank(avatar)) {
+            user.setAvatar(avatar);
         }
         Users ret = userRepository.save(user);
         ret.setPassword("");

@@ -114,12 +114,15 @@ public class ThreadController {
         AppThread thread = threadService.getThread(threadId);
         List<ThreadTag> tags = getThreadTagsFromThreadId(threadId);
         List<String> tagNames = getTagNamesFromThreadTags(tags);
+        List<ThreadComment> comments = threadCommentService.getThreadComments(threadId);
         String authorName = userService.getUserByUserId(thread.getAuthorID()).getUsername();
+
 
         return AppThreadInfo.builder()
                 .thread(thread)
                 .tagNames(tagNames)
                 .authorName(authorName)
+                .comments(comments)
                 .build();
     }
 
@@ -158,8 +161,6 @@ public class ThreadController {
         }
         return ids;
     }
-
-
 
     /**
      * Get method for getting a list of threads provided by their ids
@@ -204,6 +205,7 @@ public class ThreadController {
                             .thread(thread)
                             .tagNames(tagNames)
                             .authorName(authorName)
+                            .noComments(threadCommentService.countCommentsByThreadId(thread.getId()))
                             .build()
             );
         }
@@ -418,17 +420,6 @@ public class ThreadController {
 
     // Request methods for thread comment
 
-    /**
-     * Get method for acquiring all comments associated with a specific thread id
-     * @param threadId the thread id for the comments to be requested
-     * @return a list of comments associated with the thread id
-     */
-    @GetMapping("/comment/{threadId}/getAll")
-    public List<ThreadComment> getAllCommentsByThreadId(
-            @PathVariable Long threadId
-    ) {
-        return threadCommentService.getThreadComments(threadId);
-    }
 
     /**
      * a post method for creating a thread comment associated with a specific thread

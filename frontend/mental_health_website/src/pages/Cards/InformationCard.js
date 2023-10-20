@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './Cards.css';
 import './InformationCard.css';
 
 export default function InformationCard(props) {

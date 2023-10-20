@@ -1,9 +1,6 @@
 package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
-import elec5619.sydney.edu.au.mental_health_support_website.controller.param.LoginInfo;
-import elec5619.sydney.edu.au.mental_health_support_website.controller.param.PasswordUpdateInfo;
-import elec5619.sydney.edu.au.mental_health_support_website.controller.param.ProfileInfo;
-import elec5619.sydney.edu.au.mental_health_support_website.controller.param.RegisterInfo;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.param.*;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.res.LoginRes;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.res.RegisterRes;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
@@ -162,7 +159,8 @@ public class UserController {
         String newEmail = profileInfo.getNewEmail();
         String newPhoneNumber = profileInfo.getNewPhoneNumber();
         String newBirthday = profileInfo.getNewBirthday();
-        return userService.updateProfile(userName, newUsername, newEmail, newPhoneNumber, newBirthday);
+        String avatar = profileInfo.getAvatar();
+        return userService.updateProfile(userName, newUsername, newEmail, newPhoneNumber, newBirthday, avatar);
     }
 
     /**
@@ -202,6 +200,42 @@ public class UserController {
     @GetMapping("searchUser")
     private Users searchUser(@RequestBody String userName) {
         return userService.getUserByUsername(userName);
+    }
+
+    /**
+     * Get method for all of the professional accounts
+     * @return All of the professional accounts
+     */
+    @GetMapping("getAllProfessionals")
+    public List<Users> getAllProfessionals() {
+        return userService.getAllProfessionals();
+    }
+
+    /**
+     * Post method for rating a professional
+     * @param token the token of the current user
+     * @param professionalRatingRequest information of professional rating request
+     * @return The latest average rating of the professional;
+     */
+    @PostMapping("rateProfessional")
+    public Long rateProfessional(@RequestHeader("token") String token,
+                                 @RequestBody ProfessionalRatingRequest professionalRatingRequest) {
+        String userName = TokenUtil.getUsernameFromToken(token);
+        Users p = userService.getUserByUsername(professionalRatingRequest.getProfessionalUserName());
+        p.setTotalRating(p.getTotalRating() + professionalRatingRequest.getRating());
+        p.setRateTimes(p.getRateTimes() + 1);
+        return p.getTotalRating() / p.getRateTimes();
+    }
+
+    /**
+     * Get method for retrieving a professional's average rating
+     * @param professionalUserName  username of the professional
+     * @return The latest average rating of the professional;
+     */
+    @GetMapping("getProfessionalRating")
+    public Long getProfessionalRating(@RequestBody String professionalUserName) {
+        Users p = userService.getUserByUsername(professionalUserName);
+        return p.getTotalRating() / p.getRateTimes();
     }
 
 
@@ -253,10 +287,5 @@ public class UserController {
 //        Users ret = userService.registerUser(p1);
 //        return ret;
 //    }
-
-    @GetMapping("getAllProfessionals")
-    public List<Users> getAllProfessionals() {
-        return userService.getAllProfessionals();
-    }
 }
 

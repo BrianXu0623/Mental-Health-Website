@@ -35,5 +35,9 @@ public class ThreadCommentService {
     public List<ThreadComment> getAllComments() {
         return respository.findAll();
     }
+
+    public Long countCommentsByThreadId(Long threadId) {
+        return respository.countCommentsByThreadId(threadId);
+    }
 }
 
