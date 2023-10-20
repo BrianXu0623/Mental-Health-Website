@@ -123,11 +123,8 @@ public class UserService {
         return false;
     }
 
-    public Users updateProfile(String userName, String newUsername, String email, String phoneNumber, String birthday, String avatar) {
+    public Users updateProfile(String userName, String email, String phoneNumber, String birthday, String avatar) {
         Users user = userRepository.findByUsername(userName);
-        if(StringUtils.isNotBlank(newUsername)) {
-            user.setUsername(newUsername);
-        }
         if(StringUtils.isNotBlank(email)) {
             user.setEmail(email);
         }
