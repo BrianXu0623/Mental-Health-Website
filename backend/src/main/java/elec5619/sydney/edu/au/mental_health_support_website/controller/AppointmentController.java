@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -50,7 +51,7 @@ public class AppointmentController {
      * @return the appointment object
      */
     @PostMapping("/make")
-    public Appointment makeAppointment(
+    public AppointmentInfo makeAppointment(
             @RequestBody Appointment appointment
     ) {
         appointment.setStatus("in progress");
@@ -58,10 +59,10 @@ public class AppointmentController {
         Users professional = userService.getUserByUserId(appointment.getProfessionalUserId());
 
         return AppointmentInfo.builder()
-                .appointment(appointment)
+                .appointment(obj)
                 .professionalName(professional.getUsername())
-                .availability(professional.)
-                .clinic();
+                .availability(professional.getAvailableHours())
+                .clinic(professional.getClinic()).build();
     }
 
     /**
@@ -110,10 +111,17 @@ public class AppointmentController {
      * @return the appointment object associated with the id
      */
     @GetMapping("/get/{appointmentID}")
-    public Appointment getAppointment(
+    public AppointmentInfo getAppointment(
             @RequestBody Long appointmentId
     ) {
-        return appointmentService.getAppointment(appointmentId);
+        Appointment obj = appointmentService.getAppointment(appointmentId);
+        Users professional = userService.getUserByUserId(obj.getProfessionalUserId());
+
+        return AppointmentInfo.builder()
+                .appointment(obj)
+                .professionalName(professional.getUsername())
+                .availability(professional.getAvailableHours())
+                .clinic(professional.getClinic()).build();
     }
 
     /**
@@ -122,10 +130,75 @@ public class AppointmentController {
      * @return a list of appointment object associated a list of ids
      */
     @GetMapping("/get/ids")
-    public List<Appointment> getAppointments(
+    public List<AppointmentInfo> getAppointments(
             @RequestBody List<Long> appointmentIds
     ) {
-        return appointmentService.getAppointments(appointmentIds);
+        List<AppointmentInfo> objs = new ArrayList<>();
+        for (Long id : appointmentIds) {
+
+            Appointment appointment = appointmentService.getAppointment(id);
+            Users professional = userService.getUserByUserId(appointment.getProfessionalUserId());
+            objs.add(
+                   AppointmentInfo.builder()
+                           .appointment(appointment)
+                           .professionalName(professional.getUsername())
+                           .availability(professional.getAvailableHours())
+                           .clinic(professional.getClinic()).build()
+           );
+        }
+        return objs;
+    }
+
+    /**
+     * Get method for getting a list of appointments associated with a user id
+     * @param token the token of the user requested
+     * @return a list of appointment info if found, otherwise an empty list
+     */
+    @GetMapping("/get/byUser/")
+    public List<AppointmentInfo> getAppointmentsByUserToken(
+            @RequestHeader("token") String token
+    ) {
+        String username = TokenUtil.getUsernameFromToken(token);
+        Long userId = userService.getUserByUsername(username).getId();
+        List<AppointmentInfo> objs = new ArrayList<>();
+        for (Appointment appointment : appointmentService.getAppointmentByUserId(userId)) {
+            Users professional = userService.getUserByUserId(appointment.getProfessionalUserId());
+            objs.add(
+                   AppointmentInfo.builder()
+                           .appointment(appointment)
+                           .professionalName(professional.getUsername())
+                           .availability(professional.getAvailableHours())
+                           .clinic(professional.getClinic())
+                           .build()
+            );
+        }
+        return objs;
+    }
+
+    /**
+     * Get method for getting a list of appointments associated with a professional user id
+     * @param token the token of the user requested
+     * @return a list of appointment info if found, otherwise an empty list
+     */
+    @GetMapping("/get/byProfessionalUser/")
+    public List<AppointmentInfo> getAppointmentsByProfessionalUserId(
+            @RequestHeader("token") String token
+    ) {
+        String username = TokenUtil.getUsernameFromToken(token);
+        Long userId = userService.getUserByUsername(username).getId();
+        List<AppointmentInfo> objs = new ArrayList<>();
+        for (Appointment appointment : appointmentService.getAppointmentByProfessionalUserId(userId)) {
+            Users professional = userService.getUserByUserId(appointment.getProfessionalUserId());
+            objs.add(
+                    AppointmentInfo.builder()
+                            .appointment(appointment)
+                            .professionalName(professional.getUsername())
+                            .availability(professional.getAvailableHours())
+                            .clinic(professional.getClinic())
+                            .build()
+            );
+        }
+        return objs;
     }
 
 

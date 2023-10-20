@@ -4,5 +4,9 @@ import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Appointm
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
+    List<Appointment> findByUserId(Long userId);
+    List<Appointment> findByProfessionalUserId(Long professionalUserId);
 }
