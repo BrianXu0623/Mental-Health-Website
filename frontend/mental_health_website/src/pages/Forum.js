@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Hero from './Hero.js';
+import ThreadCard from './Cards/ThreadCard.js';
 
 const Forum = () => {
   const [threads, setThreads] = useState([]);
@@ -25,8 +26,7 @@ const Forum = () => {
       <Hero />
       {threads.map((thread, index) => (
         <div key={index}>
-          <h2>{thread.thread.title}</h2>
-          <p>{thread.thread.content}</p>
+          <ThreadCard key={index} title={thread.thread.title} content={thread.thread.content} tags={thread.tags} />
         </div>
       ))}
 

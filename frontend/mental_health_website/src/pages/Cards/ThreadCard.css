@@ -1,6 +1,6 @@
 /* ThreadCard.css */
 .thread-card {
-    max-width: 600px;
+    width: 95%;
     border: 1px solid #ccc;
     padding: 16px;
     margin: 16px auto;
