@@ -1,5 +1,6 @@
 package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
+import elec5619.sydney.edu.au.mental_health_support_website.controller.param.AppointmentInfo;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Appointment;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
@@ -10,6 +11,8 @@ import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -26,6 +29,21 @@ public class AppointmentController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/test-create")
+    public Appointment testCreate() {
+        Appointment obj  = Appointment.builder()
+                .appointmentTopic("Social Anxiety Disorder")
+                .date(LocalDate.now())
+                .time(LocalTime.now())
+                .status("In Progress")
+                .professionalUserId(1L)
+                .userId(2L)
+                .build();
+
+        return appointmentService.makeAppointment(
+            obj
+        );
+    }
     /**
      * Post method for making an appointment
      * @param appointment the appointment object that encapsulates all required information
@@ -35,10 +53,15 @@ public class AppointmentController {
     public Appointment makeAppointment(
             @RequestBody Appointment appointment
     ) {
-        appointmentService.makeAppointment(appointment);
-        appointmentService.editStatusAppointment("in progress", appointment);
+        appointment.setStatus("in progress");
+        Appointment obj = appointmentService.makeAppointment(appointment);
+        Users professional = userService.getUserByUserId(appointment.getProfessionalUserId());
 
-        return appointment;
+        return AppointmentInfo.builder()
+                .appointment(appointment)
+                .professionalName(professional.getUsername())
+                .availability(professional.)
+                .clinic();
     }
 
     /**
@@ -161,7 +184,7 @@ public class AppointmentController {
             return false;
         } else if (user.getUserType().equals("admin")) {
             return true;
-        } else if (!(apm.getProfessionUserId().equals(userId))) {
+        } else if (!(apm.getProfessionalUserId().equals(userId))) {
             return false;
         }
         return true;
@@ -180,7 +203,7 @@ public class AppointmentController {
             return false;
         } else if (user.getUserType().equals("admin")) {
             return true;
-        } else if (!(apm.getProfessionUserId().equals(userId)||apm.getUserId().equals(userId))) {
+        } else if (!(apm.getProfessionalUserId().equals(userId)||apm.getUserId().equals(userId))) {
             return false;
         }
         return true;

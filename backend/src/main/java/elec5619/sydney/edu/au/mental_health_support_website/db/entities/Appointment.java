@@ -19,13 +19,13 @@ import java.time.LocalTime;
 @Builder
 public class Appointment {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String status;
     private LocalDate date;
     private LocalTime time;
-    private Integer professionUserId;
-    private Integer userId;
+    private Long professionalUserId;
+    private Long userId;
     private String appointmentTopic;
 
     public Appointment() {
