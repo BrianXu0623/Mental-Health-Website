@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.Map;
 
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -345,9 +345,11 @@ public class ThreadController {
     public List<AppThreadInfo> searchThreadByTag(
       @RequestBody String tagName
     ) {
+
         ThreadTag tagObj = threadTagService.getTagByName(tagName);
         // I need  to find all the relationships
         List<ThreadTagRelationship> tags = threadTagRelationshipService.getThread(tagObj.getId());
+
         // Getting the tag name
         List<String> tagNames = new ArrayList<>();
         tagNames.add(tagName);

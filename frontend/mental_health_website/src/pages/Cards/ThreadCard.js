@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './ThreadCard.css';
 
-const InformationCard = ({title, content, tags}) => {
+const InformationCard = ({title, content, tags, no_comments}) => {
 
   return (
     <div className='thread-card'>
@@ -18,6 +18,9 @@ const InformationCard = ({title, content, tags}) => {
       </div>
 
       <div className='thread-body'>{content}</div>
+      <div className='thread-foot'>
+        <div className='no_comments'>{no_comments} comments</div>
+      </div>
       
     </div>
   );

@@ -46,10 +46,7 @@
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px; 
 }
-.thread-comments {
-    font-size: 0.9em;
-    color: #555;
-}
+
 
 .thread-time {
     font-size: 0.9em;
@@ -62,4 +59,10 @@ mark {
     background-color:#7fd8be;
     font-family: Space Grotesk;
     font-weight: bold; 
+}
+
+.no_comments{
+    color:#ccc;
+    margin:2px;
+    font-weight: 400;
 }
