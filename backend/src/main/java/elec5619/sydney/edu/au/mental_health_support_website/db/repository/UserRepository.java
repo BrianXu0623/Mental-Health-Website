@@ -11,6 +11,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     Users findByEmail(String email);
     Users findByUsername(String username);
     List<Users> findAllByIdIn(@Param("ids") List<Long> ids);
+    List<Users> findAllByUserType(String userType);
 //    int updateEmailById(Long id, String newEmail);
 //    int updateFollowedIdsById(Long id, String newFollowedIds);
 //    int updateFollowerIdsById(Long id, String newFollowerIds);

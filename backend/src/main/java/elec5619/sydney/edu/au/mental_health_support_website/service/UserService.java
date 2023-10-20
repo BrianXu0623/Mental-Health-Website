@@ -169,4 +169,14 @@ public class UserService {
         user.setToken("");
         return user;
     }
+
+    public List<Users> getAllProfessionals() {
+
+        List<Users> users = userRepository.findAllByUserType("professional");
+        for(Users cur : users) {
+            cur.setPassword("");
+            cur.setToken("");
+        }
+        return users;
+    }
 }

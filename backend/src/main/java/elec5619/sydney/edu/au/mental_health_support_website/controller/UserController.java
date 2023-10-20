@@ -246,5 +246,17 @@ public class UserController {
     public Users testLogin() {
         return userService.loginUser("testEmail@gmail.com", "testPassword");
     }
+
+//    @GetMapping("addSampleProfessionals")
+//    public Users addSampleProfessionals() throws IOException, InterruptedException {
+//        Users p1 = Users.builder().username("Dr. Emily Morgan").email("emilymorgan@outlook.com").userType("professional").password(EncryptionUtil.encrypt("Emily.12345")).phonenumber("0422748392").availableHours("1pm - 5pm Monday to Friday").clinic("Red Boundary Clinic").build();
+//        Users ret = userService.registerUser(p1);
+//        return ret;
+//    }
+
+    @GetMapping("getAllProfessionals")
+    public List<Users> getAllProfessionals() {
+        return userService.getAllProfessionals();
+    }
 }
 
