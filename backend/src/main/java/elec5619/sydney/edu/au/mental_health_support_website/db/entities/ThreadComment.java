@@ -16,8 +16,8 @@ public class ThreadComment {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private Integer userId;
-    private Integer threadId;
+    private Long userId;
+    private Long threadId;
     private String comment;
     private Date timestamp;
 }

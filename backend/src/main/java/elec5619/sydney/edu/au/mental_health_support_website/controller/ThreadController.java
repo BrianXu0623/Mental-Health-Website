@@ -114,12 +114,15 @@ public class ThreadController {
         AppThread thread = threadService.getThread(threadId);
         List<ThreadTag> tags = getThreadTagsFromThreadId(threadId);
         List<String> tagNames = getTagNamesFromThreadTags(tags);
+        List<ThreadComment> comments = threadCommentService.getThreadComments(threadId);
         String authorName = userService.getUserByUserId(thread.getAuthorID()).getUsername();
+
 
         return AppThreadInfo.builder()
                 .thread(thread)
                 .tagNames(tagNames)
                 .authorName(authorName)
+                .comments(comments)
                 .build();
     }
 
@@ -158,8 +161,6 @@ public class ThreadController {
         }
         return ids;
     }
-
-
 
     /**
      * Get method for getting a list of threads provided by their ids
@@ -204,6 +205,7 @@ public class ThreadController {
                             .thread(thread)
                             .tagNames(tagNames)
                             .authorName(authorName)
+                            .noComments(threadCommentService.countCommentsByThreadId(thread.getId()))
                             .build()
             );
         }
@@ -335,6 +337,39 @@ public class ThreadController {
     }
 
     /**
+     * Get method for searching a list of thread given a tag name
+     * @param tagName the name of the tag to be searched
+     * @return a list of thread associated with the tag name
+     */
+    @GetMapping("/search/tag")
+    public List<AppThreadInfo> searchThreadByTag(
+      @RequestBody String tagName
+    ) {
+        ThreadTag tagObj = threadTagService.getTagByName(tagName);
+        // I need  to find all the relationships
+        List<ThreadTagRelationship> tags = threadTagRelationshipService.getThread(tagObj.getId());
+        // Getting the tag name
+        List<String> tagNames = new ArrayList<>();
+        tagNames.add(tagName);
+
+        // Now getting all the AppThread
+        List<AppThreadInfo> resultSet = new ArrayList<>();
+        for (ThreadTagRelationship tag : tags) {
+            AppThread thread = threadService.getThread(tag.getThreadId());
+            resultSet.add(
+                    AppThreadInfo.builder()
+                            .thread(thread)
+                            .tagNames(tagNames)
+                            .noComments(threadCommentService.countCommentsByThreadId(thread.getId()))
+                            .build()
+            );
+        }
+
+        return resultSet;
+    }
+
+
+    /**
      * method used to check if the user can edit or remove thread
      * an eligible users are those either created the thread or has the admin user_type
      * @param userId the id of the user
@@ -418,17 +453,6 @@ public class ThreadController {
 
     // Request methods for thread comment
 
-    /**
-     * Get method for acquiring all comments associated with a specific thread id
-     * @param threadId the thread id for the comments to be requested
-     * @return a list of comments associated with the thread id
-     */
-    @GetMapping("/comment/{threadId}/getAll")
-    public List<ThreadComment> getAllCommentsByThreadId(
-            @PathVariable Long threadId
-    ) {
-        return threadCommentService.getThreadComments(threadId);
-    }
 
     /**
      * a post method for creating a thread comment associated with a specific thread

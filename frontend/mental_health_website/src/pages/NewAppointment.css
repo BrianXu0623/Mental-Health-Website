@@ -1,0 +1,66 @@
+/* NewAppointment.css */
+.new-appointment-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.new-appointment-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.new-appointment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.new-appointment-form .form-group {
+    margin-bottom: 15px;
+}
+
+.new-appointment-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.new-appointment-form .date-picker {
+}
+
+.new-appointment-form .available-times {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.new-appointment-form .available-time {
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.new-appointment-form button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+
+
+
+
