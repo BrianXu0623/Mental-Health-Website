@@ -14,8 +14,14 @@
     }
 
     .loginForm{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         align-self: center;
         margin: 20px;
         align-items: stretch;
-        
+    }
+
+    Form {
+        border-radius: 20px;
     }

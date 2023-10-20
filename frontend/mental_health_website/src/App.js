@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NoPage from "./pages/NoPage";
@@ -15,6 +16,21 @@ import UserProfile from "./pages/UserProfile";
 
 
 export default function App() {
+
+  
+  useEffect(() => {
+    window.addEventListener('beforeunload', clearLocalStorage);
+
+    return () => {
+      window.removeEventListener('beforeunload', clearLocalStorage);
+    };
+  }, []);
+
+  const clearLocalStorage = () => {
+    localStorage.clear();
+  };
+  
+
   return (
     
     <BrowserRouter>
