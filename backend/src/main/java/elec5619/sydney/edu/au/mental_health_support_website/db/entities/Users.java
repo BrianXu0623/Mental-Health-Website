@@ -30,6 +30,8 @@ public class Users {
     private String experience;
     private String availableHours;
     private String clinic;
+    private Long totalRating = 0L;
+    private Long rateTimes = 0L;
     public Users() {}
 //    CREATE TABLE User (
 //    id BIGINT AUTO_INCREMENT PRIMARY KEY,

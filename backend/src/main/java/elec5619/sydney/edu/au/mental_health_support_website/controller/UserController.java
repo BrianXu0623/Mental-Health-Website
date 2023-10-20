@@ -1,9 +1,6 @@
 package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
-import elec5619.sydney.edu.au.mental_health_support_website.controller.param.LoginInfo;
-import elec5619.sydney.edu.au.mental_health_support_website.controller.param.PasswordUpdateInfo;
-import elec5619.sydney.edu.au.mental_health_support_website.controller.param.ProfileInfo;
-import elec5619.sydney.edu.au.mental_health_support_website.controller.param.RegisterInfo;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.param.*;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.res.LoginRes;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.res.RegisterRes;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
@@ -257,6 +254,22 @@ public class UserController {
     @GetMapping("getAllProfessionals")
     public List<Users> getAllProfessionals() {
         return userService.getAllProfessionals();
+    }
+
+    @PostMapping("rateProfessional")
+    public Long rateProfessional(@RequestHeader("token") String token,
+                                    @RequestBody ProfessionalRatingRequest professionalRatingRequest) {
+        String userName = TokenUtil.getUsernameFromToken(token);
+        Users p = userService.getUserByUsername(professionalRatingRequest.getProfessionalUserName());
+        p.setTotalRating(p.getTotalRating() + professionalRatingRequest.getRating());
+        p.setRateTimes(p.getRateTimes() + 1);
+        return p.getTotalRating() / p.getRateTimes();
+    }
+
+    @PostMapping("getProfessionalRating")
+    public Long rateProfessional(@RequestBody ProfessionalRatingRequest professionalRatingRequest) {
+        Users p = userService.getUserByUsername(professionalRatingRequest.getProfessionalUserName());
+        return p.getTotalRating() / p.getRateTimes();
     }
 }
 
