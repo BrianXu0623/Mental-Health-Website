@@ -12,4 +12,5 @@ public class ProfileInfo {
     String newEmail;
     String newPhoneNumber;
     String newBirthday;
+    String avatar;
 }

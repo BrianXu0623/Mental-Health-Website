@@ -159,7 +159,8 @@ public class UserController {
         String newEmail = profileInfo.getNewEmail();
         String newPhoneNumber = profileInfo.getNewPhoneNumber();
         String newBirthday = profileInfo.getNewBirthday();
-        return userService.updateProfile(userName, newUsername, newEmail, newPhoneNumber, newBirthday);
+        String avatar = profileInfo.getAvatar();
+        return userService.updateProfile(userName, newUsername, newEmail, newPhoneNumber, newBirthday, avatar);
     }
 
     /**
