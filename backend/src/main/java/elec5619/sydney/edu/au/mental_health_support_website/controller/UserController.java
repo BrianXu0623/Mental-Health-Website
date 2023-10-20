@@ -201,6 +201,42 @@ public class UserController {
         return userService.getUserByUsername(userName);
     }
 
+    /**
+     * Get method for all of the professional accounts
+     * @return All of the professional accounts
+     */
+    @GetMapping("getAllProfessionals")
+    public List<Users> getAllProfessionals() {
+        return userService.getAllProfessionals();
+    }
+
+    /**
+     * Post method for rating a professional
+     * @param token the token of the current user
+     * @param professionalRatingRequest information of professional rating request
+     * @return The latest average rating of the professional;
+     */
+    @PostMapping("rateProfessional")
+    public Long rateProfessional(@RequestHeader("token") String token,
+                                 @RequestBody ProfessionalRatingRequest professionalRatingRequest) {
+        String userName = TokenUtil.getUsernameFromToken(token);
+        Users p = userService.getUserByUsername(professionalRatingRequest.getProfessionalUserName());
+        p.setTotalRating(p.getTotalRating() + professionalRatingRequest.getRating());
+        p.setRateTimes(p.getRateTimes() + 1);
+        return p.getTotalRating() / p.getRateTimes();
+    }
+
+    /**
+     * Get method for retrieving a professional's average rating
+     * @param professionalUserName  username of the professional
+     * @return The latest average rating of the professional;
+     */
+    @GetMapping("getProfessionalRating")
+    public Long getProfessionalRating(@RequestBody String professionalUserName) {
+        Users p = userService.getUserByUsername(professionalUserName);
+        return p.getTotalRating() / p.getRateTimes();
+    }
+
 
     // Testing Endpoints
     @GetMapping("testRegister1")
@@ -250,26 +286,5 @@ public class UserController {
 //        Users ret = userService.registerUser(p1);
 //        return ret;
 //    }
-
-    @GetMapping("getAllProfessionals")
-    public List<Users> getAllProfessionals() {
-        return userService.getAllProfessionals();
-    }
-
-    @PostMapping("rateProfessional")
-    public Long rateProfessional(@RequestHeader("token") String token,
-                                    @RequestBody ProfessionalRatingRequest professionalRatingRequest) {
-        String userName = TokenUtil.getUsernameFromToken(token);
-        Users p = userService.getUserByUsername(professionalRatingRequest.getProfessionalUserName());
-        p.setTotalRating(p.getTotalRating() + professionalRatingRequest.getRating());
-        p.setRateTimes(p.getRateTimes() + 1);
-        return p.getTotalRating() / p.getRateTimes();
-    }
-
-    @PostMapping("getProfessionalRating")
-    public Long rateProfessional(@RequestBody ProfessionalRatingRequest professionalRatingRequest) {
-        Users p = userService.getUserByUsername(professionalRatingRequest.getProfessionalUserName());
-        return p.getTotalRating() / p.getRateTimes();
-    }
 }
 
