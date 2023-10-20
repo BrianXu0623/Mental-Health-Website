@@ -20,4 +20,8 @@ public class ThreadTagRelationship {
     private Long id;
     private Long threadId;
     private Long tagId;
+
+    public ThreadTagRelationship() {
+        
+    }
 }

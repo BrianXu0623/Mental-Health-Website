@@ -48,4 +48,12 @@ public class AppointmentService {
     public List<Appointment> getAppointments(List<Long> appointmentIds) {
         return appointmentRepository.findAllById(appointmentIds);
     }
+
+    public List<Appointment> getAppointmentByUserId(Long userId) {
+        return appointmentRepository.findByUserId(userId);
+    }
+
+    public List<Appointment> getAppointmentByProfessionalUserId(Long professionalUserId) {
+        return appointmentRepository.findByProfessionalUserId(professionalUserId);
+    }
 }
