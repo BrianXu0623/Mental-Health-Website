@@ -155,12 +155,11 @@ public class UserController {
     private Users updateProfile(@RequestHeader("token") String token,
                                 @RequestBody ProfileInfo profileInfo) {
         String userName = TokenUtil.getUsernameFromToken(token);
-        String newUsername = profileInfo.getNewUsername();
         String newEmail = profileInfo.getNewEmail();
         String newPhoneNumber = profileInfo.getNewPhoneNumber();
         String newBirthday = profileInfo.getNewBirthday();
         String avatar = profileInfo.getAvatar();
-        return userService.updateProfile(userName, newUsername, newEmail, newPhoneNumber, newBirthday, avatar);
+        return userService.updateProfile(userName, newEmail, newPhoneNumber, newBirthday, avatar);
     }
 
     /**

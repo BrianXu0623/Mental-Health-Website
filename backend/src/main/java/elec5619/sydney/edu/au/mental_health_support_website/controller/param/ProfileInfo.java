@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class ProfileInfo {
-    String newUsername;
     String newEmail;
     String newPhoneNumber;
     String newBirthday;
