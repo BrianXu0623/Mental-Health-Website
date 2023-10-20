@@ -205,6 +205,7 @@ public class ThreadController {
                             .thread(thread)
                             .tagNames(tagNames)
                             .authorName(authorName)
+                            .noComments(threadCommentService.countCommentsByThreadId(thread.getId()))
                             .build()
             );
         }

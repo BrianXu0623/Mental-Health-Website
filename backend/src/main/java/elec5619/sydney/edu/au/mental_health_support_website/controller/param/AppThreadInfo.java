@@ -18,4 +18,5 @@ public class AppThreadInfo {
     private String authorName;
     private String userToken;
     private List<ThreadComment> comments;
+    private Long noComments;
 }
