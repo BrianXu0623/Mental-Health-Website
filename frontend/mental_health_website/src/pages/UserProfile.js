@@ -4,6 +4,26 @@ import './UserProfile.css';
 const UserProfile = () => {
 
     const [user, setUser] = useState([]);
+    const [nameForm, setNameForm] = useState('');
+
+    const updateUsername = (newUsername) => {
+        fetch('/api/users/updateProfile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ newUserName: newUsername,
+                                 newEmail: })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if(data.success) {
+            // Update username in the state if update is successful
+            setUsername(newUsername);
+          } else {
+            console.error('Failed to update username');
+          }
+        })
+        .catch((error) => console.error('Error:', error));
+      }
 
     useEffect(() => {
 
@@ -15,27 +35,23 @@ const UserProfile = () => {
         }
         })
         .then(response => response.json())
-        .then((data) => {
-        setUser(data);
-        })
+        .then((data) => {setUser(data);})
         .catch(error => console.error('There was an error!', error));
-    });
 
-    const userInfo = {
-        name: user.username,
-        email: user.email,
-        icon: user.avatar
-    };
+    setNameForm(user.username);
+    });
 
     const [isEditingName, setIsEditingName] = useState(false);
-    const [nameForm, setNameForm] = useState({
-        name: 'Example User',
-    });
+    const [isEditingEmail, setIsEditingEmail] = useState(false);
+    const [isEditingIcon, setIsEditingIcon] = useState(false);
+
+    
 
 
     const handleNameInputChange = (e) => {
         const { name, value } = e.target;
         setNameForm((prev) => ({ ...prev, [name]: value }));
+        localStorage.setItem('username', e.target);
     };
 
     const handleNameSubmit = async (e) => {
@@ -51,29 +67,31 @@ const UserProfile = () => {
     return (
         <div className="profile-container">
             <div className="header">
-                <img src={userInfo.icon} alt="User Avatar" className="icon"/>
+                <img src={user.avatar} alt="User Avatar" className="icon"/>
                 <div className='profile-header-middle'>
                     <div className='name'>
                         {isEditingName ? (
-                            <div>
+                            <>
                                 <input
                                     type="text"
                                     name="name"
-                                    value={nameForm.name}
+                                    value={nameForm}
                                     onChange={handleNameInputChange}
                                 />
                                 <button type="submit" onClick={handleNameSubmit}>Save</button>
-                            </div>
+                            </>
+                                
+                            
                             
                             
                         ) : (
                             <div>
-                                <h1 className="name">{nameForm.name}</h1>
+                                <h1 className="name">{nameForm}</h1>
                                 <button onClick={() => setIsEditingName(true)}>edit</button>
                             </div>
                         )}
                     </div>
-                    <p className="email">{userInfo.email}</p>
+                    <p className="email">{user.email}</p>
                 </div>
                 
             </div>
