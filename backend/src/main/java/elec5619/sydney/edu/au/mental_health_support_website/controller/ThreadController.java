@@ -337,6 +337,39 @@ public class ThreadController {
     }
 
     /**
+     * Get method for searching a list of thread given a tag name
+     * @param tagName the name of the tag to be searched
+     * @return a list of thread associated with the tag name
+     */
+    @GetMapping("/search/tag")
+    public List<AppThreadInfo> searchThreadByTag(
+      @RequestBody String tagName
+    ) {
+        ThreadTag tagObj = threadTagService.getTagByName(tagName);
+        // I need  to find all the relationships
+        List<ThreadTagRelationship> tags = threadTagRelationshipService.getThread(tagObj.getId());
+        // Getting the tag name
+        List<String> tagNames = new ArrayList<>();
+        tagNames.add(tagName);
+
+        // Now getting all the AppThread
+        List<AppThreadInfo> resultSet = new ArrayList<>();
+        for (ThreadTagRelationship tag : tags) {
+            AppThread thread = threadService.getThread(tag.getThreadId());
+            resultSet.add(
+                    AppThreadInfo.builder()
+                            .thread(thread)
+                            .tagNames(tagNames)
+                            .noComments(threadCommentService.countCommentsByThreadId(thread.getId()))
+                            .build()
+            );
+        }
+
+        return resultSet;
+    }
+
+
+    /**
      * method used to check if the user can edit or remove thread
      * an eligible users are those either created the thread or has the admin user_type
      * @param userId the id of the user
