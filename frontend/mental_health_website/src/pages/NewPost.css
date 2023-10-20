@@ -1,0 +1,49 @@
+.newPostForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: auto;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+
+
+#title {
+    width: 200px;
+    height: 40px;
+    padding: 10px;
+    margin: 5px 0 5px 0;
+    resize: none;
+}
+
+.create-post-container {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+#text {
+    width: 700px;
+    min-height: 500px;
+    padding: 10px;
+    margin: 5px 0 5px 0;
+    resize: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-container button:first-child {
+    margin-right: 10px;
+    align-self: flex-end;
+}
+
+
+.button-container textarea {
+    height: 38px;
+    align-self: flex-end;
+}
