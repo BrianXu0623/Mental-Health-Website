@@ -23,4 +23,8 @@ public class InformationService {
                 content(infoRes.getContent()).build();
         informationRepository.save(information);
     }
+
+    public Information getById(Long id) {
+        return informationRepository.getById(id);
+    }
 }
