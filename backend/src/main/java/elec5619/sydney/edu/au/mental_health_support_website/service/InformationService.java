@@ -18,12 +18,6 @@ public class InformationService {
         return informationRepository.findAll();
     }
 
-    public void insert(InfoRes infoRes) {
-        Information information = Information.builder().author(infoRes.getAuthor()).title(infoRes.getTitle()).
-                content(infoRes.getContent()).build();
-        informationRepository.save(information);
-    }
-
     public Optional<Information> getById(Long id) {
         return informationRepository.findById(id);
     }
