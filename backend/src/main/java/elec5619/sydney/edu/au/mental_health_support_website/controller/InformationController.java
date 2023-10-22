@@ -17,9 +17,9 @@ public class InformationController {
     @Resource
     private InformationService informationService;
     @GetMapping("/information")
-    public List<Information> getInfo() {
+    public InfoRes getInfo() {
         List<Information> informationList = informationService.getAll();
-        return informationList;
+        return new InfoRes(informationList);
     }
 
     @GetMapping("/information/{infoId}")

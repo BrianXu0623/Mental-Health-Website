@@ -1,6 +1,9 @@
 package elec5619.sydney.edu.au.mental_health_support_website.controller.res;
 
+import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Information;
 import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Setter
@@ -8,7 +11,5 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 public class InfoRes {
-    private String title;
-    private String content;
-    private String author;
+    private List<Information> informationList;
 }
