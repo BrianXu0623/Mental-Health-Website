@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './ThreadCard.css';
 
-const InformationCard = ({id, title, content, tags, no_comments}) => {
+const ThreadCard = ({title, content, tags, no_comments}) => {
 
   return (
     <div className='thread-card'>
@@ -26,4 +26,4 @@ const InformationCard = ({id, title, content, tags, no_comments}) => {
   );
 }
 
-export default InformationCard;
+export default ThreadCard;

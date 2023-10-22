@@ -78,15 +78,16 @@
   }
 
   .search-bar-container{
-    align-items: center;
+    align-items: stretch;
   }
   
  .search-bar{
     align-self: center;
+    width: 100%;
     height: 20px;
     padding-top:20px;
  }
 
  .search-bar input[type='text']{
-    width:400px;
+    width:100%;
  }

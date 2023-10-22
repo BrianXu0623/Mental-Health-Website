@@ -1,25 +1,55 @@
+
 .information-card-link{
+    text-decoration: none;
+    color: inherit;
     display: flex;
-    border: 1px solid #ccc;
     padding: '16px';
     margin: '16px';
-    width: 1700px;
+    width: 100%;
     height: 350px;
+}
+
+.information-card-item{
+    list-style: none;
+    border-radius: 0%;
 }
 
 .information-card{
     list-style-type: none;
     display: grid;
     grid-gap: 20px;
-    border-radius: 10px;
 }
 
 .information-card-left{
-    width: 1400px;
+    width: 80%;
     background-color: white;
 }
 
 .information-card-right{
-    width: 300px;
+    width: 20%;
     background-color: #ccc;
+    font-size:xx-large;
+    font-family: Space Grotesk;
+    text-align: center;
+    font-weight: 50;
+}
+
+.information-card-title{
+    font-size: 24px; 
+    color: #333; 
+    font-weight: bold; 
+    margin-bottom: 10px; 
+}
+
+.information-card-content{
+    font-size: 16px; 
+    color: #666; 
+    line-height: 1.6; 
+    margin-bottom: 15px; 
+}
+
+.information-card-author{
+    font-size: 24px; 
+    color: #333; 
+    font-weight:100;
 }

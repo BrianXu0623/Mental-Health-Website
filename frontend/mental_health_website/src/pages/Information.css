@@ -1,26 +1,26 @@
 .information-card{
-    border: 1px solid #ccc;
     padding: '16px';
     margin: '16px';
-    width: 1700px;
-    height: 350px;
+    width: 100%;
+    height: 100%;
 }
 
 .card-container{
     display: grid;
     grid-gap: 20px;
-    border-radius: 10px;
+    width: 100%;
 }
 
 .card-list-left{
     justify-self: left;
     align-items: left;
-    padding-left: 80px;
+    padding-left: 3%;
+
 }
 
 .card-list-right{
     justify-self: right;
     align-items: end;
-    padding-right: 80px;
+    padding-right: 3%;
     transition: left 0.3s ease-in-out;
 }

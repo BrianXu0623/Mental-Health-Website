@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Information.css";
 import Hero from "./Hero.js";
 import InformationCard from './Cards/InformationCard';
@@ -7,14 +7,15 @@ const Information = () => {
 
   const [data, setData] = useState([]);
 
-    fetch('http://localhost:8080/information')
-        .then(response => response.json())
-        .then((data) => {
-          setData(data);
-        })
-        .catch(error => console.error('Error:', error));
-
-    console.log(data);
+    useEffect(() => {
+      fetch('http://localhost:8080/information')
+      .then(response => response.json())
+      .then((data) => {
+        setData(data);
+      })
+      .catch(error => console.error('Error:', error));
+    }, []);
+    
 
     return (
       <>

@@ -58,10 +58,6 @@ const UserProfile = () => {
         setIsEditingName(false); 
     };
 
-    const list1 = ['Item 1', 'Item 2', 'Item 3'];
-    const list2 = ['Item 1', 'Item 2', 'Item 3'];
-    const list3 = ['Item 1', 'Item 2', 'Item 3'];
-
     return (
         <div className="profile-container">
             <div className="header">
@@ -94,14 +90,17 @@ const UserProfile = () => {
             </div>
 
             <div className="lists-container">
-                <ul className="list">
-                    {list1.map((item, index) => <li key={index}>{item}</li>)}
+                <ul className="post-list">
+                    <li>My Posts:</li>
+
                 </ul>
-                <ul className="list">
-                    {list2.map((item, index) => <li key={index}>{item}</li>)}
+                <ul className="bookmark-list">
+                    <li>My Bookmarks:</li>
+                    
                 </ul>
-                <ul className="list">
-                    {list3.map((item, index) => <li key={index}>{item}</li>)}
+                <ul className="appointment-list">
+                    <li>My Appointments:</li>
+                    
                 </ul>
             </div>
 
