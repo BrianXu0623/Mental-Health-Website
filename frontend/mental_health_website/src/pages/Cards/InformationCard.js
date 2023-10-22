@@ -3,11 +3,15 @@ import { Link } from 'react-router-dom';
 import './Cards.css';
 import './InformationCard.css';
 
-export default function InformationCard(id, title, content, author) {
+export default function InformationCard({id, title, content, author}) {
+  console.log('ID:', id); 
+    console.log('Title:', title); 
+    console.log('Content:', content); 
+    console.log('Author:', author); 
   return (
     <div className='information-card'>
       <li className='information-card-item'>
-        <Link className='information-card-link' to={'/information/{id}'}>
+        <Link className='information-card-link' to={`/information/${id}`}>
             <div className='information-card-left'>
                 <div className='information-card-title'>
                     <h3>{title}</h3>

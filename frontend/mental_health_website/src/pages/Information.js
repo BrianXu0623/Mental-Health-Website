@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./Information.css";
 import Hero from "./Hero.js";
 import InformationCard from './Cards/InformationCard';
@@ -14,15 +14,16 @@ const Information = () => {
         })
         .catch(error => console.error('Error:', error));
 
+    console.log(data);
 
     return (
       <>
         <Hero />
         <div className='card-container'>
           {data.map((item, index) => (
-            <div key={index} className={`${index % 2 === 0 ? 'card-list-left' : 'card-list-right'}`}>
-              <InformationCard id={data.}
-            </div>))};
+            <div key={item.id} className={`${index % 2 === 0 ? 'card-list-left' : 'card-list-right'}`}>
+              <InformationCard id={item.id} title={item.title} content={item.content} author={item.author} />
+            </div>))}
         </div>
       </>
       

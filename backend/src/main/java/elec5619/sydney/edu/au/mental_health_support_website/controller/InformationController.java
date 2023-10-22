@@ -1,5 +1,6 @@
 package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
+import elec5619.sydney.edu.au.mental_health_support_website.controller.param.InformationInfo;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.res.InfoRes;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Information;
 import elec5619.sydney.edu.au.mental_health_support_website.service.InformationService;
@@ -17,9 +18,9 @@ public class InformationController {
     @Resource
     private InformationService informationService;
     @GetMapping("/information")
-    public InfoRes getInfo() {
+    public List<Information> getInfo() {
         List<Information> informationList = informationService.getAll();
-        return new InfoRes(informationList);
+        return informationList;
     }
 
     @GetMapping("/information/{infoId}")

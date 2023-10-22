@@ -1,4 +1,4 @@
-
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import Hero from './Hero.js';
 import ThreadCard from './Cards/ThreadCard.js';
@@ -26,9 +26,9 @@ const Forum = () => {
     <div>
       <Hero />
       {threads.map((thread, index) => (
-        <div key={index}>
+        <Link to={`/forum/${thread.thread.id}`} key={index}>
           <ThreadCard id={thread.thread.id} key={index} title={thread.thread.title} content={thread.thread.content} tags={thread.tagNames} no_comments={thread.noComments} />
-        </div>
+        </Link>
       ))}
 
     </div>
