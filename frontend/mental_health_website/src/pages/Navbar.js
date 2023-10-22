@@ -38,7 +38,7 @@ function Navbar() {
     <>
       <nav className="nav">
         <div className='navbar-container'>
-          <Link to="/" className="website-title">USYD Mental<br />Health Support</Link>
+          <Link to="/" className="website-title">USYD Mental<br/>Health Support</Link>
           <ul className='nav-menu'>
             <li className='nav-item'>
               <Link to='/information' className='nav-links'>
@@ -60,8 +60,7 @@ function Navbar() {
           <ul className='nav-menu'>
             <li className='search-bar-container'>
               <form className='search-bar' onSubmit={search}>
-                <input type='text' id='search-content'>
-                  
+                <input type='text' id='search-content' placeholder='search'>
                 </input>
                 
               </form>

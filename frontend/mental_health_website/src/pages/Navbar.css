@@ -1,5 +1,5 @@
 .nav {
-    background-color: white;
+    background-color: #0074DD;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,6 +15,7 @@
   
   .website-title {
     color: rgb(111, 111, 111);
+    color: white;
     justify-self: start;
     cursor: pointer;
     text-decoration: none;
@@ -55,6 +56,7 @@
   
   .nav-links {
     color: rgb(111, 111, 111);
+    color: white;
     display: flex;
     align-items: center;
     font-family:sans-serif;
@@ -67,6 +69,7 @@
   .nav-links:hover {
     border-bottom: 4px solid darkgray;
     transition: all 0.2s ease-out;
+    color: #FDB750;
   }
   
   .fa-bars {
@@ -86,8 +89,18 @@
     width: 100%;
     height: 20px;
     padding-top:20px;
+    border-radius: 8px;
+    min-width: 300px;
  }
 
  .search-bar input[type='text']{
     width:100%;
+    border-radius: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+    margin-top: 10px;
+    font-family: sans-serif, Arial, Helvetica, sans-serif;
+    color: black;
  }
+ 
