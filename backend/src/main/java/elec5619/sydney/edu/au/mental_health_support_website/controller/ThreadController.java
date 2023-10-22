@@ -212,6 +212,61 @@ public class ThreadController {
         return threadInfos;
     }
 
+    /**
+     * Post method for getting a list of thread given the author Id
+     * @param authorId the id of the author requested
+     * @return a list of threads
+     */
+    @PostMapping("/get/byAuthor")
+    public List<AppThreadInfo> getThreadsBasedOnAuthorID(
+            @RequestBody Long authorId
+    ) {
+        List<AppThread> threads = threadService.findByAuthorID(authorId);
+        List<AppThreadInfo> threadInfos = new ArrayList<>();
+        for (AppThread thread : threads) {
+            List<ThreadTag> tags = getThreadTagsFromThreadId(thread.getId());
+            List<String> tagNames = getTagNamesFromThreadTags(tags);
+            String authorName = userService.getUserByUserId(thread.getAuthorID()).getUsername();
+            threadInfos.add(
+                    AppThreadInfo.builder()
+                            .thread(thread)
+                            .tagNames(tagNames)
+                            .authorName(authorName)
+                            .noComments(threadCommentService.countCommentsByThreadId(thread.getId()))
+                            .build()
+            );
+        }
+        return threadInfos;
+    }
+
+    /**
+     * Post method for getting a list of thread given a user token
+     * @param token the token of the author requested
+     * @return a list of threads
+     */
+    @PostMapping("/get/byUserToken")
+    public List<AppThreadInfo> getThreadsBasedOnUserToken(
+            @RequestHeader("token") String token
+    ) {
+        Long authorId = userService.getUserByUsername(getUsernameFromToken(token)).getId();
+        List<AppThread> threads = threadService.findByAuthorID(authorId);
+        List<AppThreadInfo> threadInfos = new ArrayList<>();
+        for (AppThread thread : threads) {
+            List<ThreadTag> tags = getThreadTagsFromThreadId(thread.getId());
+            List<String> tagNames = getTagNamesFromThreadTags(tags);
+            String authorName = userService.getUserByUserId(thread.getAuthorID()).getUsername();
+            threadInfos.add(
+                    AppThreadInfo.builder()
+                            .thread(thread)
+                            .tagNames(tagNames)
+                            .authorName(authorName)
+                            .noComments(threadCommentService.countCommentsByThreadId(thread.getId()))
+                            .build()
+            );
+        }
+        return threadInfos;
+    }
+
 
     /**
      * Put method for requesting a change in thread content, this ranging from

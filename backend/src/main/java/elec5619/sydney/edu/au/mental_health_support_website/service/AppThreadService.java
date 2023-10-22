@@ -67,4 +67,8 @@ public class AppThreadService {
     public List<AppThread> getAllExistingThreads() {
         return threadRepository.findAll();
     }
+
+    public List<AppThread> findByAuthorID(Long authorId) {
+        return threadRepository.findByAuthorID(authorId);
+    }
 }
