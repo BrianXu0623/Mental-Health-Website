@@ -6,9 +6,10 @@
     align-items: center;
     border: 1px solid lightgray;
     padding: 20px;
-    margin: 40px;
+    margin: 20px;
     height: 250px;
     width: calc(100% - 80px);
+    border-radius: 12px;
   }
 
   .icon {

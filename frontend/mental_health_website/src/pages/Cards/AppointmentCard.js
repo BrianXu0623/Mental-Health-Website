@@ -11,7 +11,7 @@ export default function InformationCard(props) {
             <img src={props.icon} alt='icon' />
         </div>
         <div className='information'>
-            <p> {props.name} </p>
+            <h2> {props.name} </h2>
             <p> {props.institude} </p>
             <p> Available hours: { props.available} </p>
         </div>
