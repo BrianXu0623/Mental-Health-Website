@@ -1,11 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import './UserProfile.css';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
 
     const [user, setUser] = useState([]);
     const [nameForm, setNameForm] = useState('');
     const [username, setUsername] = useState("");
+    const navigate = useNavigate();
+
+    const handleLogout = () =>{
+        localStorage.clear();
+        navigate('/information');
+    };
 
     const updateUsername = (newUsername) => {
         fetch('http://localhost:8080/api/users/updateProfile', {
@@ -97,6 +104,8 @@ const UserProfile = () => {
                     {list3.map((item, index) => <li key={index}>{item}</li>)}
                 </ul>
             </div>
+
+            <button onClick={handleLogout}> log out </button>
         </div>
     );
 }

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import "./Navbar.css"
 
 
@@ -8,6 +8,31 @@ function Navbar() {
   const search = () => {
 
   }
+
+  const [username, setUsername] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const checkUsername = () => {
+    const storedUsername = localStorage.getItem('username');
+    setUsername(storedUsername);
+  }
+
+  useEffect(() => {
+    checkUsername();
+
+    // Listener for route changes
+    const unlisten = () => {
+      // This is a mock function, you need to implement actual listener
+      // for route change using useNavigate and useLocation or other alternatives
+      checkUsername();
+    };
+
+    // Simulate a route change listener with useEffect dependencies
+    return () => {
+      unlisten();
+    };
+  }, [location]);
 
   return (
     <>
@@ -43,10 +68,10 @@ function Navbar() {
               
             </li>
             <li className='nav-item'>
-              {localStorage.getItem('username') !== null ? (
+              {username !== null ? (
                 <Link to='/account' className='welcome-user'>
                   <div>Welcome, </div>
-                  <div>{localStorage.getItem('username')}!</div>
+                  <div>{username}!</div>
                 </Link>
                 
               ) : (

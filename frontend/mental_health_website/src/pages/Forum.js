@@ -27,7 +27,7 @@ const Forum = () => {
       <Hero />
       {threads.map((thread, index) => (
         <div key={index}>
-          <ThreadCard key={index} title={thread.thread.title} content={thread.thread.content} tags={thread.tagNames} no_comments={thread.noComments} />
+          <ThreadCard id={thread.thread.id} key={index} title={thread.thread.title} content={thread.thread.content} tags={thread.tagNames} no_comments={thread.noComments} />
         </div>
       ))}
 

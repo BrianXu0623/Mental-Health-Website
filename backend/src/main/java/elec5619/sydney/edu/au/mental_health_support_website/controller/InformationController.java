@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/")
 public class InformationController {
-    @GetMapping("/info")
+    @GetMapping("/information")
     public List<InfoRes> testCreate() {
         List<InfoRes> list = new ArrayList<>();
         InfoRes infoRes1 = InfoRes.builder().author("Dr. Jack")

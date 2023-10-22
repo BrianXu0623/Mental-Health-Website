@@ -3,22 +3,22 @@ import { Link } from 'react-router-dom';
 import './Cards.css';
 import './InformationCard.css';
 
-export default function InformationCard(props) {
+export default function InformationCard(id, title, content, author) {
   return (
     <div className='information-card'>
       <li className='information-card-item'>
-        <Link className='information-card-link' to={props.path}>
+        <Link className='information-card-link' to={'/information/{id}'}>
             <div className='information-card-left'>
                 <div className='information-card-title'>
-                    <h3>{props.title}</h3>
+                    <h3>{title}</h3>
                 </div>
                 <div className='information-card-info'>
-                    <h5 className='information-card-text'>{props.text}</h5>
+                    <h5 className='information-card-text'>{content}</h5>
                 </div>
             </div>
             <div className='information-card-right'>
                 <h4>
-                    {props.author}
+                    {author}
                 </h4>
             </div>
             
