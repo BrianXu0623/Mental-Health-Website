@@ -244,7 +244,7 @@ public class ThreadController {
      * @param token the token of the author requested
      * @return a list of threads
      */
-    @PostMapping("/get/byUserToken")
+    @GetMapping("/get/byUserToken")
     public List<AppThreadInfo> getThreadsBasedOnUserToken(
             @RequestHeader("token") String token
     ) {
