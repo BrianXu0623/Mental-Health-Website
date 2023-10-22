@@ -129,7 +129,7 @@ public class AppointmentController {
      * @param appointmentIds a list of appointment ids
      * @return a list of appointment object associated a list of ids
      */
-    @GetMapping("/get/ids")
+    @GetMapping("/get/all")
     public List<AppointmentInfo> getAppointments(
             @RequestBody List<Long> appointmentIds
     ) {
