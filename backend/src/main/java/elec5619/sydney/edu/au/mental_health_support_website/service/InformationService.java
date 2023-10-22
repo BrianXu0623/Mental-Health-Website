@@ -7,6 +7,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InformationService {
@@ -18,13 +19,12 @@ public class InformationService {
     }
 
     public void insert(InfoRes infoRes) {
-        id += 1;
         Information information = Information.builder().author(infoRes.getAuthor()).title(infoRes.getTitle()).
                 content(infoRes.getContent()).build();
         informationRepository.save(information);
     }
 
-    public Information getById(Long id) {
-        return informationRepository.getById(id);
+    public Optional<Information> getById(Long id) {
+        return informationRepository.findById(id);
     }
 }

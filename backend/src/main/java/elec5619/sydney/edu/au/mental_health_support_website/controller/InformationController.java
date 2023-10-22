@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -23,7 +24,8 @@ public class InformationController {
 
     @GetMapping("/information/{infoId}")
     public Information getInfoById(@PathVariable Long infoId) {
-        return informationService.getById(infoId);
+        Optional<Information> informationOptional = informationService.getById(infoId);
+        return informationOptional.orElse(null);
     }
 
 //    public void generateSampleData() {
