@@ -248,7 +248,7 @@ public class ThreadController {
     public List<AppThreadInfo> getThreadsBasedOnUserToken(
             @RequestHeader("token") String token
     ) {
-        Long authorId = userService.getUserByUsername(getUsernameFromToken(token)).getId();
+        Long authorId = userService.getUserByUsername(TokenUtil.getUsernameFromToken(token)).getId();
         List<AppThread> threads = threadService.findByAuthorID(authorId);
         List<AppThreadInfo> threadInfos = new ArrayList<>();
         for (AppThread thread : threads) {
