@@ -21,14 +21,10 @@ function Navbar() {
   useEffect(() => {
     checkUsername();
 
-    // Listener for route changes
     const unlisten = () => {
-      // This is a mock function, you need to implement actual listener
-      // for route change using useNavigate and useLocation or other alternatives
       checkUsername();
     };
 
-    // Simulate a route change listener with useEffect dependencies
     return () => {
       unlisten();
     };
@@ -88,30 +84,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-
-/*
-return (
-    <nav className="nav">
-      
-      <ul>
-        <li>
-          <a href="/information">Information</a>
-        </li>
-        <li>
-          <a href="/forum">Forum</a>
-        </li>
-        <li>
-          <a href="/appointment">Appointment</a>
-        </li>
-      </ul>
-      <ul>
-        <li
-      >
-        <a href="/login">Login</a>
-      </li>
-      </ul>
-      
-    </nav>
-  );
-  */

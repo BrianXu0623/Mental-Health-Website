@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import './DetailedThread.css';
 
 function DetailedThread() {
@@ -8,13 +8,28 @@ function DetailedThread() {
         console.log("favorited");
     }
 
+    const { id } = useParams();
+    const [thread, setThread] = useState([]);
+
+    fetch(`http://localhost:8080/api/threads/get/id/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+        })
+        .then(response => response.json())
+        .then((data) => {setThread(data);})
+        .catch(error => console.error('There was an error!', error));
+
+    console.log(thread.thread.title);
+
     return (
         <div className="detailed-thread">
 
             <div className="thread-content">
-                <h1>Thread Title</h1>
+                <h1>{thread.thread.title}</h1>
                 <p>
-                    This is thread content
+                    {thread.thread.content}
                 </p>
             </div>
 
@@ -26,8 +41,12 @@ function DetailedThread() {
 
             <div className="comments">
 
-                <p>Comment 1</p>
-                <p>Comment 2</p>
+                {(thread.comments).map((item, index) => (
+                    <div>
+                        <div>{item.title}</div>
+                        <div>{item.content}</div>
+                    </div>
+                ))}
 
             </div>
 

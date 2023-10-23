@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 const UserProfile = () => {
 
     const [user, setUser] = useState([]);
+    const [myposts, setMyPosts] = useState([]);
+    const [myAppointments, setMyAppointments] = useState([]);
     const [nameForm, setNameForm] = useState('');
     const [username, setUsername] = useState("");
     const navigate = useNavigate();
@@ -46,7 +48,36 @@ const UserProfile = () => {
         .catch(error => console.error('There was an error!', error));
 
     setUsername (user.username);
-    });
+
+    fetch('http://localhost:8080/api/appointments/get/byUser', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': localStorage.getItem('token')
+        }
+        })
+        .then(response => response.json())
+        .then((data) => {setMyAppointments(data);})
+        .catch(error => console.error('There was an error!', error));
+
+    setUsername (user.username);
+
+    fetch('http://localhost:8080/api/threads/get/byUserToken', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': localStorage.getItem('token')
+        }
+        })
+        .then(response => response.json())
+        .then((data) => {setMyPosts(data);})
+        .catch(error => console.error('There was an error!', error));
+
+    setUsername (user.username);
+
+    }
+    
+    , []);
 
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingEmail, setIsEditingEmail] = useState(false);
@@ -89,22 +120,24 @@ const UserProfile = () => {
                 
             </div>
 
-            <div className="lists-container">
+            {/* <div className="lists-container">
                 <ul className="post-list">
                     <li>My Posts:</li>
-
-                </ul>
-                <ul className="bookmark-list">
-                    <li>My Bookmarks:</li>
-                    
+                    {myposts.map((item, index) => (
+                        <li key={index}>
+                            {item.name}
+                        </li>))}
                 </ul>
                 <ul className="appointment-list">
                     <li>My Appointments:</li>
-                    
+                    {myAppointments.map((item, index) => (
+                        <li key={index}>
+                            {item.name}
+                        </li>))}
                 </ul>
-            </div>
+            </div> */}
 
-            <button onClick={handleLogout}> log out </button>
+            <button className='logout-button' onClick={handleLogout}> log out </button>
         </div>
     );
 }
