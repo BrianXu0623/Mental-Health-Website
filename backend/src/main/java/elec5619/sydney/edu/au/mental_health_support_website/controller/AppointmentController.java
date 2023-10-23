@@ -185,7 +185,10 @@ public class AppointmentController {
             @RequestHeader("token") String token
     ) {
         String username = TokenUtil.getUsernameFromToken(token);
-        Long userId = userService.getUserByUsername(username).getId();
+        Users user = userService.getUserByUsername(username);
+        if (!user.getUserType().equals("professional"))
+            return new ArrayList<>();
+        Long userId = user.getId();
         List<AppointmentInfo> objs = new ArrayList<>();
         for (Appointment appointment : appointmentService.getAppointmentByProfessionalUserId(userId)) {
             Users professional = userService.getUserByUserId(appointment.getProfessionalUserId());

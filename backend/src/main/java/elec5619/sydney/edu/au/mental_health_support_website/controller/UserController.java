@@ -52,7 +52,7 @@ public class UserController {
         }
         String encrypted = EncryptionUtil.encrypt(password);
         Users user = Users.builder().username(username).password(encrypted).
-                email(email).build();
+                email(email).userType("normal").build();
         user.setToken(TokenUtil.generateToken(username));
         if (userService.registerUser(user) != null) {
             registerRes.setSuccess(true);

@@ -11,7 +11,7 @@
 
 .information-card-item{
     list-style: none;
-    border-radius: 0%;
+    /* border-radius: 0%; */
 }
 
 .information-card{
@@ -23,13 +23,15 @@
 .information-card-left{
     width: 80%;
     background-color: white;
+    padding: 10px;
 }
 
 .information-card-right{
+    padding: 10px;
     width: 20%;
     background-color: #ccc;
     font-size:xx-large;
-    font-family: Space Grotesk;
+    font-family: Arial;
     text-align: center;
     font-weight: 50;
 }
