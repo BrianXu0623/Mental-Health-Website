@@ -32,6 +32,9 @@
 }
 
 .thread-tags {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
     font-size: 0.9em;
     color: #777;
 };
