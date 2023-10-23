@@ -13,6 +13,7 @@ export default function DetailedInformation(){
         .then(response => response.json())
         .then((data) => {
           setData(data);
+          console.log(data);
         })
         .catch(error => console.error('Error:', error));
       }, []);

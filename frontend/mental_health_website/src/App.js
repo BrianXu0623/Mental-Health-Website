@@ -40,6 +40,8 @@ export default function App() {
           <Route path="/account" element={<UserProfile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/appointment/makeappointment/:id" element={<NewAppointment />} />
+          <Route path="/forum/newthread/" element={<NewPost />} />
           <Route path="/" element={<Information />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
