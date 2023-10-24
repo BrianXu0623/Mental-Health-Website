@@ -253,7 +253,8 @@ public class UserController {
         if(professionalComments == null) {
             professionalComments = new ArrayList<>();
         }
-        ProfessionalRes professionalRes = new ProfessionalRes(professional, professionalComments);
+        ProfessionalRes professionalRes = new ProfessionalRes(professional, professionalComments,
+                professional.getTotalRating() / professional.getRateTimes());
         return professionalRes;
     }
 

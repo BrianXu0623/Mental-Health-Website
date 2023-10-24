@@ -16,4 +16,5 @@ import java.util.List;
 public class ProfessionalRes {
     private Users user;
     private List<ProfessionalComment> professionalCommentList;
+    private Long averageRating;
 }
