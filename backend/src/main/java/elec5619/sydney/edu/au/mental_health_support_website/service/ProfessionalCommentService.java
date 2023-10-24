@@ -3,9 +3,11 @@ package elec5619.sydney.edu.au.mental_health_support_website.service;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.ProfessionalComment;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.ProfessionalCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ProfessionalCommentService {
     @Autowired
     private ProfessionalCommentRepository repository;
