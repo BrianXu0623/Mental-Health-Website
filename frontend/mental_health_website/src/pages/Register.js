@@ -1,15 +1,18 @@
-// Register.js
-
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export default function Register() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [conPass, setConPass] = useState('');
     const [passwordsMatch, setPasswordsMatch] = useState(true);
+    const [redirectToLogin, setRedirectToLogin] = useState(false);
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -26,6 +29,8 @@ export default function Register() {
                 .then(response => response.json())
                 .then(data => {
                     console.log('Registration response:', data);
+
+                    navigate('/login');
                 })
                 .catch(error => {
                     console.error('Registration error:', error);
@@ -39,6 +44,8 @@ export default function Register() {
     function ButtonLink({ to, children }) {
         return <Link to={to}><button>{children}</button></Link>;
     }
+
+
 
     return (
         <>
