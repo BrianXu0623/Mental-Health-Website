@@ -165,6 +165,9 @@ public class UserService {
 
     public Users getUserByUsername(String userName) {
         Users user = userRepository.findByUsername(userName);
+        if(user == null) {
+            return null;
+        }
         user.setPassword("");
         user.setToken("");
         return user;
