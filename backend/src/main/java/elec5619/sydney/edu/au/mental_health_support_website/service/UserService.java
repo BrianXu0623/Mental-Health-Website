@@ -22,7 +22,7 @@ public class UserService {
         // Add logic to validate and save the user
         Users ret = userRepository.save(user);
         ret.setPassword("");
-        ret.setToken("");
+//        ret.setToken("");
         return ret;
     }
 
