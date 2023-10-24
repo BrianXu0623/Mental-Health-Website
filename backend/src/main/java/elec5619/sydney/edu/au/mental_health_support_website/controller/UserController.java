@@ -242,8 +242,8 @@ public class UserController {
         return p.getTotalRating() / p.getRateTimes();
     }
 
-    @PostMapping("searchProfessional")
-    private ProfessionalRes searchProfessional(@RequestBody String userName) {
+    @GetMapping("searchProfessional/{userName}")
+    private ProfessionalRes searchProfessional(@PathVariable String userName) {
         Users professional = userService.getUserByUsername(userName);
         if(professional == null) {
             return null;
