@@ -253,8 +253,12 @@ public class UserController {
         if(professionalComments == null) {
             professionalComments = new ArrayList<>();
         }
+        Long averageRating = 100L;
+        if( professional.getRateTimes() > 0) {
+            averageRating = professional.getTotalRating() / professional.getRateTimes();
+        }
         ProfessionalRes professionalRes = new ProfessionalRes(professional, professionalComments,
-                professional.getTotalRating() / professional.getRateTimes());
+                averageRating);
         return professionalRes;
     }
 
