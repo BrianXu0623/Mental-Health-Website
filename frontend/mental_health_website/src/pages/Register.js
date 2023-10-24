@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+
 export default function Register() {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
@@ -10,10 +11,23 @@ export default function Register() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (pass === conPass) {
-            // Passwords match, you can proceed with registration
             console.log('Registration successful');
+
+            fetch('http://localhost:8080/api/users/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password: pass }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Registration response:', data);
+                })
+                .catch(error => {
+                    console.error('Registration error:', error);
+                });
         } else {
-            // Passwords do not match, display an error message
             console.log('Passwords do not match');
             setPasswordsMatch(false);
         }
@@ -57,7 +71,7 @@ export default function Register() {
                     />
                 </Form.Group>
 
-                {!passwordsMatch && <p>Passwords do not match.</p>} {/* Display error message */}
+                {!passwordsMatch && <p>Passwords do not match.</p>}
 
                 <Button type="submit" variant="primary">
                     REGISTER
@@ -69,4 +83,4 @@ export default function Register() {
             </ButtonLink>
         </>
     );
-};
+}
