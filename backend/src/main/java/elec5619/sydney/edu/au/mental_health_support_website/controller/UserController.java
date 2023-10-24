@@ -18,10 +18,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
 @RequestMapping("api/users")
-
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -196,8 +196,8 @@ public class UserController {
      * @param userName the username of the user
      * @return the requested user object if found, otherwise null
      */
-    @PostMapping("searchUser")
-    private Users searchUser(@RequestBody String userName) {
+    @GetMapping("searchUser/{userName}")
+    private Users searchUser(@PathVariable String userName) {
         return userService.getUserByUsername(userName);
     }
 
