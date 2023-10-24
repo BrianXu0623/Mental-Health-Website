@@ -1,19 +1,36 @@
+// Register.js
+
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+
 export default function Register() {
     const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [conPass, setConPass] = useState('');
     const [passwordsMatch, setPasswordsMatch] = useState(true);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (pass === conPass) {
-            // Passwords match, you can proceed with registration
+        if (password === conPass) {
             console.log('Registration successful');
+
+            fetch('http://localhost:8080/api/users/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, username, password }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Registration response:', data);
+                })
+                .catch(error => {
+                    console.error('Registration error:', error);
+                });
         } else {
-            // Passwords do not match, display an error message
             console.log('Passwords do not match');
             setPasswordsMatch(false);
         }
@@ -37,12 +54,22 @@ export default function Register() {
                     />
                 </Form.Group>
 
+                <Form.Group controlId="username">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="YourUsername"
+                    />
+                </Form.Group>
+
                 <Form.Group controlId="password">
                     <Form.Label>Password</Form.Label>
                     <Form.Control
                         type="password"
-                        value={pass}
-                        onChange={(e) => setPass(e.target.value)}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         placeholder="**********"
                     />
                 </Form.Group>
@@ -57,7 +84,7 @@ export default function Register() {
                     />
                 </Form.Group>
 
-                {!passwordsMatch && <p>Passwords do not match.</p>} {/* Display error message */}
+                {!passwordsMatch && <p>Passwords do not match.</p>}
 
                 <Button type="submit" variant="primary">
                     REGISTER
@@ -69,4 +96,4 @@ export default function Register() {
             </ButtonLink>
         </>
     );
-};
+}
