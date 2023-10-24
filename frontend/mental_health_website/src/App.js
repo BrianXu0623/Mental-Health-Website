@@ -36,7 +36,7 @@ export default function App() {
           <Route path="/forum" element={<Forum />} />
           <Route path="/forum/:id" element={< DetailedThread />} />
           <Route path="/appointment" element={<Appointment />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="/account" element={<UserProfile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
