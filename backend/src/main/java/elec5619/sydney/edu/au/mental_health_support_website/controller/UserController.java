@@ -59,6 +59,10 @@ public class UserController {
         Users user = Users.builder().username(username).password(encrypted).
                 email(email).userType("normal").build();
         user.setToken(TokenUtil.generateToken(username));
+        if(userService.getUserByUsername(user.getUsername()) != null) {
+            registerRes.setError(ErrorsEnum.USER_ALREADY_EXISTS.getErrorMessage());
+            return new ResponseEntity<>(registerRes, HttpStatus.METHOD_FAILURE);
+        }
         if (userService.registerUser(user) != null) {
             registerRes.setSuccess(true);
             registerRes.setToken(user.getToken());
