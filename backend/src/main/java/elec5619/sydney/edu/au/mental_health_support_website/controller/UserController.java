@@ -243,7 +243,7 @@ public class UserController {
     }
 
     @GetMapping("searchProfessional/{userName}")
-    private ProfessionalRes searchProfessional(@PathVariable String userName) {
+    public ProfessionalRes searchProfessional(@PathVariable String userName) {
         Users professional = userService.getUserByUsername(userName);
         if(professional == null) {
             return null;

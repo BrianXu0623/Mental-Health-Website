@@ -1,5 +1,7 @@
 package elec5619.sydney.edu.au.mental_health_support_website;
 
+import elec5619.sydney.edu.au.mental_health_support_website.controller.UserController;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.res.ProfessionalRes;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
 import elec5619.sydney.edu.au.mental_health_support_website.service.UserService;
 import elec5619.sydney.edu.au.mental_health_support_website.util.EncryptionUtil;
@@ -16,6 +18,9 @@ class MentalHealthSupportWebsiteApplicationTests {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    UserController userController;
 
     @Test
     void contextLoads() {
@@ -77,5 +82,11 @@ class MentalHealthSupportWebsiteApplicationTests {
     void testValidatePasswordSuccess() {
         boolean isValidate = EncryptionUtil.validatePassword("Xxx.1234.xxx");
         assertTrue(isValidate);
+    }
+
+    @Test
+    void testGetProfessional() {
+        ProfessionalRes professionalRes =userController.searchProfessional("Dr. David Collins");
+        assertNotNull(professionalRes);
     }
 }
