@@ -2,8 +2,11 @@ package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
 import elec5619.sydney.edu.au.mental_health_support_website.controller.param.*;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.res.LoginRes;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.res.ProfessionalRes;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.res.RegisterRes;
+import elec5619.sydney.edu.au.mental_health_support_website.db.entities.ProfessionalComment;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
+import elec5619.sydney.edu.au.mental_health_support_website.service.ProfessionalCommentService;
 import elec5619.sydney.edu.au.mental_health_support_website.service.UserService;
 import elec5619.sydney.edu.au.mental_health_support_website.util.EncryptionUtil;
 import elec5619.sydney.edu.au.mental_health_support_website.util.TokenUtil;
@@ -25,6 +28,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private ProfessionalCommentService professionalCommentService;
 
     /**
      * Post method that allows user to register his/her account to the system
@@ -237,6 +242,25 @@ public class UserController {
         return p.getTotalRating() / p.getRateTimes();
     }
 
+    @PostMapping("searchProfessional")
+    private ProfessionalRes searchProfessional(@RequestBody String userName) {
+        Users professional = userService.getUserByUsername(userName);
+        if(professional == null) {
+            return null;
+        }
+        List<ProfessionalComment> professionalComments = professionalCommentService.
+                getProfessionalComments(professional.getId());
+        if(professionalComments == null) {
+            professionalComments = new ArrayList<>();
+        }
+        Long averageRating = 100L;
+        if( professional.getRateTimes() > 0) {
+            averageRating = professional.getTotalRating() / professional.getRateTimes();
+        }
+        ProfessionalRes professionalRes = new ProfessionalRes(professional, professionalComments,
+                averageRating);
+        return professionalRes;
+    }
 
     // Testing Endpoints
     @GetMapping("testRegister1")
