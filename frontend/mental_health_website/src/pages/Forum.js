@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Hero from './Hero.js';
 import ThreadCard from './Cards/ThreadCard.js';
 import './Forum.css';
@@ -27,7 +27,7 @@ const Forum = () => {
     }, []);
 
     return (
-        <div>
+        <div className="post-container">
             <Hero />
             {isLoading ? (
                 <div>Loading...</div>
@@ -45,7 +45,6 @@ const Forum = () => {
                             />
                         </Link>
                     ))}
-
                     <Link to="/new-post">
                         <button className="new-post-button">New Post</button>
                     </Link>
