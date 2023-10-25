@@ -2,7 +2,7 @@ package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.param.AppThreadInfo;
-import elec5619.sydney.edu.au.mental_health_support_website.controller.res.ThreadRes;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.res.ThreadCommentRes;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.*;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
 import elec5619.sydney.edu.au.mental_health_support_website.service.*;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -519,7 +518,7 @@ public class ThreadController {
      */
     @PostMapping("/comment/create")
     public ThreadComment createThreadComment(
-            @RequestBody ThreadRes comment
+            @RequestBody ThreadCommentRes comment
     ) {
         String username = TokenUtil.getUsernameFromToken(comment.getUserToken());
         Long userId = userService.getUserByUsername(username).getId();
