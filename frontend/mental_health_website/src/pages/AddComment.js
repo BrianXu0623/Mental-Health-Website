@@ -24,8 +24,9 @@ function AddComment() {
         const userToken = localStorage.getItem('token');
 
 
+
         const ThreadComment = {
-            userId: userToken,
+            userToken: userToken,
             threadId: id,
             comment: comment,
             timestamp: new Date().toISOString(),
@@ -40,6 +41,8 @@ function AddComment() {
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log(userToken);
+
                 console.log('Comment added:', data);
                 navigate(`/forum/${id}`);
             })
