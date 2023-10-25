@@ -2,6 +2,7 @@ package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.param.AppThreadInfo;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.res.ThreadRes;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.*;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
 import elec5619.sydney.edu.au.mental_health_support_website.service.*;
@@ -518,9 +519,17 @@ public class ThreadController {
      */
     @PostMapping("/comment/create")
     public ThreadComment createThreadComment(
-            @RequestBody ThreadComment comment
+            @RequestBody ThreadRes comment
     ) {
-       return threadCommentService.createThreadComment(comment);
+        String username = TokenUtil.getUsernameFromToken(comment.getUserToken());
+        Long userId = userService.getUserByUsername(username).getId();
+        ThreadComment obj = ThreadComment.builder()
+                .userId(userId)
+                .comment(comment.getComment())
+                .threadId(comment.getThreadId())
+                .timestamp(comment.getTimestamp())
+                .build();
+       return threadCommentService.createThreadComment(obj);
     }
 
     /**

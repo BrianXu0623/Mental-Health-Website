@@ -27,7 +27,7 @@ const Forum = () => {
   }, []);
 
   return (
-      <div>
+      <div className="post-container">
         <Hero />
         {threads.map((thread, index) => (
             <Link to={`/forum/${thread.thread.id}`} key={index}>
