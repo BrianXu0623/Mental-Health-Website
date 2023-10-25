@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import './Register.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
     const navigate = useNavigate();
@@ -11,6 +10,7 @@ export default function Register() {
     const [password, setPassword] = useState('');
     const [conPass, setConPass] = useState('');
     const [passwordsMatch, setPasswordsMatch] = useState(true);
+    const [registrationError, setRegistrationError] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,10 +28,16 @@ export default function Register() {
                 .then((data) => {
                     console.log('Registration response:', data);
 
-                    navigate('/login');
+                    if (data.success) {
+                        console.log('Registration successful');
+                        navigate('/login');
+                    } else {
+                        setRegistrationError('Registration failed. Please check your information.');
+                    }
                 })
                 .catch((error) => {
                     console.error('Registration error:', error);
+                    setRegistrationError('Registration failed. Please try again later.');
                 });
         } else {
             console.log('Passwords do not match');
@@ -39,14 +45,10 @@ export default function Register() {
         }
     };
 
-    function ButtonLink({ to, children }) {
-        return <Link to={to}>{children}</Link>;
-    }
-
     return (
         <div className="loginPage">
-            <div className="loginPageTitle">USYD Mental Health Support</div> {}
-            <div className="loginForm"> {}
+            <div className="loginPageTitle">USYD Mental Health Support</div>
+            <div className="loginForm">
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formTable" className="form-container">
                         <table className="form-table">
@@ -108,13 +110,24 @@ export default function Register() {
                     </Form.Group>
 
                     {!passwordsMatch && <p className="password-mismatch-error">Passwords do not match.</p>}
+                    {registrationError && <p className="registration-error">{registrationError}</p>}
 
-                    <Button type="submit" variant="primary">
-                        REGISTER
-                    </Button>
+                    <div className="button-container">
+                        <div>
+                            <Button type="submit" variant="primary" className="btn btn-lg">
+                                REGISTER
+                            </Button>
+                        </div>
+                    </div>
                 </Form>
+
                 <div className="register-button">
-                    <Button onClick={() => navigate('/login')}>Back To Login</Button>
+                    <Button
+                        className="btn btn-secondary btn-lg"
+                        onClick={() => navigate('/login')}
+                    >
+                        Back to Login
+                    </Button>
                 </div>
             </div>
         </div>
