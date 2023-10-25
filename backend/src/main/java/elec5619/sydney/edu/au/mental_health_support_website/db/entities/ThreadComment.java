@@ -23,4 +23,8 @@ public class ThreadComment {
     private Long threadId;
     private String comment;
     private Date timestamp;
+
+    public ThreadComment() {
+
+    }
 }

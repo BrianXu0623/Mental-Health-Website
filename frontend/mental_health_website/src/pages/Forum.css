@@ -22,5 +22,8 @@ a {
 }
 
 .new-post-button { 
+    position: fixed;
+    right: 10px; 
+    bottom: 10px;
 }
 

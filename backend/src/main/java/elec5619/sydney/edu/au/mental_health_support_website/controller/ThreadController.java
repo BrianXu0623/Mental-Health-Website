@@ -522,12 +522,14 @@ public class ThreadController {
     public ThreadComment createThreadComment(
             @RequestBody ThreadCommentRes comment
     ) {
+        
         String username = TokenUtil.getUsernameFromToken(comment.getUserToken());
         Long userId = userService.getUserByUsername(username).getId();
+        Long threadId = Long.parseLong(comment.getThreadId());
         ThreadComment obj = ThreadComment.builder()
                 .userId(userId)
                 .comment(comment.getComment())
-                .threadId(comment.getThreadId())
+                .threadId(threadId)
                 .timestamp(comment.getTimestamp())
                 .build();
        return threadCommentService.createThreadComment(obj);

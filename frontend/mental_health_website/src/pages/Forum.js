@@ -27,7 +27,7 @@ const Forum = () => {
     }, []);
 
     return (
-        <div className="post-container">
+        <div>
             <Hero />
             {isLoading ? (
                 <div>Loading...</div>
