@@ -10,7 +10,6 @@ export default function Register() {
     const [password, setPassword] = useState('');
     const [conPass, setConPass] = useState('');
     const [passwordsMatch, setPasswordsMatch] = useState(true);
-    const [redirectToLogin, setRedirectToLogin] = useState(false);
 
 
 

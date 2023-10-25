@@ -4,27 +4,52 @@ import "./NewPost.css";
 import TagsInput from "./components/TagsInput";
 import "./components/TagsInput.css";
 import Hero from "./Hero";
+import { useNavigate } from 'react-router-dom';
 
 export default function NewPost() {
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
+    const [tags, setTags] = useState([]);
+    const navigate = useNavigate();
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission here
-    };
 
-    function ButtonLink({ to, children }) {
-        return <Link to={to}><button>{children}</button></Link>;
-    }
+        const postData = {
+            title: title,
+            text: text,
+            tags: tags,
+        };
+
+        fetch('/api/posts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData),
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Post created successfully');
+                } else {
+                    console.error('Failed to create post');
+                }
+            })
+            .catch(error => {
+                console.error('Network error', error);
+            });
+    };
 
     return (
         <>
             <Hero />
             <div className="newPostTags">
-                <h2></h2>
                 <div className="create-post-container">
                     <h1 className="newPostPageTitle">Create Post</h1>
-                    <TagsInput />
+                    <TagsInput
+                        tags={tags}
+                        setTags={setTags}
+                    />
                 </div>
                 <form className="newPostForm" onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -40,7 +65,7 @@ export default function NewPost() {
                             id="text"
                             value={text}
                             onChange={(e) => setText(e.target.value)}
-                            placeholder="Text(Optional)"
+                            placeholder="Text (Optional)"
                         />
                     </div>
                     <div className="button-container">

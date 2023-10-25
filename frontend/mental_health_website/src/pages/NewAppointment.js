@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import 'react-datepicker/dist/react-datepicker.css';
 import './NewAppointment.css';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function NewAppointment() {
     const [date, setDate] = useState(null);
     const [time, setTime] = useState(null);
     const [concern, setConcern] = useState('');
-    const [doctorInfo, setDoctorInfo] = useState({});
-
-    const { doctorName } = useParams();
-
+    const { doctorId } = useParams();
+    const navigate = useNavigate();
     const availableTimes = [
-        { value: 'morning', label: 'Morning' },
-        { value: 'afternoon', label: 'Afternoon' },
-        { value: 'evening', label: 'Evening' },
+        { value: '12:00:00', label: '12:00 PM' },
+        { value: '13:00:00', label: '01:00 PM' },
+        { value: '14:00:00', label: '02:00 PM' },
+        { value: '15:00:00', label: '03:00 PM' },
+        { value: '16:00:00', label: '04:00 PM' },
+        { value: '17:00:00', label: '05:00 PM' },
     ];
 
     const handleDateChange = (selectedDate) => {
@@ -24,37 +26,37 @@ export default function NewAppointment() {
     };
 
     const handleTimeChange = (selectedTime) => {
-        setTime(selectedTime);
+        setTime(selectedTime.value);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const userToken = localStorage.getItem('token');
+
+        if (!userToken) {
+            console.error('User token is missing. Please log in.');
+            return;
+        }
+
+        const appointmentData = {
+            appointmentTopic: concern,
+            date: date,
+            time: time,
+            professionalUserId: doctorId,
+            userId: userToken,
+        };
+
+
+
+
+        console.log('Appointment created:', appointmentData);
+        navigate('/appointment');
     };
-
-    useEffect(() => {
-
-        fetch(`/api/getDoctorInfo?name=${doctorName}`)
-            .then((response) => response.json())
-            .then((data) => {
-                setDoctorInfo(data);
-            })
-            .catch((error) => {
-                console.error('Error fetching doctor info:', error);
-            });
-    }, [doctorName]);
 
     return (
         <div className="new-appointment-container">
             <h1 className="new-appointment-title">New Appointment</h1>
-            <div className="doctor-info">
-                <div className="doctor-avatar">
-                    <img src={doctorInfo.avatar} alt={`${doctorName} avatar`} />
-                </div>
-                <div className="doctor-rating">
-                    <p>Doctor: {doctorName}</p>
-                    <p>Rating: {doctorInfo.rating}</p>
-                </div>
-            </div>
             <form className="new-appointment-form" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Select Date:</label>
@@ -62,7 +64,7 @@ export default function NewAppointment() {
                 </div>
                 <div className="form-group">
                     <label>Select Time:</label>
-                    <Select options={availableTimes} value={time} onChange={handleTimeChange} />
+                    <Select options={availableTimes} value={availableTimes.find((t) => t.value === time)} onChange={handleTimeChange} />
                 </div>
                 <div className="form-group">
                     <label>Describe Your Concern:</label>
