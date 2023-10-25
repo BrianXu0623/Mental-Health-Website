@@ -520,10 +520,11 @@ public class ThreadController {
      */
     @PostMapping("/comment/create")
     public ThreadComment createThreadComment(
+            @RequestHeader("token") String userToken,
             @RequestBody ThreadCommentRes comment
     ) {
-        
-        String username = TokenUtil.getUsernameFromToken(comment.getUserToken());
+
+        String username = TokenUtil.getUsernameFromToken(userToken);
         Long userId = userService.getUserByUsername(username).getId();
         Long threadId = Long.parseLong(comment.getThreadId());
         ThreadComment obj = ThreadComment.builder()
