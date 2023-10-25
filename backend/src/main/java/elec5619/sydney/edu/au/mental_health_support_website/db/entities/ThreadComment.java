@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class ThreadComment {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
     private Long threadId;

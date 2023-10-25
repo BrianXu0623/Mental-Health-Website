@@ -14,6 +14,7 @@ import ProfilePage from "./pages/ProfilePage";
 import UserProfile from "./pages/UserProfile";
 import NewPost from "./pages/NewPost";
 import NewAppointment from "./pages/NewAppointment";
+import AddComment from "./pages/AddComment";
 
 export default function App() {
     // useEffect(() => {
@@ -44,7 +45,8 @@ export default function App() {
           <Route path="/forum/newthread/" element={<NewPost />} />
           <Route path="/" element={<Information />} />
           <Route path="*" element={<NoPage />} />
-        </Routes>
+          <Route path="/addcomment/:id" element={<AddComment />} />
+      </Routes>
         
       </div>
     </BrowserRouter>
