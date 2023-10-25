@@ -524,6 +524,7 @@ public class ThreadController {
             @RequestBody ThreadCommentRes comment
     ) {
 
+        System.out.println(userToken);
         String username = TokenUtil.getUsernameFromToken(userToken);
         Long userId = userService.getUserByUsername(username).getId();
         Long threadId = Long.parseLong(comment.getThreadId());

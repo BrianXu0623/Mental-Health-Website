@@ -37,6 +37,8 @@ function AddComment() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userToken}`,
+                'token': `${userToken}`
             },
             body: JSON.stringify(ThreadComment),
         })
