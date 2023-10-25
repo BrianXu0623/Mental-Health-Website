@@ -25,6 +25,7 @@ function AddComment() {
 
 
         const ThreadComment = {
+            userId: userToken,
             threadId: id,
             comment: comment,
             timestamp: new Date().toISOString(),
