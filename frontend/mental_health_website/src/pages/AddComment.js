@@ -22,6 +22,7 @@ function AddComment() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const userToken = localStorage.getItem('token');
+        console.log(userToken);
 
 
 
