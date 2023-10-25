@@ -60,12 +60,15 @@ public class ThreadController {
      */
     @PostMapping("/create")
     public AppThreadInfo createThread(
+            @RequestHeader("token") String token,
         @RequestBody AppThreadInfo context
     ) {
+        System.out.println(token == null ? "Token is null" : token);
         AppThread thread = context.getThread();
         List<ThreadTag> tags = threadTagService.getTagByNames(context.getTagNames());
         insertThreadTagRelationship(thread, tags);
-        String username  = TokenUtil.getUsernameFromToken(context.getUserToken());
+        String username  = TokenUtil.getUsernameFromToken(token);
+        thread.setAuthorID(userService.getUserByUsername(username).getId());
 
         thread = threadService.createThread(thread);
         return AppThreadInfo.builder()

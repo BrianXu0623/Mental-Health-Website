@@ -25,6 +25,7 @@ export default function NewPost() {
             tagNames: tags,
             userToken: userToken,
         };
+        console.log(userToken);
 
         fetch('http://localhost:8080/api/threads/create', {
             method: 'POST',
