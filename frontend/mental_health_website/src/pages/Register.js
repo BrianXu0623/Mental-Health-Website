@@ -1,7 +1,8 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import './Register.css';
 
 export default function Register() {
     const navigate = useNavigate();
@@ -10,8 +11,6 @@ export default function Register() {
     const [password, setPassword] = useState('');
     const [conPass, setConPass] = useState('');
     const [passwordsMatch, setPasswordsMatch] = useState(true);
-
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,13 +24,13 @@ export default function Register() {
                 },
                 body: JSON.stringify({ email, username, password }),
             })
-                .then(response => response.json())
-                .then(data => {
+                .then((response) => response.json())
+                .then((data) => {
                     console.log('Registration response:', data);
 
                     navigate('/login');
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.error('Registration error:', error);
                 });
         } else {
@@ -41,65 +40,83 @@ export default function Register() {
     };
 
     function ButtonLink({ to, children }) {
-        return <Link to={to}><button>{children}</button></Link>;
+        return <Link to={to}>{children}</Link>;
     }
 
-
-
     return (
-        <>
-            <h1 className="pageTitle">USYD Mental Health Support</h1>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="email">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="YOUREMAIL@GMAIL.COM"
-                    />
-                </Form.Group>
+        <div className="loginPage">
+            <div className="loginPageTitle">USYD Mental Health Support</div> {}
+            <div className="loginForm"> {}
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group controlId="formTable" className="form-container">
+                        <table className="form-table">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <Form.Label>Email</Form.Label>
+                                </td>
+                                <td>
+                                    <Form.Control
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="EMAIL@GMAIL.COM"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <Form.Label>Username</Form.Label>
+                                </td>
+                                <td>
+                                    <Form.Control
+                                        type="text"
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                        placeholder="YourUsername"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <Form.Label>Password</Form.Label>
+                                </td>
+                                <td>
+                                    <Form.Control
+                                        type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        placeholder="**********"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <Form.Label>Confirm Password</Form.Label>
+                                </td>
+                                <td>
+                                    <Form.Control
+                                        type="password"
+                                        value={conPass}
+                                        onChange={(e) => setConPass(e.target.value)}
+                                        placeholder="**********"
+                                    />
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </Form.Group>
 
-                <Form.Group controlId="username">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        placeholder="YourUsername"
-                    />
-                </Form.Group>
+                    {!passwordsMatch && <p className="password-mismatch-error">Passwords do not match.</p>}
 
-                <Form.Group controlId="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="**********"
-                    />
-                </Form.Group>
-
-                <Form.Group controlId="conpass">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        value={conPass}
-                        onChange={(e) => setConPass(e.target.value)}
-                        placeholder="**********"
-                    />
-                </Form.Group>
-
-                {!passwordsMatch && <p>Passwords do not match.</p>}
-
-                <Button type="submit" variant="primary">
-                    REGISTER
-                </Button>
-            </Form>
-
-            <ButtonLink to="/login" className="btn btn-secondary">
-                <div> Back to Login Page </div>
-            </ButtonLink>
-        </>
+                    <Button type="submit" variant="primary">
+                        REGISTER
+                    </Button>
+                </Form>
+                <div className="register-button">
+                    <Button onClick={() => navigate('/login')}>Back To Login</Button>
+                </div>
+            </div>
+        </div>
     );
 }

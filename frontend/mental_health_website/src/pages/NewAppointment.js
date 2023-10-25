@@ -38,6 +38,7 @@ export default function NewAppointment() {
             console.error('User token is missing. Please log in.');
             return;
         }
+        console.log('Doctor ID:', doctorId);
 
         const appointmentData = {
             appointmentTopic: concern,
