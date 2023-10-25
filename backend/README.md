@@ -69,7 +69,6 @@ The backend application are using 3 Controllers for handling endpoints for impor
 | /comment/{commentId}/edit  | PUT   | token: `String`, newComment: `ThreadComment` | `Boolean`: TRUE if the operation is successful otherwise FALSE                                    | PUT method that allows eligible user to edit the thread comment                                                                                                                                                                            | 
 | /comment/{commentId}/delete | DELETE | token: `String`                             | `Boolean`: TRUE if the operation is successful otherwise FALSE                                    | Put method that allows eligible user to remove the thread comment                                                                                                                                                                          |
 
-
 ### 2.3) AppointmentController - (/api/appointments/)
 
 > ❗<a>Note</a><br>
@@ -88,51 +87,3 @@ The backend application are using 3 Controllers for handling endpoints for impor
 | /get/byProfessionalUser/  | GET    | token: `String`                     | List<AppointmentInfo>: a list of appointment objects associated with the the user id, otherwise an empty list | Get method for getting a list of appointments associated with a professional user id                                                                           |
 | /edit/{appointmentId}     | PUT    | token: `String`, apm: `Appointment` | `Boolean`: TRUE if the user is eligible to edit the appointment, otherwise FALSE                              | Put method for editing a certain appointment. Only the admin, professional and the user who created the appointment can edit it                                |
 | /delete/{appointmentId}   | DELETE | token: `String`                     | `Boolean`: TRUE if the operation is successful otherwise FALSE                                                | DELETE method that allows admin to remove a certain appointment                                                                                                |
-
----
-<style> 
-    body { 
-        font-family: "Space Grotesk";
-    }
-
-    h1 {
-        color: red;
-    }
-
-    h2 {
-        color: orange;
-    }
-
-    h3 {
-        color: aquamarine;
-    }
-
-    .green_marker { 
-        border-radius: 5px;
-        padding: 2px;
-        color: black;
-        background-color: #BBFABBA6;
-    }
-
-</style>
----
-[//]: # (table template)
-[//]: # (<table> )
-
-[//]: # (    <thead>)
-
-[//]: # (        <th>EndPoint</th>)
-
-[//]: # (        <th>Method</th>)
-
-[//]: # (        <th>Parameters</th>)
-
-[//]: # (        <th>Description</th>)
-
-[//]: # (    </thead>)
-
-[//]: # (    <tbody>)
-
-[//]: # (    </tbody>)
-
-[//]: # (</table>)

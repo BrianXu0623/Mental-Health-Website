@@ -313,6 +313,6 @@ public class UserController {
 //        Users p1 = Users.builder().username("Dr. Emily Morgan").email("emilymorgan@outlook.com").userType("professional").password(EncryptionUtil.encrypt("Emily.12345")).phonenumber("0422748392").availableHours("1pm - 5pm Monday to Friday").clinic("Red Boundary Clinic").build();
 //        Users ret = userService.registerUser(p1);
 //        return ret;
-//    }
+
 }
 
