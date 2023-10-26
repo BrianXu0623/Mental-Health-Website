@@ -64,7 +64,6 @@ public class ThreadController {
             @RequestHeader("token") String token,
         @RequestBody AppThreadInfo context
     ) {
-        System.out.println(token == null ? "Token is null" : token);
         AppThread thread = context.getThread();
         List<ThreadTag> tags = threadTagService.getTagByNames(context.getTagNames());
         insertThreadTagRelationship(thread, tags);
@@ -101,7 +100,8 @@ public class ThreadController {
         for (ThreadTag tag : tags) {
             ThreadTagRelationship obj = ThreadTagRelationship.builder()
                                                             .threadId(thr.getId())
-                                                            .tagId(tag.getId()).build();
+                                                            .tagId(tag.getId())
+                                                            .build();
             threadTagRelationshipService.insertThreadTagRelationship(obj);
         }
     }
