@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 export default function NewPost() {
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
-    const [tags, setTags] = useState([]);
+    var [tags, setTags] = useState([]);
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {

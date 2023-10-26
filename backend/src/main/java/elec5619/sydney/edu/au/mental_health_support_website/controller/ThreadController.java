@@ -65,12 +65,14 @@ public class ThreadController {
         @RequestBody AppThreadInfo context
     ) {
         AppThread thread = context.getThread();
+        String username  = TokenUtil.getUsernameFromToken(token);
+        Users user = userService.getUserByUsername(username);
+
+        thread.setAuthorID(user.getId());
+        thread = threadService.createThread(thread);
+
         List<ThreadTag> tags = threadTagService.getTagByNames(context.getTagNames());
         insertThreadTagRelationship(thread, tags);
-        String username  = TokenUtil.getUsernameFromToken(token);
-        thread.setAuthorID(userService.getUserByUsername(username).getId());
-
-        thread = threadService.createThread(thread);
         return AppThreadInfo.builder()
                 .thread(thread)
                 .tagNames(getTagNamesFromThreadTags(tags))
@@ -399,7 +401,7 @@ public class ThreadController {
 
     /**
      * Get method for searching a list of thread given a tag name
-     * @param tagName the name of the tag to be searched
+     * @param tagMap the name of the tag to be searched
      * @return a list of thread associated with the tag name
      */
     @PostMapping ("/search/tag")
