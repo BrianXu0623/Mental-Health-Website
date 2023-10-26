@@ -21,6 +21,7 @@ public class UserService {
     public Users registerUser(Users user) {
         // Add logic to validate and save the user
         Users ret = userRepository.save(user);
+        ret.copy();
         ret.setPassword("");
 //        ret.setToken("");
         return ret;
@@ -138,6 +139,7 @@ public class UserService {
             user.setAvatar(avatar);
         }
         Users ret = userRepository.save(user);
+        ret = ret.copy();
         ret.setPassword("");
         ret.setToken("");
         return ret;
@@ -167,9 +169,12 @@ public class UserService {
         Users user = userRepository.findByUsername(userName);
         if(user == null) {
             return null;
+        } else {
+            user = user.copy();
         }
         user.setPassword("");
         user.setToken("");
+        Users tmp = userRepository.findById(52l).orElse(null);
         return user;
     }
 
@@ -177,6 +182,7 @@ public class UserService {
 
         List<Users> users = userRepository.findAllByUserType("professional");
         for(Users cur : users) {
+            cur = cur.copy();
             cur.setPassword("");
             cur.setToken("");
         }
