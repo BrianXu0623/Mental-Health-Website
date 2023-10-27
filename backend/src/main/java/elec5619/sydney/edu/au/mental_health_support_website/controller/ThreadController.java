@@ -2,6 +2,7 @@ package elec5619.sydney.edu.au.mental_health_support_website.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.param.AppThreadInfo;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.res.ThreadCommentRes;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.*;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.UserRepository;
 import elec5619.sydney.edu.au.mental_health_support_website.service.*;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -58,14 +61,18 @@ public class ThreadController {
      */
     @PostMapping("/create")
     public AppThreadInfo createThread(
+            @RequestHeader("token") String token,
         @RequestBody AppThreadInfo context
     ) {
         AppThread thread = context.getThread();
+        String username  = TokenUtil.getUsernameFromToken(token);
+        Users user = userService.getUserByUsername(username);
+
+        thread.setAuthorID(user.getId());
+        thread = threadService.createThread(thread);
+
         List<ThreadTag> tags = threadTagService.getTagByNames(context.getTagNames());
         insertThreadTagRelationship(thread, tags);
-        String username  = TokenUtil.getUsernameFromToken(context.getUserToken());
-
-        thread = threadService.createThread(thread);
         return AppThreadInfo.builder()
                 .thread(thread)
                 .tagNames(getTagNamesFromThreadTags(tags))
@@ -95,7 +102,8 @@ public class ThreadController {
         for (ThreadTag tag : tags) {
             ThreadTagRelationship obj = ThreadTagRelationship.builder()
                                                             .threadId(thr.getId())
-                                                            .tagId(tag.getId()).build();
+                                                            .tagId(tag.getId())
+                                                            .build();
             threadTagRelationshipService.insertThreadTagRelationship(obj);
         }
     }
@@ -393,21 +401,21 @@ public class ThreadController {
 
     /**
      * Get method for searching a list of thread given a tag name
-     * @param tagName the name of the tag to be searched
+     * @param tagMap the name of the tag to be searched
      * @return a list of thread associated with the tag name
      */
-    @GetMapping("/search/tag")
+    @PostMapping ("/search/tag")
     public List<AppThreadInfo> searchThreadByTag(
-      @RequestBody String tagName
+      @RequestBody Map<String, String> tagMap
     ) {
 
-        ThreadTag tagObj = threadTagService.getTagByName(tagName);
+        ThreadTag tagObj = threadTagService.getTagByName(tagMap.get("tagName"));
         // I need  to find all the relationships
         List<ThreadTagRelationship> tags = threadTagRelationshipService.getThread(tagObj.getId());
 
         // Getting the tag name
         List<String> tagNames = new ArrayList<>();
-        tagNames.add(tagName);
+        tagNames.add(tagMap.get("tagName"));
 
         // Now getting all the AppThread
         List<AppThreadInfo> resultSet = new ArrayList<>();
@@ -518,9 +526,21 @@ public class ThreadController {
      */
     @PostMapping("/comment/create")
     public ThreadComment createThreadComment(
-            @RequestBody ThreadComment comment
+            @RequestHeader("token") String userToken,
+            @RequestBody ThreadCommentRes comment
     ) {
-       return threadCommentService.createThreadComment(comment);
+
+        System.out.println(userToken);
+        String username = TokenUtil.getUsernameFromToken(userToken);
+        Long userId = userService.getUserByUsername(username).getId();
+        Long threadId = Long.parseLong(comment.getThreadId());
+        ThreadComment obj = ThreadComment.builder()
+                .userId(userId)
+                .comment(comment.getComment())
+                .threadId(threadId)
+                .timestamp(comment.getTimestamp())
+                .build();
+       return threadCommentService.createThreadComment(obj);
     }
 
     /**

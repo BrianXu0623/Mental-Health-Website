@@ -1,0 +1,32 @@
+
+
+.registerPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: inherit;
+    height: 100vh;
+}
+
+.registerPageTitle {
+    font-size: 2rem;
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.registerForm {
+    align-self: center;
+    margin: 20px;
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.registerForm Form {
+    border-radius: 20px;
+}
+
+

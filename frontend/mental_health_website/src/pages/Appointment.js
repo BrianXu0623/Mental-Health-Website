@@ -26,7 +26,7 @@ const Appointment = () => {
                 institude={data.clinic} 
                 available={data.availableHours}
                 profilelink={`http://localhost:3000/profile/${data.username}`}
-                appointmentlink={`http://localhost:3000/appointment/makeappointment/${data.id}`} />
+                appointmentlink={`http://localhost:3000/appointment/make/${data.id}`} />
             ))}
         </div>
     )

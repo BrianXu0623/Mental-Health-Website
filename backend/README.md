@@ -48,27 +48,27 @@ The backend application are using 3 Controllers for handling endpoints for impor
 > /api/threads/update/{threadId} - Using the provided threadId in the url, update its content
 
 
-| Endpoint                   | Method | Parameters                                  | Return                                                                                            | Description                                                                                                                                                                                                                                |
-|----------------------------|-------|---------------------------------------------|---------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| /create                    | POST  | context: `AppThreadInfo`                    | `AppThreadInfo`: a newly created thread if possible                                               | Post method for creating new thread                                                                                                                                                                                                        |
-| /get/id/{threadId}         | GET   | None                                        | `AppThreadInfo`: the thread object associated with the requested id, otherwise null               | Get method for getting a single thread object from the database                                                                                                                                                                            |
-| /get/id/tag/{threadId}     | GET   | None                                        | `List<ThreadTag>`: a list of tags associated with the thread id                                   | GET method for getting a list of tags based on requested thread id                                                                                                                                                                         |
-| /get/ids                   | GET   | threadIds: `List<Long>`                     | `List<AppThreadInfo>`: a list of thread objects associated with their ids, otherwise an empty list | Get method for getting a list of threads provided by their ids                                                                                                                                                                             |
-| /get/all                   | GET   | None                                        | `List<AppThreadInfo>`: a list of all existing threads in the system                               | Get method for getting all existing threads from the systems                                                                                                                                                                               |
-| /get/byAuthorId            | POST  | authorId: `Long`                            | `List<AppThreadInfo>`: a list of threads matches the author id                                    | Post method for getting a list of thread given an author id                                                                                                                                                                                |
-| /get/byUserToken           | GET   | token: `String`                             | `List<AppThreadInfo>`: a list of threads matches the user token                                   | GET method for getting a list of thread given an author id                                                                                                                                                                                 |
-| /search/tag                | GET   | tagName: `String`                           | `List<AppThreadInfo>`: a list of threads associated with the tag name                             | Get method for searching a list of thread given a tag name                                                                                                                                                                                 |
-| /update/{threadId}         | PUT   | token: `String`, context: `AppThreadInfo`   | `Boolean`: TRUE if the operation was successful otherwise FALSE                                   | Put method for requesting a change in thread content, this ranging from thread content, a number of thread tags provided. It's worth noting that the requested user, must be the thread original creator or an admin to make the adjustment |
-| /delete/{threadId}         | DELETE | token: `String`                             | `Boolean`: TRUE if the user is eligible to delete the thread, otherwise FALSE                     | Put method for removing a certain thread. Only the original creator and the admin can remove the thread                                                                                                                                    |
-| /tag/add                   | POST  | tag: `TheadTag`                             | `ThreadTag`: the newly created tag                                                                | Post method for adding new thread to the system                                                                                                                                                                                            |
-| /tag/getAll                | GET   | None                                        | `List<ThreadTag>`: a list of tags available in the system                                         | Get method for getting all the tags in the database                                                                                                                                                                                        |
-| /tag/get                   | GET   | tagId: `Long`                               | `ThreadTag`: a single tag associated with the provided id                                         | Get method for getting a single thread tag from the database                                                                                                                                                                               |
-| /tag/{tagId}/edit          | PUT   | tag: `ThreadTag`                            | None                                                                                              | Put method for editing existing thread tag                                                                                                                                                                                                 |
-| /tag/{tagId}/remove        | DELETE | None                                        | None                                                                                              | Put method for removing thread tag                                                                                                                                                                                                         |
-| /comment/{threadId}/getAll | GET   | None                                        | `List<ThreadComment>`: a list of comments associated with the thread id                           | Get method for acquiring all comments associated with a specific thread id                                                                                                                                                                 |
-| /comment/{commentId}/edit  | PUT   | token: `String`, newComment: `ThreadComment` | `Boolean`: TRUE if the operation is successful otherwise FALSE                                    | PUT method that allows eligible user to edit the thread comment                                                                                                                                                                            | 
-| /comment/{commentId}/delete | DELETE | token: `String`                             | `Boolean`: TRUE if the operation is successful otherwise FALSE                                    | Put method that allows eligible user to remove the thread comment                                                                                                                                                                          |
-
+| Endpoint                    | Method | Parameters                                   | Return                                                                                             | Description                                                                                                                                                                                                                                 |
+|-----------------------------|--------|----------------------------------------------|----------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| /create                     | POST   | context: `AppThreadInfo`                     | `AppThreadInfo`: a newly created thread if possible                                                | Post method for creating new thread                                                                                                                                                                                                         |
+| /get/id/{threadId}          | GET    | None                                         | `AppThreadInfo`: the thread object associated with the requested id, otherwise null                | Get method for getting a single thread object from the database                                                                                                                                                                             |
+| /get/id/tag/{threadId}      | GET    | None                                         | `List<ThreadTag>`: a list of tags associated with the thread id                                    | GET method for getting a list of tags based on requested thread id                                                                                                                                                                          |
+| /get/ids                    | GET    | threadIds: `List<Long>`                      | `List<AppThreadInfo>`: a list of thread objects associated with their ids, otherwise an empty list | Get method for getting a list of threads provided by their ids                                                                                                                                                                              |
+| /get/all                    | GET    | None                                         | `List<AppThreadInfo>`: a list of all existing threads in the system                                | Get method for getting all existing threads from the systems                                                                                                                                                                                |
+| /get/byAuthorId             | POST   | authorId: `Long`                             | `List<AppThreadInfo>`: a list of threads matches the author id                                     | Post method for getting a list of thread given an author id                                                                                                                                                                                 |
+| /get/byUserToken            | GET    | token: `String`                              | `List<AppThreadInfo>`: a list of threads matches the user token                                    | GET method for getting a list of thread given an author id                                                                                                                                                                                  |
+| /search/tag                 | GET    | tagName: `Map<String, String>`               | `List<AppThreadInfo>`: a list of threads associated with the tag name                              | Get method for searching a list of thread given a tag name                                                                                                                                                                                  |
+| /update/{threadId}          | PUT    | token: `String`, context: `AppThreadInfo`    | `Boolean`: TRUE if the operation was successful otherwise FALSE                                    | Put method for requesting a change in thread content, this ranging from thread content, a number of thread tags provided. It's worth noting that the requested user, must be the thread original creator or an admin to make the adjustment |
+| /delete/{threadId}          | DELETE | token: `String`                              | `Boolean`: TRUE if the user is eligible to delete the thread, otherwise FALSE                      | Put method for removing a certain thread. Only the original creator and the admin can remove the thread                                                                                                                                     |
+| /tag/add                    | POST   | tag: `TheadTag`                              | `ThreadTag`: the newly created tag                                                                 | Post method for adding new thread to the system                                                                                                                                                                                             |
+| /tag/getAll                 | GET    | None                                         | `List<ThreadTag>`: a list of tags available in the system                                          | Get method for getting all the tags in the database                                                                                                                                                                                         |
+| /tag/get                    | GET    | tagId: `Long`                                | `ThreadTag`: a single tag associated with the provided id                                          | Get method for getting a single thread tag from the database                                                                                                                                                                                |
+| /tag/{tagId}/edit           | PUT    | tag: `ThreadTag`                             | None                                                                                               | Put method for editing existing thread tag                                                                                                                                                                                                  |
+| /tag/{tagId}/remove         | DELETE | None                                         | None                                                                                               | Put method for removing thread tag                                                                                                                                                                                                          |
+| /comment/create /           | GET    | comment: `ThreadRes`                         | `ThreadComment`: the newly created comment from the database                                       | a post method for creating a thread comment associated with a specific thread                                                                                                                                                               |
+| /comment/{threadId}/getAll  | GET    | None                                         | `List<ThreadComment>`: a list of comments associated with the thread id                            | Get method for acquiring all comments associated with a specific thread id                                                                                                                                                                  |
+| /comment/{commentId}/edit   | PUT    | token: `String`, newComment: `ThreadComment` | `Boolean`: TRUE if the operation is successful otherwise FALSE                                     | PUT method that allows eligible user to edit the thread comment                                                                                                                                                                             | 
+| /comment/{commentId}/delete | DELETE | token: `String`                              | `Boolean`: TRUE if the operation is successful otherwise FALSE                                     | Put method that allows eligible user to remove the thread comment                                                                                                                                                                           |
 
 ### 2.3) AppointmentController - (/api/appointments/)
 
@@ -88,51 +88,3 @@ The backend application are using 3 Controllers for handling endpoints for impor
 | /get/byProfessionalUser/  | GET    | token: `String`                     | List<AppointmentInfo>: a list of appointment objects associated with the the user id, otherwise an empty list | Get method for getting a list of appointments associated with a professional user id                                                                           |
 | /edit/{appointmentId}     | PUT    | token: `String`, apm: `Appointment` | `Boolean`: TRUE if the user is eligible to edit the appointment, otherwise FALSE                              | Put method for editing a certain appointment. Only the admin, professional and the user who created the appointment can edit it                                |
 | /delete/{appointmentId}   | DELETE | token: `String`                     | `Boolean`: TRUE if the operation is successful otherwise FALSE                                                | DELETE method that allows admin to remove a certain appointment                                                                                                |
-
----
-<style> 
-    body { 
-        font-family: "Space Grotesk";
-    }
-
-    h1 {
-        color: red;
-    }
-
-    h2 {
-        color: orange;
-    }
-
-    h3 {
-        color: aquamarine;
-    }
-
-    .green_marker { 
-        border-radius: 5px;
-        padding: 2px;
-        color: black;
-        background-color: #BBFABBA6;
-    }
-
-</style>
----
-[//]: # (table template)
-[//]: # (<table> )
-
-[//]: # (    <thead>)
-
-[//]: # (        <th>EndPoint</th>)
-
-[//]: # (        <th>Method</th>)
-
-[//]: # (        <th>Parameters</th>)
-
-[//]: # (        <th>Description</th>)
-
-[//]: # (    </thead>)
-
-[//]: # (    <tbody>)
-
-[//]: # (    </tbody>)
-
-[//]: # (</table>)

@@ -21,9 +21,10 @@ public class UserService {
     public Users registerUser(Users user) {
         // Add logic to validate and save the user
         Users ret = userRepository.save(user);
-        ret.setPassword("");
+        Users retCp = ret.copy();
+        retCp.setPassword("");
 //        ret.setToken("");
-        return ret;
+        return retCp;
     }
 
     public Users loginUser(String email, String password) {
@@ -57,6 +58,7 @@ public class UserService {
         List<Long> list = Arrays.asList(longArray);
         List<Users> users = userRepository.findAllByIdIn(list);
         for(Users cur : users) {
+            cur = cur.copy();
             cur.setPassword("");
             cur.setToken("");
         }
@@ -78,6 +80,7 @@ public class UserService {
         List<Long> list = Arrays.asList(longArray);
         List<Users> users = userRepository.findAllByIdIn(list);
         for(Users cur : users) {
+            cur = cur.copy();
             cur.setPassword("");
             cur.setToken("");
         }
@@ -138,9 +141,10 @@ public class UserService {
             user.setAvatar(avatar);
         }
         Users ret = userRepository.save(user);
-        ret.setPassword("");
-        ret.setToken("");
-        return ret;
+        Users retCp = ret.copy();
+        retCp.setPassword("");
+        retCp.setToken("");
+        return retCp;
     }
 
     public boolean updatePassword(String userName, String oldPassword, String newPassword) throws IOException, InterruptedException {
@@ -167,9 +171,12 @@ public class UserService {
         Users user = userRepository.findByUsername(userName);
         if(user == null) {
             return null;
+        } else {
+            user = user.copy();
         }
         user.setPassword("");
         user.setToken("");
+        Users tmp = userRepository.findById(52l).orElse(null);
         return user;
     }
 
@@ -177,6 +184,7 @@ public class UserService {
 
         List<Users> users = userRepository.findAllByUserType("professional");
         for(Users cur : users) {
+            cur = cur.copy();
             cur.setPassword("");
             cur.setToken("");
         }

@@ -1,42 +1,46 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import "./NewPost.css";
 import TagsInput from "./components/TagsInput";
-import "./components/TagsInput.css";
 import Hero from "./Hero";
 import { useNavigate } from 'react-router-dom';
 
 export default function NewPost() {
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
-    const [tags, setTags] = useState([]);
+    var [tags, setTags] = useState([]);
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        const userToken = localStorage.getItem('token');
         const postData = {
-            title: title,
-            text: text,
-            tags: tags,
+            thread: {
+                title: title,
+                content: text,
+                timestamp: new Date().toISOString(),
+            },
+            tagNames: tags,
+            userToken: userToken,
         };
 
-        fetch('/api/posts', {
+        fetch('http://localhost:8080/api/threads/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userToken}`,
+                'token': `${userToken}`
             },
             body: JSON.stringify(postData),
         })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Post created successfully');
-                } else {
-                    console.error('Failed to create post');
-                }
+            .then(response => response.json())
+            .then(data => {
+                console.log('Post created successfully:', data);
+                navigate(`/forum/${data.thread.id}`);
             })
             .catch(error => {
-                console.error('Network error', error);
+                console.error('Failed to create post', error);
             });
     };
 

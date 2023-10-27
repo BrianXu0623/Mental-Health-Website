@@ -14,6 +14,7 @@ import ProfilePage from "./pages/ProfilePage";
 import UserProfile from "./pages/UserProfile";
 import NewPost from "./pages/NewPost";
 import NewAppointment from "./pages/NewAppointment";
+import AddComment from "./pages/AddComment";
 
 export default function App() {
     // useEffect(() => {
@@ -40,11 +41,12 @@ export default function App() {
           <Route path="/account" element={<UserProfile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/appointment/makeappointment/:id" element={<NewAppointment />} />
+          <Route path="/appointment/make/:doctorId" element={<NewAppointment />} />
           <Route path="/forum/newthread/" element={<NewPost />} />
           <Route path="/" element={<Information />} />
           <Route path="*" element={<NoPage />} />
-        </Routes>
+          <Route path="/addcomment/:id" element={<AddComment />} />
+      </Routes>
         
       </div>
     </BrowserRouter>
