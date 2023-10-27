@@ -21,6 +21,7 @@ header {
   text-align: left;
 }
 
+
 /* Button styles */
 .button {
   background-color: var(--accent-color);
@@ -30,6 +31,7 @@ header {
   border-radius: 5px;
   cursor: pointer;
 }
+
 
 /* Link styles */
 a {

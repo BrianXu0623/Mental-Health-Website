@@ -80,6 +80,14 @@ ul{
 button:hover {
     background-color: lightblue;
     color: black; 
+
+}
+
+button {
+    min-width: 250px; 
+    min-height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .logout-button{
