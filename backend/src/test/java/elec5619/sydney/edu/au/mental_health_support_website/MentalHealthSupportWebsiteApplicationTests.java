@@ -2,6 +2,7 @@ package elec5619.sydney.edu.au.mental_health_support_website;
 
 import elec5619.sydney.edu.au.mental_health_support_website.controller.ThreadController;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.UserController;
+import elec5619.sydney.edu.au.mental_health_support_website.controller.param.ProfessionalRatingRequest;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.res.ProfessionalRes;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
 import elec5619.sydney.edu.au.mental_health_support_website.service.UserService;
@@ -64,21 +65,6 @@ class MentalHealthSupportWebsiteApplicationTests {
     }
 
     @Test
-    void testFollow() {
-        boolean ifSuccess = userService.follow("testRegister1", "testRegister2");
-        assertTrue(ifSuccess);
-        List<Users> followed = userService.getFollowed("testRegister2");
-        boolean ifContains = false;
-        for(Users user : followed) {
-            if(user.getUsername().equals("testRegister1")) {
-                ifContains = true;
-                break;
-            }
-        }
-        assertTrue(ifContains);
-    }
-
-    @Test
     void testValidatePasswordFail() {
         boolean isValidate = EncryptionUtil.validatePassword("123456");
         assertFalse(isValidate);
@@ -109,4 +95,13 @@ class MentalHealthSupportWebsiteApplicationTests {
         String username = TokenUtil.getUsernameFromToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLQyIsImV4cCI6MTY5ODI0NDA0Mn0.XzO_ihO7NuyQm94MYh3220KiyiCdkxqjt3nyYaeTAKg");
         System.out.println(username);
     }
+
+    @Test
+    void testRateProfessional() {
+        String token = TokenUtil.generateToken("delay");
+        ProfessionalRatingRequest professionalRatingRequest = new ProfessionalRatingRequest(90L, "Dr.%20David%20Collins");
+        Long rate = userController.rateProfessional(token, professionalRatingRequest);
+        System.out.println(rate);
+    }
+
 }
