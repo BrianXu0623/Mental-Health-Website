@@ -24,6 +24,7 @@
     font-size: 28px;
     display: flex;
     align-items: left;
+    font-style: italic;
   }
 
   .welcome-user {
