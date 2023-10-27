@@ -75,7 +75,7 @@ The backend application are using 3 Controllers for handling endpoints for impor
 > ❗<a>Note</a><br>
 > All the parameters described in each controller should be passed from the frontend as *@RequestHeader("token")* for token, otherwise *@RequestBody* by default
 > The {attribute} is interpreted to be part of the url, and will be used to run certain query. For example:
-> /api/threads/update/{threadId} - Using the provided threadId in the url, update its content
+> /cancel/{appointmentID} - Using the provided appointmentId in the url, set its status to 'cancelled'
 
 | Endpoint                  | Method | Parameters                          | Return                                                                                                        | Description                                                                                                                                                    |
 |---------------------------|--------|-------------------------------------|---------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
