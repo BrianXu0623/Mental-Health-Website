@@ -7,7 +7,7 @@ const ProfilePage = (props) => {
     const { id } = useParams();
     const [rating, setRating] = useState(0);
     const [currentRating, setCurrentRating] = useState(0);
-    const [targetUser, setTargetUser] = useState('');
+    const [professionalUsername, setprofessionalUsername] = useState('');
     const [data, setData] = useState({
         avatar: '',
         username: '',
@@ -29,7 +29,7 @@ const ProfilePage = (props) => {
                     'token': localStorage.getItem('token')
                 },
                 body: JSON.stringify({
-                    targetUser,
+                    professionalUsername,
                     rating
                 })
             });
@@ -53,7 +53,7 @@ const ProfilePage = (props) => {
             .then(data => {
                 setData(data.user);
                 setCurrentRating(data.averageRating);
-                setTargetUser(data.user.username);
+                setprofessionalUsername(data.user.username);
                 console.log("got data");
                 console.log(data);
             })
