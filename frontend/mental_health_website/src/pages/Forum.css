@@ -27,6 +27,7 @@ a {
     bottom: 10px;
     height: 80px ; 
     width: 80px;
+    min-width: 80px;
     border-radius: 50em;
     opacity: 0.5px;
     background-color:#7fd8be;
