@@ -38,8 +38,6 @@ export default function NewAppointment() {
             console.error('User token is missing. Please log in.');
             return;
         }
-        console.log(userToken);
-
 
         console.log('Doctor ID:', doctorId);
 
@@ -48,15 +46,28 @@ export default function NewAppointment() {
             date: date,
             time: time,
             professionalUserId: doctorId,
-            userId: userToken,
         };
 
 
+        fetch('http://localhost:8080/api/appointments/make', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userToken}`,
+            },
+            body: JSON.stringify(appointmentData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Appointment created:', data);
 
-
-        console.log('Appointment created:', appointmentData);
-        navigate('/appointment');
+                navigate('/appointment');
+            })
+            .catch(error => {
+                console.error('Failed to create appointment', error);
+            });
     };
+
 
     return (
         <div className="new-appointment-container">

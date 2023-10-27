@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom';
 export default function NewPost() {
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
-    var [tags, setTags] = useState([]);
-
     const [tags, setTags] = useState('');
     const navigate = useNavigate();
 
