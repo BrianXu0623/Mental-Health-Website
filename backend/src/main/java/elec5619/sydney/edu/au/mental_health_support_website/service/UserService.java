@@ -21,10 +21,10 @@ public class UserService {
     public Users registerUser(Users user) {
         // Add logic to validate and save the user
         Users ret = userRepository.save(user);
-        ret.copy();
-        ret.setPassword("");
+        Users retCp = ret.copy();
+        retCp.setPassword("");
 //        ret.setToken("");
-        return ret;
+        return retCp;
     }
 
     public Users loginUser(String email, String password) {
@@ -139,10 +139,10 @@ public class UserService {
             user.setAvatar(avatar);
         }
         Users ret = userRepository.save(user);
-        ret = ret.copy();
-        ret.setPassword("");
-        ret.setToken("");
-        return ret;
+        Users retCp = ret.copy();
+        retCp.setPassword("");
+        retCp.setToken("");
+        return retCp;
     }
 
     public boolean updatePassword(String userName, String oldPassword, String newPassword) throws IOException, InterruptedException {

@@ -1,10 +1,12 @@
 package elec5619.sydney.edu.au.mental_health_support_website;
 
+import elec5619.sydney.edu.au.mental_health_support_website.controller.ThreadController;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.UserController;
 import elec5619.sydney.edu.au.mental_health_support_website.controller.res.ProfessionalRes;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Users;
 import elec5619.sydney.edu.au.mental_health_support_website.service.UserService;
 import elec5619.sydney.edu.au.mental_health_support_website.util.EncryptionUtil;
+import elec5619.sydney.edu.au.mental_health_support_website.util.TokenUtil;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +23,9 @@ class MentalHealthSupportWebsiteApplicationTests {
 
     @Resource
     UserController userController;
+
+    @Resource
+    ThreadController threadController;
 
     @Test
     void contextLoads() {
@@ -88,5 +93,20 @@ class MentalHealthSupportWebsiteApplicationTests {
     void testGetProfessional() {
         ProfessionalRes professionalRes =userController.searchProfessional("Dr. David Collins");
         assertNotNull(professionalRes);
+    }
+
+    @Test
+    void testToken() throws InterruptedException {
+        String token = TokenUtil.generateToken("delay");
+        System.out.println(token);
+        System.out.println("asdasd");
+        Thread.sleep(5000);
+        System.out.println(TokenUtil.getUsernameFromToken(token));
+    }
+
+    @Test
+    void testThread() {
+        String username = TokenUtil.getUsernameFromToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLQyIsImV4cCI6MTY5ODI0NDA0Mn0.XzO_ihO7NuyQm94MYh3220KiyiCdkxqjt3nyYaeTAKg");
+        System.out.println(username);
     }
 }
