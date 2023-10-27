@@ -1,9 +1,6 @@
 package elec5619.sydney.edu.au.mental_health_support_website.db.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,6 +24,8 @@ public class Appointment {
     private Long professionalUserId;
     private Long userId;
     private String appointmentTopic;
+    @Transient
+    private String username;
 
     public Appointment() {
     }

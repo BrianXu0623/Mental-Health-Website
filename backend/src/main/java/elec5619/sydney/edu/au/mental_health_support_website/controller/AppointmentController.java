@@ -52,9 +52,13 @@ public class AppointmentController {
      */
     @PostMapping("/make")
     public AppointmentInfo makeAppointment(
-            @RequestBody Appointment appointment
+            @RequestBody Appointment appointment,
+            @RequestHeader("token") String token
     ) {
         appointment.setStatus("in progress");
+        String userName = TokenUtil.getUsernameFromToken(token);
+        Users user = userService.getUserByUsername(userName);
+        appointment.setUserId(user.getId());
         Appointment obj = appointmentService.makeAppointment(appointment);
         Users professional = userService.getUserByUserId(appointment.getProfessionalUserId());
 
