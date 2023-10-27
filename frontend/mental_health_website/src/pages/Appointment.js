@@ -18,7 +18,9 @@ const Appointment = () => {
     }, []);
 
     return (
-      <div className='appointment-card-container'>
+        <>
+            <Hero />
+            <div className='appointment-card-container'>
             {data.map(data => (
                 <AppointmentCard key={data.id} 
                 icon={data.avatar} 
@@ -29,6 +31,8 @@ const Appointment = () => {
                 appointmentlink={`http://localhost:3000/appointment/make/${data.id}`} />
             ))}
         </div>
+        </>
+        
     )
   };
   

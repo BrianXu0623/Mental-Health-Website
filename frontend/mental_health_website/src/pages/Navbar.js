@@ -5,9 +5,7 @@ import "./Navbar.css"
 
 function Navbar() {
 
-  const search = () => {
 
-  }
 
   const [username, setUsername] = useState(null);
   const navigate = useNavigate();
@@ -54,14 +52,7 @@ function Navbar() {
             
           </ul>
           <ul className='nav-menu'>
-            <li className='search-bar-container'>
-              <form className='search-bar' onSubmit={search}>
-                <input type='text' id='search-content' placeholder='search'>
-                </input>
-                
-              </form>
-              
-            </li>
+            
             <li className='nav-item'>
               {username !== null ? (
                 <Link to='/account' className='welcome-user'>
