@@ -58,6 +58,7 @@ public class UserService {
         List<Long> list = Arrays.asList(longArray);
         List<Users> users = userRepository.findAllByIdIn(list);
         for(Users cur : users) {
+            cur = cur.copy();
             cur.setPassword("");
             cur.setToken("");
         }
@@ -79,6 +80,7 @@ public class UserService {
         List<Long> list = Arrays.asList(longArray);
         List<Users> users = userRepository.findAllByIdIn(list);
         for(Users cur : users) {
+            cur = cur.copy();
             cur.setPassword("");
             cur.setToken("");
         }
