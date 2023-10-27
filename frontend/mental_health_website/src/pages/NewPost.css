@@ -47,3 +47,10 @@
     height: 38px;
     align-self: flex-end;
 }
+
+textarea { 
+    border-radius: 12px;
+    padding: 10px;
+    min-width: 250px;
+    margin-bottom: 10px;
+}
