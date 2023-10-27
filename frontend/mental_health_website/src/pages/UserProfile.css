@@ -88,6 +88,12 @@ button {
     min-height: 30px;
     margin-top: 10px;
     margin-bottom: 10px;
+    background-color: #0074DD;
+    color: white;
+    border-radius: 12px;
+    height: 40px;
+    font-family: "Atkinson Hyperlegible";
+    font-weight: bold;
 }
 
 .logout-button{
