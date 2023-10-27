@@ -59,6 +59,7 @@ public class AppointmentController {
         String userName = TokenUtil.getUsernameFromToken(token);
         Users user = userService.getUserByUsername(userName);
         appointment.setUserId(user.getId());
+        appointment.setUsername(userName);
         Appointment obj = appointmentService.makeAppointment(appointment);
         Users professional = userService.getUserByUserId(appointment.getProfessionalUserId());
 

@@ -54,6 +54,7 @@ export default function NewAppointment() {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${userToken}`,
+                'token': userToken
             },
             body: JSON.stringify(appointmentData),
         })
