@@ -105,13 +105,10 @@ const UserProfile = () => {
                                 <button type="submit" onClick={handleNameSubmit}>Save</button>
                             </>
                                 
-                            
-                            
-                            
                         ) : (
                             <div>
                                 <h1 className="name">{username}</h1>
-                                <button onClick={() => setIsEditingName(true)}>edit</button>
+                                <button className="default-button" onClick={() => setIsEditingName(true)}>edit</button>
                             </div>
                         )}
                     </div>
@@ -120,7 +117,7 @@ const UserProfile = () => {
                 
             </div>
 
-            {/* <div className="lists-container">
+            {/* { <div className="lists-container">
                 <ul className="post-list">
                     <li>My Posts:</li>
                     {myposts.map((item, index) => (
