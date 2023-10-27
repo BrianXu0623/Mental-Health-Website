@@ -22,7 +22,7 @@ const ProfilePage = (props) => {
     
       const handleSubmit = async (event) => {
         event.preventDefault();
-        const response = await fetch('https://your-api-endpoint.com/rateProfessional', {
+        const response = await fetch('https://localhost:8080/api/users/rateProfessional', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
