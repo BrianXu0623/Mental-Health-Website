@@ -11,6 +11,8 @@
         font-size: 2rem;
         text-align: center;
         padding-bottom: 40px;
+        font-family: "Verdana";
+        font-weight: 800;
     }
 
     .loginForm{
@@ -22,7 +24,14 @@
         justify-content: space-between;
     }
 
-    Form {
-        border-radius: 20px;
+    input {
+        border-radius: 12px;
+        height: 30px;
+        min-width: 250px;
+        padding-left: 20px;
+        margin: 5px;
+    }
 
+    input.form-control {
+        background-color: white;
     }
