@@ -71,7 +71,8 @@ public class ThreadController {
         thread.setAuthorID(user.getId());
         thread = threadService.createThread(thread);
 
-        List<ThreadTag> tags = threadTagService.getTagByNames(context.getTagNames());
+        List<String> tagNames = Arrays.asList(context.getThread().getTags().split(","));
+        List<ThreadTag> tags = threadTagService.getTagByNames(tagNames);
         insertThreadTagRelationship(thread, tags);
         return AppThreadInfo.builder()
                 .thread(thread)
