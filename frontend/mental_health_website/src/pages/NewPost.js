@@ -1,6 +1,4 @@
-
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import "./NewPost.css";
 import TagsInput from "./components/TagsInput";
 import Hero from "./Hero";
@@ -9,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 export default function NewPost() {
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
-    const [tags, setTags] = useState([]);
+    var [tags, setTags] = useState([]);
+
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -25,7 +24,8 @@ export default function NewPost() {
             tagNames: tags,
             userToken: userToken,
         };
-        console.log(userToken);
+
+        console.log('Tags in NewPost:', tags);
 
         fetch('http://localhost:8080/api/threads/create', {
             method: 'POST',
