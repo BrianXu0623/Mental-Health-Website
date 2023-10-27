@@ -64,14 +64,16 @@ public class ThreadController {
             @RequestHeader("token") String token,
         @RequestBody AppThreadInfo context
     ) {
-        System.out.println(token == null ? "Token is null" : token);
         AppThread thread = context.getThread();
-        List<ThreadTag> tags = threadTagService.getTagByNames(context.getTagNames());
-        insertThreadTagRelationship(thread, tags);
         String username  = TokenUtil.getUsernameFromToken(token);
-        thread.setAuthorID(userService.getUserByUsername(username).getId());
+        Users user = userService.getUserByUsername(username);
 
+        thread.setAuthorID(user.getId());
         thread = threadService.createThread(thread);
+
+        List<String> tagNames = Arrays.asList(context.getThread().getTags().split(","));
+        List<ThreadTag> tags = threadTagService.getTagByNames(tagNames);
+        insertThreadTagRelationship(thread, tags);
         return AppThreadInfo.builder()
                 .thread(thread)
                 .tagNames(getTagNamesFromThreadTags(tags))
@@ -101,7 +103,8 @@ public class ThreadController {
         for (ThreadTag tag : tags) {
             ThreadTagRelationship obj = ThreadTagRelationship.builder()
                                                             .threadId(thr.getId())
-                                                            .tagId(tag.getId()).build();
+                                                            .tagId(tag.getId())
+                                                            .build();
             threadTagRelationshipService.insertThreadTagRelationship(obj);
         }
     }
@@ -399,7 +402,7 @@ public class ThreadController {
 
     /**
      * Get method for searching a list of thread given a tag name
-     * @param tagName the name of the tag to be searched
+     * @param tagMap the name of the tag to be searched
      * @return a list of thread associated with the tag name
      */
     @PostMapping ("/search/tag")

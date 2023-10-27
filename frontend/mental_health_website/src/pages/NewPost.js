@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import "./NewPost.css";
-import TagsInput from "./components/TagsInput";
 import Hero from "./Hero";
 import { useNavigate } from 'react-router-dom';
 
@@ -9,24 +8,24 @@ export default function NewPost() {
     const [text, setText] = useState('');
     var [tags, setTags] = useState([]);
 
+    const [tags, setTags] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const userToken = localStorage.getItem('token');
-
         const postData = {
             thread: {
                 title: title,
                 content: text,
                 timestamp: new Date().toISOString(),
+                tags: tags
             },
-            tagNames: tags,
             userToken: userToken,
         };
 
-        console.log('Tags in NewPost:', tags);
 
+        console.log('Tags in NewPost:', tags);
         fetch('http://localhost:8080/api/threads/create', {
             method: 'POST',
             headers: {
@@ -52,12 +51,16 @@ export default function NewPost() {
             <div className="newPostTags">
                 <div className="create-post-container">
                     <h1 className="newPostPageTitle">Create Post</h1>
-                    <TagsInput
-                        tags={tags}
-                        setTags={setTags}
-                    />
                 </div>
                 <form className="newPostForm" onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <textarea
+                            id="tags"
+                            value={tags}
+                            onChange={(e) => setTags(e.target.value)}
+                            placeholder="Tags"
+                        />
+                    </div>
                     <div className="form-group">
                         <textarea
                             id="title"
