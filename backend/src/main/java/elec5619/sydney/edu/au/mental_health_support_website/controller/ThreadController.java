@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 
@@ -63,14 +64,16 @@ public class ThreadController {
             @RequestHeader("token") String token,
         @RequestBody AppThreadInfo context
     ) {
-        System.out.println(token == null ? "Token is null" : token);
         AppThread thread = context.getThread();
-        List<ThreadTag> tags = threadTagService.getTagByNames(context.getTagNames());
-        insertThreadTagRelationship(thread, tags);
         String username  = TokenUtil.getUsernameFromToken(token);
-        thread.setAuthorID(userService.getUserByUsername(username).getId());
+        Users user = userService.getUserByUsername(username);
 
+        thread.setAuthorID(user.getId());
         thread = threadService.createThread(thread);
+
+        List<String> tagNames = Arrays.asList(context.getThread().getTags().split(","));
+        List<ThreadTag> tags = threadTagService.getTagByNames(tagNames);
+        insertThreadTagRelationship(thread, tags);
         return AppThreadInfo.builder()
                 .thread(thread)
                 .tagNames(getTagNamesFromThreadTags(tags))
@@ -100,7 +103,8 @@ public class ThreadController {
         for (ThreadTag tag : tags) {
             ThreadTagRelationship obj = ThreadTagRelationship.builder()
                                                             .threadId(thr.getId())
-                                                            .tagId(tag.getId()).build();
+                                                            .tagId(tag.getId())
+                                                            .build();
             threadTagRelationshipService.insertThreadTagRelationship(obj);
         }
     }
@@ -120,6 +124,9 @@ public class ThreadController {
         List<ThreadTag> tags = getThreadTagsFromThreadId(threadId);
         List<String> tagNames = getTagNamesFromThreadTags(tags);
         List<ThreadComment> comments = threadCommentService.getThreadComments(threadId);
+        for(ThreadComment comment: comments) {
+            comment.setCommentAuthor(userService.getUserByUserId(comment.getUserId()).getUsername());
+        }
         String authorName = userService.getUserByUserId(thread.getAuthorID()).getUsername();
 
 
@@ -398,21 +405,21 @@ public class ThreadController {
 
     /**
      * Get method for searching a list of thread given a tag name
-     * @param tagName the name of the tag to be searched
+     * @param tagMap the name of the tag to be searched
      * @return a list of thread associated with the tag name
      */
-    @GetMapping("/search/tag")
+    @PostMapping ("/search/tag")
     public List<AppThreadInfo> searchThreadByTag(
-      @RequestBody String tagName
+      @RequestBody Map<String, String> tagMap
     ) {
 
-        ThreadTag tagObj = threadTagService.getTagByName(tagName);
+        ThreadTag tagObj = threadTagService.getTagByName(tagMap.get("tagName"));
         // I need  to find all the relationships
         List<ThreadTagRelationship> tags = threadTagRelationshipService.getThread(tagObj.getId());
 
         // Getting the tag name
         List<String> tagNames = new ArrayList<>();
-        tagNames.add(tagName);
+        tagNames.add(tagMap.get("tagName"));
 
         // Now getting all the AppThread
         List<AppThreadInfo> resultSet = new ArrayList<>();

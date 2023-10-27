@@ -33,4 +33,27 @@ public class Users {
     private Long rateTimes = 0L;
     private String avatar;
     public Users() {}
+
+    public Users copy() {
+        return Users.builder()
+                .id(this.id)
+                .username(this.username)
+                .email(this.email)
+                .password(this.password)
+                .birthday(this.birthday)
+                .phonenumber(this.phonenumber)
+                .userType(this.userType)
+                .followerIds(this.followerIds)
+                .followedIds(this.followedIds)
+                .likedThreadIds(this.likedThreadIds)
+                .isMuted(this.isMuted)
+                .token(this.token)
+                .experience(this.experience)
+                .availableHours(this.availableHours)
+                .clinic(this.clinic)
+                .totalRating(this.totalRating)
+                .rateTimes(this.rateTimes)
+                .avatar(this.avatar)
+                .build();
+    }
 }

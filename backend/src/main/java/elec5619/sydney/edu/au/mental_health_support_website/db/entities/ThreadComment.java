@@ -1,9 +1,6 @@
 package elec5619.sydney.edu.au.mental_health_support_website.db.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,6 +20,8 @@ public class ThreadComment {
     private Long threadId;
     private String comment;
     private Date timestamp;
+    @Transient
+    private String commentAuthor;
 
     public ThreadComment() {
 

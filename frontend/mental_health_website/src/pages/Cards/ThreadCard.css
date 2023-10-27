@@ -1,9 +1,13 @@
 /* ThreadCard.css */
 @import url('https://fonts.googleapis.com/css2');
 
+body {
+    background: #FAFAFA;
+}
+
 .thread-card {
     width: 95%;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     /* padding: 16px; */
     margin: 16px auto;
     border-radius: 8px;
@@ -11,6 +15,10 @@
     flex-direction: column;
     gap: 16px;  /* Adjust the space between elements */
     overflow: auto;
+}
+
+.thread-card:hover {
+    border: 10px solid #7fd8be; 
 }
 
 .thread-header, .thread-footer {

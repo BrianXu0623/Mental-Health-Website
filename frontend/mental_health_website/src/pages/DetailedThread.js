@@ -45,7 +45,7 @@ function DetailedThread() {
             <div>Comments:</div>
                 {data?.comments?.map(comment => ( // Adjusted the comment rendering
                     <div key={comment.id}> 
-                        <div>User ID: {comment.userId}</div>
+                        <div>Username: {comment.commentAuthor}</div>
                         <div>Comment: {comment.comment}</div>
                     </div>
                 ))}

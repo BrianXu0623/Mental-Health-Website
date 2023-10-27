@@ -86,7 +86,7 @@ const Forum = () => {
                         </Link>
                     ))}
                     <Link to="/forum/newthread/">
-                        <button className="new-post-button">New Post</button>
+                        <button className="new-post-button">+</button>
                     </Link>
                 </>
             )}
