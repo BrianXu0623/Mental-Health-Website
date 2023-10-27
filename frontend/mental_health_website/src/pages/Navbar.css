@@ -21,9 +21,10 @@
     text-decoration: none;
     font-family:sans-serif;
     font-weight: 1000;
-    font-size: 2rem;
+    font-size: 28px;
     display: flex;
     align-items: left;
+    font-style: italic;
   }
 
   .welcome-user {
@@ -38,6 +39,12 @@
     align-self: right;
     flex-direction: column;
     text-align: right;
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  
+  .welcome-user:hover {
+    color: orange;
   }
   
   .nav-menu {
@@ -101,7 +108,9 @@
     padding-bottom: 8px;
     padding-left: 10px;
     margin-top: 10px;
-    font-family: sans-serif, Arial, Helvetica, sans-serif;
+    font-family: Space Grotesk, Arial, Arial, Arial;
+    font-weight: bold;
     color: black;
  }
+
  

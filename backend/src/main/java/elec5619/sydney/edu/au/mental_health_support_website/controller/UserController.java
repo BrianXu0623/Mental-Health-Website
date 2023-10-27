@@ -229,7 +229,9 @@ public class UserController {
     public Long rateProfessional(@RequestHeader("token") String token,
                                  @RequestBody ProfessionalRatingRequest professionalRatingRequest) {
         String userName = TokenUtil.getUsernameFromToken(token);
-        Users p = userService.getUserByUsername(professionalRatingRequest.getProfessionalUserName());
+        String pName = professionalRatingRequest.getProfessionalUserName();
+        pName = pName.replaceAll("%20", " ");
+        Users p = userService.getUserByUsername(pName);
         p.setTotalRating(p.getTotalRating() + professionalRatingRequest.getRating());
         p.setRateTimes(p.getRateTimes() + 1);
         return p.getTotalRating() / p.getRateTimes();

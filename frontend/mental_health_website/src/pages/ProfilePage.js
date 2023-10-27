@@ -5,15 +5,56 @@ import { useParams } from 'react-router-dom';
 const ProfilePage = (props) => {
 
     const { id } = useParams();
-    const [data, setData] = useState([]);
+    const [rating, setRating] = useState(0);
+    const [currentRating, setCurrentRating] = useState(0);
+    const [professionalUsername, setprofessionalUsername] = useState('');
+    const [data, setData] = useState({
+        avatar: '',
+        username: '',
+        clinic: '',
+        availableHours: '',
+        averageRating: 0, 
+      });
+
+      const handleRatingChange = (event) => {
+        setRating(event.target.value);
+      };
+    
+      const handleSubmit = async (event) => {
+        event.preventDefault();
+        const response = await fetch('https://localhost:8080/api/users/rateProfessional', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    professionalUsername,
+                    rating
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log('Success:', data);
+            } else {
+                console.error('Error:', data);
+            }
+        };
+      
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/users/searchUser/${id}`, {
+        console.log('useEffect is running');
+        fetch(`http://localhost:8080/api/users/searchProfessional/${id}`, {
             method: 'GET',
           })
             .then(response => response.json())
             .then(data => {
-                setData(data);
+                setData(data.user);
+                setCurrentRating(data.averageRating);
+                setprofessionalUsername(data.user.username);
+                console.log("got data");
                 console.log(data);
             })
             .catch(error => console.error('Error:', error));
@@ -33,11 +74,23 @@ const ProfilePage = (props) => {
                     <p className='profile-name'>{data.username}</p>
                     <p className='profile-institude'>{data.clinic}</p>
                     <p className='profile-available'>{data.availableHours}</p>
-                    <a href={`/make-appointment/${id}`}>Make an appointment now</a>
+                    <a href={`/appointment/make/${data.id}`}>Make an appointment now</a>
                 </div>
                 <div className='profile-rating'>
-                    <p className='current-rating'>Current Rating</p>
-                    <p className='rate-me-now'>Rate me now</p>
+                    <p className='current-rating'>Current Rating: {currentRating}</p>
+                    <form onSubmit={handleSubmit}>
+                        <label>
+                            Rate Me (0 - 100):
+                            <input
+                            type="number"
+                            min="0"
+                            max="100"
+                            value={rating}
+                            onChange={handleRatingChange}
+                            />
+                        </label>
+                        <button type="submit">Submit Rating</button>
+                        </form>
                 </div>
             </div>
             <div className='profile-body'>
@@ -45,9 +98,13 @@ const ProfilePage = (props) => {
                 <p>{data.experience}</p>
             </div>
             <div className='profile-comments'>
-                <h3>Recent User Comments</h3>
-                <h4>Example User</h4>
-                <p className='comment-content'>User comment contents blah blah</p>
+                {data?.professionalCommentList?.map((item) => (
+                <div >
+                    <h3>Recent User Comments</h3>
+                    <h4>Example User</h4>
+                    <p className='comment-content'>User comment contents blah blah</p>
+                </div>))}
+                
             </div>
         </div>
         

@@ -1,3 +1,7 @@
+body {
+    background-color: #FAFAFA;
+}
+
 .profile-container {
     max-width: 800px;
     margin: auto;
@@ -16,6 +20,7 @@
     width: 250px;
     border-radius: 50%;
     margin-right: 20px;
+    border: 2px solid;
 }
 
 .name {
@@ -61,7 +66,46 @@ ul{
     align-items: start;
 }
 
+.default-button {
+    width: 100px;
+    height: 40px;
+    margin: 10px;
+    background-color: #0074DD;
+    color: white; 
+    border-radius: 12px;
+    border: 2px solid;
+    font-size: 20px; 
+}
+
+button:hover {
+    background-color: lightblue;
+    color: black; 
+
+}
+
+button {
+    min-width: 250px; 
+    min-height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #0074DD;
+    color: white;
+    border-radius: 12px;
+    height: 40px;
+    font-family: "Atkinson Hyperlegible";
+    font-weight: bold;
+}
+
 .logout-button{
     width: 20%;
     align-self: center;
+    position: fixed;
+    height: 50px;
+    bottom: 20px;
+    border-radius: 12px;
+    font-size: 20px;
+    font-family: "Atkinson Hyperlegible";
+    background-color: #0074DD;
+    color: white;
 }
+
