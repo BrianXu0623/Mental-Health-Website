@@ -124,6 +124,9 @@ public class ThreadController {
         List<ThreadTag> tags = getThreadTagsFromThreadId(threadId);
         List<String> tagNames = getTagNamesFromThreadTags(tags);
         List<ThreadComment> comments = threadCommentService.getThreadComments(threadId);
+        for(ThreadComment comment: comments) {
+            comment.setCommentAuthor(userService.getUserByUserId(comment.getUserId()).getUsername());
+        }
         String authorName = userService.getUserByUserId(thread.getAuthorID()).getUsername();
 
 
