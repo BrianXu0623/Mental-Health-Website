@@ -120,32 +120,34 @@ const UserProfile = () => {
             </div>
 
             <div className="lists-container">
-                <ul className="post-list">
-                    <li>My Posts:</li>
-                    {myposts.map((item, index) => (
-                        <li key={index}>
-                            {item.name}
-                        </li>))}
-                </ul>
+                <div className='post-container'>
+                    <h3>My Posts:</h3>
+                    <ul className="post-list">
+                        {myposts.map((item, index) => (
+                            <li key={index}>
+                                {item.thread.title}
+                            </li>))}
+                    </ul>
+                </div>
+                
                 <div className='appointment-container'>
-                    <h1>My Appointment:</h1>
+                    <h3>My Appointment:</h3>
                     <ul className="appointment-list">
-                    
-                    {myAppointments.map((item, index) => (
-                        <li key={index}>
-                            <div className='item-name'>
-                                {item.professionalName}
-                            </div>
-                            <div className='item-clinic'>
-                                {item.clinic}
-                            </div>
-                            <div className='item-date'>
-                                {item.appointment.date}
-                                {item.appointment.time}
-                            </div>
+                        {myAppointments.map((item, index) => (
+                            <li key={index}>
+                                <div className='item-name'>
+                                    {item.professionalName}
+                                </div>
+                                <div className='item-clinic'>
+                                    {item.clinic}
+                                </div>
+                                <div className='item-date'>
+                                    {item.appointment.date}
+                                    {item.appointment.time}
+                                </div>
                             
                         </li>))}
-                </ul>
+                    </ul>
                 </div>
                 
             </div>
