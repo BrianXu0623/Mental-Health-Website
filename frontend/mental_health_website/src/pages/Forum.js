@@ -7,7 +7,12 @@ import './Forum.css';
 const Forum = () => {
     const [threads, setThreads] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleInputChange = (event) => {
+        setSearchValue(event.target.value);
+        console.log("Searching for:", event.target.value);
+    };
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
@@ -15,18 +20,19 @@ const Forum = () => {
         }
       };
 
-    const search = () => {
-        fetch(`http://localhost:8080/api/threads/search/tag/${searchQuery}`, {
-            method: 'GET',
+    const search = async () => {
+        await fetch(`http://localhost:8080/api/threads/search/tag/`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            body: JSON.stringify({ tagName: searchValue }),
         })
             .then((response) => response.json())
             .then((data) => {
                 setThreads(data);
                 console.log(data);
-                console.log(searchQuery);
+                console.log(searchValue);
                 setIsLoading(false);
             })
             .catch((error) => {
@@ -57,17 +63,15 @@ const Forum = () => {
         <div>
             <Hero />
             <div className='search-bar-container'>
-              <form className='search-bar' onSubmit={search}>
-              <input
-                    type="text"
-                    placeholder="Search..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                />
-                <button onClick={search}>Search</button>
-                
-              </form>
+                <div>
+                    <h1>Search Bar in React</h1>
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchValue}
+                        onChange={handleInputChange}
+                    />
+                </div>
             </div>
             {isLoading ? (
                 <div>Loading...</div>

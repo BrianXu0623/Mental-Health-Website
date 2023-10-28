@@ -7,7 +7,6 @@ const UserProfile = () => {
     const [user, setUser] = useState([]);
     const [myposts, setMyPosts] = useState([]);
     const [myAppointments, setMyAppointments] = useState([]);
-    const [nameForm, setNameForm] = useState('');
     const [username, setUsername] = useState("");
     const navigate = useNavigate();
 
@@ -16,16 +15,18 @@ const UserProfile = () => {
         navigate('/information');
     };
 
-    const updateUsername = (newUsername) => {
+    const handleUpdateEmail = (newEmail) => {
         fetch('http://localhost:8080/api/users/updateProfile', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 'newUserName': newUsername})
+          body: JSON.stringify({
+            newEmail
+            })
         })
         .then(response => response.json())
         .then(data => {
           if(data.success) {
-            setUsername(newUsername);
+            console.log(data.email)
           } else {
             console.error('Failed to update username');
           }
@@ -35,47 +36,47 @@ const UserProfile = () => {
 
     useEffect(() => {
 
-    fetch('http://localhost:8080/api/users/profile', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'token': localStorage.getItem('token')
+        fetch('http://localhost:8080/api/users/profile', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            }
+            })
+            .then(response => response.json())
+            .then((data) => {setUser(data);
+            })
+            .catch(error => console.error('There was an error!', error));
+
+        setUsername (user.username);
+
+        fetch('http://localhost:8080/api/appointments/get/byUser', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            }
+            })
+            .then(response => response.json())
+            .then((data) => {setMyAppointments(data);})
+            .catch(error => console.error('There was an error!', error));
+
+        setUsername (user.username);
+
+        fetch('http://localhost:8080/api/threads/get/byUserToken', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            }
+            })
+            .then(response => response.json())
+            .then((data) => {setMyPosts(data);})
+            .catch(error => console.error('There was an error!', error));
+
+        setUsername (user.username);
+
         }
-        })
-        .then(response => response.json())
-        .then((data) => {setUser(data);
-                        localStorage.setItem('username', data.username)})
-        .catch(error => console.error('There was an error!', error));
-
-    setUsername (user.username);
-
-    fetch('http://localhost:8080/api/appointments/get/byUser', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'token': localStorage.getItem('token')
-        }
-        })
-        .then(response => response.json())
-        .then((data) => {setMyAppointments(data);})
-        .catch(error => console.error('There was an error!', error));
-
-    setUsername (user.username);
-
-    fetch('http://localhost:8080/api/threads/get/byUserToken', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'token': localStorage.getItem('token')
-        }
-        })
-        .then(response => response.json())
-        .then((data) => {setMyPosts(data);})
-        .catch(error => console.error('There was an error!', error));
-
-    setUsername (user.username);
-
-    }
     
     , []);
 
@@ -83,36 +84,37 @@ const UserProfile = () => {
     const [isEditingEmail, setIsEditingEmail] = useState(false);
     const [isEditingIcon, setIsEditingIcon] = useState(false);
 
-    const handleNameSubmit = async (e) => {
-        e.preventDefault();
-        updateUsername(username);
-        setIsEditingName(false); 
-    };
-
     return (
         <div className="profile-container">
             <div className="header">
                 <img src={user.avatar} alt="User Avatar" className="icon"/>
                 <div className='profile-header-middle'>
                     <div className='name'>
-                        {isEditingName ? (
-                            <>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    defaultValue={user.username}
-                                />
-                                <button type="submit" onClick={handleNameSubmit}>Save</button>
-                            </>
-                                
-                        ) : (
-                            <div>
-                                <h1 className="name">{username}</h1>
-                                <button className="default-button" onClick={() => setIsEditingName(true)}>edit</button>
-                            </div>
-                        )}
+                        
+                        <div>
+                            <h1 className="name">{username}</h1>
+                        </div>
                     </div>
-                    <p className="email">{user.email}</p>
+                    <p className="email">
+                        <div className='email'>
+                            {isEditingEmail ? (
+                                <>
+                                    <input
+                                        type="text"
+                                        name="newEmail"
+                                        defaultValue={user.email}
+                                    />
+                                    <button type="submit" onClick={handleUpdateEmail}>Save</button>
+                                </>
+                                    
+                            ) : (
+                                <div>
+                                    <h1 className="email">{user.email}</h1>
+                                    <button className="default-button" onClick={() => setIsEditingEmail(true)}>edit</button>
+                                </div>
+                            )}
+                        </div>
+                    </p>
                 </div>
                 
             </div>

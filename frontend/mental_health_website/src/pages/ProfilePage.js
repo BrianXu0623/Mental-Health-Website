@@ -30,7 +30,7 @@ const ProfilePage = (props) => {
                 },
                 body: JSON.stringify({
                     professionalUsername,
-                    rating
+                    rating: Number(rating)
                 })
             });
 
@@ -44,7 +44,7 @@ const ProfilePage = (props) => {
         };
       
 
-    useEffect(() => {
+    componentDidMount(() => {
         console.log('useEffect is running');
         fetch(`http://localhost:8080/api/users/searchProfessional/${id}`, {
             method: 'GET',
