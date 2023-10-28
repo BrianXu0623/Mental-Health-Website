@@ -19,9 +19,10 @@ import java.util.Map;
 import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
 @RequestMapping("/api/threads/")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ThreadController {
     @Autowired
     private ThreadCommentService threadCommentService;

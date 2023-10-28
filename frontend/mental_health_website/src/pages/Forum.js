@@ -15,7 +15,7 @@ const Forum = () => {
     };
 
     const handleSubmit = async () => {
-        await fetch(`http://localhost:8080/api/threads/search/tag/`, {
+        await fetch(`http://localhost:8080/api/threads/search/tag`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
