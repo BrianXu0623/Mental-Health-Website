@@ -4,9 +4,6 @@ import './DetailedThread.css';
 
 function DetailedThread() {
 
-    const favorite_thread = () => {
-        console.log("favorited");
-    }
 
     const { id } = useParams();
     const [data, setData] = useState([]);
@@ -38,7 +35,7 @@ function DetailedThread() {
 
             <div className="buttons">
                 <Link to={`/addcomment/${data?.thread?.id}`}>+ Add a comment</Link>
-                <button onClick={favorite_thread}>Favorite</button> 
+                
             </div>
 
             <div className="comments">

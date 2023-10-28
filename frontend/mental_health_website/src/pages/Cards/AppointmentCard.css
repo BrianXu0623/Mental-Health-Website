@@ -20,8 +20,8 @@
   }
   
   .icon img {
-    max-width: 50px; /* Adjust as needed */
-    border-radius: 50%;  /* Optional, for circular icons */
+    max-width: 250px; /* Adjust as needed */
+    border-radius: 100%;  /* Optional, for circular icons */
   }
   
   .information {

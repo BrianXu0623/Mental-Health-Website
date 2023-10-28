@@ -8,7 +8,7 @@ export default function InformationCard(props) {
     return (
       <div className='appointment-card'>
         <div className='icon'>
-            <img src={props.icon} alt='icon' />
+            <img src={`data:image/jpeg;base64,${props.icon}`} alt='icon' />
         </div>
         <div className='information'>
             <h2> {props.name} </h2>
