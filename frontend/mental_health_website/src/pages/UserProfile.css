@@ -39,11 +39,12 @@ body {
 
 .lists-container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
 }
 
-.list {
-    width: 30%;
+.post-container{
+    display: flex;
+    flex-direction: column;
 }
 
 ul{
