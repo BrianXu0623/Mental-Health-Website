@@ -267,26 +267,34 @@ public class ThreadController {
     public List<AppThreadInfo> getThreadsBasedOnUserToken(
             @RequestHeader("token") String token
     ) {
-        Long authorId = userService.getUserByUsername(TokenUtil.getUsernameFromToken(token)).getId();
-        List<AppThread> threads = threadService.findByAuthorID(authorId);
-        if (threads == null || threads.isEmpty()) {
+        try {
+            Long authorId = userService.getUserByUsername(TokenUtil.getUsernameFromToken(token)).getId();
+            if(authorId == null) {
+                return new ArrayList<>();
+            }
+            List<AppThread> threads = threadService.findByAuthorID(authorId);
+            if (threads == null || threads.isEmpty()) {
+                return new ArrayList<>();
+            }
+            List<AppThreadInfo> threadInfos = new ArrayList<>();
+            for (AppThread thread : threads) {
+                List<ThreadTag> tags = getThreadTagsFromThreadId(thread.getId());
+                List<String> tagNames = getTagNamesFromThreadTags(tags);
+                String authorName = userService.getUserByUserId(thread.getAuthorID()).getUsername();
+                threadInfos.add(
+                        AppThreadInfo.builder()
+                                .thread(thread)
+                                .tagNames(tagNames)
+                                .authorName(authorName)
+                                .noComments(threadCommentService.countCommentsByThreadId(thread.getId()))
+                                .build()
+                );
+            }
+            return threadInfos;
+        }
+        catch (Exception e) {
             return new ArrayList<>();
         }
-        List<AppThreadInfo> threadInfos = new ArrayList<>();
-        for (AppThread thread : threads) {
-            List<ThreadTag> tags = getThreadTagsFromThreadId(thread.getId());
-            List<String> tagNames = getTagNamesFromThreadTags(tags);
-            String authorName = userService.getUserByUserId(thread.getAuthorID()).getUsername();
-            threadInfos.add(
-                    AppThreadInfo.builder()
-                            .thread(thread)
-                            .tagNames(tagNames)
-                            .authorName(authorName)
-                            .noComments(threadCommentService.countCommentsByThreadId(thread.getId()))
-                            .build()
-            );
-        }
-        return threadInfos;
     }
 
 
