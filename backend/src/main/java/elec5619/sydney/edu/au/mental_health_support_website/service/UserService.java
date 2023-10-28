@@ -165,6 +165,7 @@ public class UserService {
 
     public boolean saveUser(Users user) {
         userRepository.save(user);
+        return true;
     }
 
     public Users getUserByUserId(Long userId) {
