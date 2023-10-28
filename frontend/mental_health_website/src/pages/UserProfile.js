@@ -10,13 +10,44 @@ const UserProfile = () => {
     const [username, setUsername] = useState("");
     const [newEmail, setNewEmail] = useState("");
     const [isEditingEmail, setIsEditingEmail] = useState(false);
-    const [isEditingIcon, setIsEditingIcon] = useState(false);
+    const [avatarString, setAvatarString] = useState('');
     const navigate = useNavigate();
 
     const handleLogout = () =>{
         localStorage.clear();
         navigate('/information');
     };
+
+    const handleImageUpload = (event) => {
+        
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
+                setAvatarString(base64String);
+                sendImageToBackend(base64String);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const sendImageToBackend = async (base64String) => {
+        try {
+            const response = await fetch('http://localhost:8080/api/users/updateProfile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': localStorage.getItem('token'),
+                },
+                body: JSON.stringify({ avatar: base64String }),
+            });
+    
+            const data = await response.json();
+        } catch (error) {
+            console.error("There was an error uploading the image:", error);
+        }
+    };    
 
     const handleUpdateEmail = () => {
 
@@ -57,6 +88,7 @@ const UserProfile = () => {
             .then((data) => {setUser(data);
                 setUsername(data.username);
                 setNewEmail(data.email);
+                setAvatarString(data.avatar);
             })
             .catch(error => console.error('There was an error!', error));
 
@@ -93,7 +125,12 @@ const UserProfile = () => {
     return (
         <div className="profile-container">
             <div className="header">
-                <img src={user.avatar} alt="User Avatar" className="icon"/>
+                <div className='profile-header-left'>
+                    <img className="icon" src={`data:image/jpeg;base64,${avatarString}`} alt="User Avatar" />
+                    <input type="file" onChange={handleImageUpload} />
+                </div>
+                
+
                 <div className='profile-header-middle'>
                     <div className='name'>
                         
