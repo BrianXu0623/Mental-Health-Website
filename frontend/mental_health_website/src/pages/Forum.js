@@ -62,7 +62,7 @@ const Forum = () => {
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
-                        placeholder="Search..."
+                        placeholder="Search a tag ..."
                         value={searchValue}
                         onChange={handleInputChange}
                     />
