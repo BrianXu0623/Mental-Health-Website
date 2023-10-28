@@ -166,20 +166,25 @@ const UserProfile = () => {
             <div className="lists-container">
                 <div className='post-container'>
                     <h3>My Posts:</h3>
+                    <div className="thread-container">
                     <ul className="post-list">
                         {myposts.map((item, index) => (
-                            <li key={index}>
-                                {item.thread.title}
-                            </li>))}
+                            <li className="thread-item" key={index}>
+                                <h2>{item.thread.title}</h2>
+                            </li>
+                            )
+                        )
+                    }
                     </ul>
+                    </div>
                 </div>
                 
-                <div className='appointment-container'>
+                <div className='post-container'>
                     <h3>My Appointment:</h3>
-                    <ul className="appointment-list">
+                    <ul className="appointment-list-">
                     
                     {myAppointments.map((item, index) => (
-                        <li className="appointment-container" key={index}>
+                        <li key={index}>
                             <div className="appointment-small-container">
                                 <div className='item-name'>
                                     <h2>{item.professionalName}</h2>
