@@ -127,8 +127,10 @@ const UserProfile = () => {
                             {item.name}
                         </li>))}
                 </ul>
-                <ul className="appointment-list">
-                    <li>My Appointments:</li>
+                <div className='appointment-container'>
+                    <h1>My Appointment:</h1>
+                    <ul className="appointment-list">
+                    
                     {myAppointments.map((item, index) => (
                         <li key={index}>
                             <div className='item-name'>
@@ -144,6 +146,8 @@ const UserProfile = () => {
                             
                         </li>))}
                 </ul>
+                </div>
+                
             </div>
 
             <button className='logout-button' onClick={handleLogout}> log out </button>
