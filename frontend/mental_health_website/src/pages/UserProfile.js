@@ -119,7 +119,7 @@ const UserProfile = () => {
                 
             </div>
 
-            {/* { <div className="lists-container">
+            <div className="lists-container">
                 <ul className="post-list">
                     <li>My Posts:</li>
                     {myposts.map((item, index) => (
@@ -127,14 +127,28 @@ const UserProfile = () => {
                             {item.name}
                         </li>))}
                 </ul>
-                <ul className="appointment-list">
-                    <li>My Appointments:</li>
+                <div className='appointment-container'>
+                    <h1>My Appointment:</h1>
+                    <ul className="appointment-list">
+                    
                     {myAppointments.map((item, index) => (
                         <li key={index}>
-                            {item.name}
+                            <div className='item-name'>
+                                {item.professionalName}
+                            </div>
+                            <div className='item-clinic'>
+                                {item.clinic}
+                            </div>
+                            <div className='item-date'>
+                                {item.appointment.date}
+                                {item.appointment.time}
+                            </div>
+                            
                         </li>))}
                 </ul>
-            </div> */}
+                </div>
+                
+            </div>
 
             <button className='logout-button' onClick={handleLogout}> log out </button>
         </div>
