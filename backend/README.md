@@ -14,6 +14,7 @@ The backend application are using 3 Controllers for handling endpoints for impor
 1. 🔥**UserController (/api/users/)** - is used for handling everything related to users.
 2. 🔥**ThreadController (/api/threads/)** - is used for handling everything related to thread, thread tag and thread comment.
 3. 🔥**AppointmentController (/api/appointments/)** - is used for handling everything related to appointments.
+4. 🔥**InformationController (/)** - is used for handling everything related to the main page (information page).
 
 
 
@@ -88,3 +89,90 @@ The backend application are using 3 Controllers for handling endpoints for impor
 | /get/byProfessionalUser/  | GET    | token: `String`                     | List<AppointmentInfo>: a list of appointment objects associated with the the user id, otherwise an empty list | Get method for getting a list of appointments associated with a professional user id                                                                           |
 | /edit/{appointmentId}     | PUT    | token: `String`, apm: `Appointment` | `Boolean`: TRUE if the user is eligible to edit the appointment, otherwise FALSE                              | Put method for editing a certain appointment. Only the admin, professional and the user who created the appointment can edit it                                |
 | /delete/{appointmentId}   | DELETE | token: `String`                     | `Boolean`: TRUE if the operation is successful otherwise FALSE                                                | DELETE method that allows admin to remove a certain appointment                                                                                                |
+
+
+### 2.4) InformationController - (/)
+
+> ❗<a>Note</a><br>
+> All the parameters described in each controller should be passed from the frontend as *@RequestHeader("token")* for token, otherwise *@RequestBody* by default
+> The {attribute} is interpreted to be part of the url, and will be used to run certain query.
+
+| Endpoint              | Method | Parameters       | Return                                                       | Description                                                        |
+|-----------------------|--------|------------------|--------------------------------------------------------------|--------------------------------------------------------------------|
+| /information          | GET    |                  | `List<Information>`: All of the information on the main page | Get method that retrieve all the information on the main page      |
+| /information/{infoId} | GET    | infoId: `String` | `Information`: The detail of a specific information          | Get method that retrieve a specific information based on its id.   |
+
+### 3) Libraries and Versions
+| Library                    | Version       | Description                                       |
+|----------------------------|---------------|---------------------------------------------------|
+| org.springframework.boot   | 3.1.3         | Spring Boot Starter for building web applications |
+| org.springframework.boot   | 2.6.3         | Spring Boot Starter for Data JPA                  |
+| org.springframework.boot   | 2.6.3         | Spring Boot Starter for testing                   |
+| org.springframework.boot   | 2.6.3         | Spring Boot Starter for web development           |
+| org.springframework.boot   | 2.6.3         | Spring Boot DevTools for faster development       |
+| com.mysql                  | 8.0.23        | MySQL Connector for Java                          |
+| org.springframework        | 6.0.11        | Spring Framework for dependency injection         |
+| org.projectlombok          | -             | Lombok library for reducing boilerplate code      |
+| com.microsoft.sqlserver    | 12.4.1.jre11  | Microsoft SQL Server JDBC Driver                  |
+| com.azure.spring           | 4.11.0        | Spring Cloud Azure dependencies                   |
+| org.json                   | 20230227      | JSON processing library                           |
+| com.fasterxml.jackson.core | 2.15.2        | JSON data-binding library for Java                |
+| io.jsonwebtoken            | 0.11.2        | JSON Web Token (JWT) library for Java             |
+
+### 4) Java Version
+- Java 17
+
+
+### 5) Quick Start Guide
+
+Follow these steps to run the Mental Health Support Website on your local machine:
+
+### Prerequisites
+
+1. Install Java 17 on your system.
+
+### Backend Setup
+
+1. Open a terminal and navigate to the project root directory.
+
+2. Build the project using the following command:
+
+    ```bash
+    ./mvnw clean install
+    ```
+
+3. Run the backend server:
+
+    ```bash
+    ./mvnw spring-boot:run
+    ```
+
+   The backend server will start, and you can access it at `http://localhost:8080`.
+
+### Frontend Setup
+
+1. Navigate to the frontend directory:
+
+    ```bash
+    cd Mental_Health_Support_Website/frontend/mental_health_website
+    ```
+
+2. Make sure you have Node.js and npm installed.
+
+3. Install the required dependencies:
+
+    ```bash
+    npm install
+    ```
+
+4. Start the frontend application:
+
+    ```bash
+    npm start
+    ```
+
+   The frontend server will start, and you can access it at `http://localhost:3000/information`.
+
+### Accessing the Website
+
+Visit [http://localhost:3000/information](http://localhost:3000/information) in your web browser to access the Mental Health Support Website.
