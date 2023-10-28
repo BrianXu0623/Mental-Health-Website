@@ -38,6 +38,7 @@ const ProfilePage = (props) => {
 
             if (response.ok) {
                 console.log('Success:', data);
+                window.location.reload();
             } else {
                 console.error('Error:', data);
             }
