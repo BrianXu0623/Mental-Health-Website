@@ -14,6 +14,7 @@ public class AppThreadService {
 
     /**
      * method for creating thread object and add it to the database
+     *
      * @param thread the object to be created
      * @return the newly created thread object
      */
@@ -23,6 +24,7 @@ public class AppThreadService {
 
     /**
      * method for removing threat object from the database
+     *
      * @param threadId - the id of the thread provided
      * @return the true if thread object exists, otherwise false
      */
@@ -37,6 +39,7 @@ public class AppThreadService {
 
     /**
      * edit the content of existing thread
+     *
      * @param edittedThread the freshly editted thread object
      * @return true if the object exists, otherwise false
      */
@@ -48,6 +51,7 @@ public class AppThreadService {
 
     /**
      * get a single thread object from the database
+     *
      * @param threadId the id of the thread to be retrieved
      * @return the requested thread if found, otherwise null
      */
@@ -57,6 +61,7 @@ public class AppThreadService {
 
     /**
      * get a list of threads based on a list of ids
+     *
      * @param threadIds the ids of thread requested
      * @return a list of threads if found, otherwise an empty list
      */

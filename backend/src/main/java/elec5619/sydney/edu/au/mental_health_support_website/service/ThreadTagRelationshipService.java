@@ -16,6 +16,7 @@ public class ThreadTagRelationshipService {
     public void insertThreadTagRelationship(ThreadTagRelationship obj) {
         repository.save(obj);
     }
+
     public List<ThreadTagRelationship> getTags(Long threadId) {
         return repository.findAllByThreadId(threadId);
     }

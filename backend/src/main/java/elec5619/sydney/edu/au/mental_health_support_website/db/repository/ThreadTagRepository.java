@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ThreadTagRepository extends JpaRepository<ThreadTag, Long> {
     List<ThreadTag> findByNameIn(List<String> tagNames);
+
     List<ThreadTag> findAllByIdIn(List<Long> ids);
 
     ThreadTag findOneByName(String name);

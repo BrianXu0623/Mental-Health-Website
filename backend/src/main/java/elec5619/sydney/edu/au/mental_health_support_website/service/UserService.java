@@ -34,10 +34,10 @@ public class UserService {
         } catch (IOException | InterruptedException e) {
             return null;
         }
-        if(user == null) {
+        if (user == null) {
             return null;
         }
-        if(user.getPassword().equals(password)) {
+        if (user.getPassword().equals(password)) {
             return user;
         }
         return null;
@@ -46,7 +46,7 @@ public class UserService {
     public List<Users> getFollowers(String username) {
         Users user = userRepository.findByUsername(username);
         String followers = user.getFollowerIds();
-        if(followers == null || followers.length() == 0) {
+        if (followers == null || followers.length() == 0) {
             return new ArrayList<>();
         }
         String[] array = followers.split(",");
@@ -57,7 +57,7 @@ public class UserService {
         }
         List<Long> list = Arrays.asList(longArray);
         List<Users> users = userRepository.findAllByIdIn(list);
-        for(Users cur : users) {
+        for (Users cur : users) {
             cur = cur.copy();
             cur.setPassword("");
             cur.setToken("");
@@ -68,7 +68,7 @@ public class UserService {
     public List<Users> getFollowed(String username) {
         Users user = userRepository.findByUsername(username);
         String followedIds = user.getFollowedIds();
-        if(followedIds == null || followedIds.length() == 0) {
+        if (followedIds == null || followedIds.length() == 0) {
             return new ArrayList<>();
         }
         String[] array = followedIds.split(",");
@@ -79,7 +79,7 @@ public class UserService {
         }
         List<Long> list = Arrays.asList(longArray);
         List<Users> users = userRepository.findAllByIdIn(list);
-        for(Users cur : users) {
+        for (Users cur : users) {
             cur = cur.copy();
             cur.setPassword("");
             cur.setToken("");
@@ -90,22 +90,22 @@ public class UserService {
     public boolean follow(String fromUsername, String toUsername) {
         Users fromUser = userRepository.findByUsername(fromUsername);
         Users toUser = userRepository.findByUsername(toUsername);
-        if(fromUser == null || toUser == null) {
+        if (fromUser == null || toUser == null) {
             return false;
         }
-        if(fromUser.getFollowedIds() == null) {
+        if (fromUser.getFollowedIds() == null) {
             fromUser.setFollowedIds("");
         }
-        if(fromUser.getFollowedIds().length() > 0) {
+        if (fromUser.getFollowedIds().length() > 0) {
             fromUser.setFollowedIds(fromUser.getFollowedIds() + ",");
         }
         fromUser.setFollowedIds(fromUser.getFollowedIds() + toUser.getId());
         userRepository.save(fromUser);
 
-        if(toUser.getFollowerIds() == null) {
+        if (toUser.getFollowerIds() == null) {
             toUser.setFollowerIds("");
         }
-        if(toUser.getFollowerIds().length() > 0) {
+        if (toUser.getFollowerIds().length() > 0) {
             toUser.setFollowerIds(toUser.getFollowerIds() + ",");
         }
         toUser.setFollowerIds(toUser.getFollowerIds() + fromUser.getId());
@@ -116,11 +116,10 @@ public class UserService {
     public boolean mute(String fromUsername, String toUsername) {
         Users fromUser = userRepository.findByUsername(fromUsername);
         Users toUser = userRepository.findByUsername(toUsername);
-        if(fromUser.getUserType() != null && fromUser.getUserType().equals("admin")) {
+        if (fromUser.getUserType() != null && fromUser.getUserType().equals("admin")) {
             toUser.setMuted(true);
             userRepository.save(toUser);
-        }
-        else {
+        } else {
             return false;
         }
         return false;
@@ -128,16 +127,16 @@ public class UserService {
 
     public Users updateProfile(String userName, String email, String phoneNumber, String birthday, String avatar) {
         Users user = userRepository.findByUsername(userName);
-        if(StringUtils.isNotBlank(email)) {
+        if (StringUtils.isNotBlank(email)) {
             user.setEmail(email);
         }
-        if(StringUtils.isNotBlank(phoneNumber)) {
+        if (StringUtils.isNotBlank(phoneNumber)) {
             user.setPhonenumber(phoneNumber);
         }
-        if(StringUtils.isNotBlank(birthday)) {
+        if (StringUtils.isNotBlank(birthday)) {
             user.setBirthday(LocalDate.parse(birthday));
         }
-        if(StringUtils.isNotBlank(avatar)) {
+        if (StringUtils.isNotBlank(avatar)) {
             user.setAvatar(avatar);
         }
         Users ret = userRepository.save(user);
@@ -154,7 +153,7 @@ public class UserService {
         } catch (IOException | InterruptedException e) {
             return false;
         }
-        if(user.getPassword().equals(oldPassword)) {
+        if (user.getPassword().equals(oldPassword)) {
             newPassword = EncryptionUtil.encrypt(newPassword);
             user.setPassword(newPassword);
             userRepository.save(user);
@@ -174,7 +173,7 @@ public class UserService {
 
     public Users getUserByUsername(String userName) {
         Users user = userRepository.findByUsername(userName);
-        if(user == null) {
+        if (user == null) {
             return null;
         } else {
             user = user.copy();
@@ -188,7 +187,7 @@ public class UserService {
     public List<Users> getAllProfessionals() {
 
         List<Users> users = userRepository.findAllByUserType("professional");
-        for(Users cur : users) {
+        for (Users cur : users) {
             cur = cur.copy();
             cur.setPassword("");
             cur.setToken("");

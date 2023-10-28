@@ -1,7 +1,10 @@
 package elec5619.sydney.edu.au.mental_health_support_website.db.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
@@ -32,7 +35,9 @@ public class Users {
     private Long totalRating = 0L;
     private Long rateTimes = 0L;
     private String avatar;
-    public Users() {}
+
+    public Users() {
+    }
 
     public Users copy() {
         return Users.builder()

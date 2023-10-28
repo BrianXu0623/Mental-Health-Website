@@ -38,7 +38,7 @@ public class ThreadTagService {
         return repository.findByNameIn(tagNames);
     }
 
-     public ThreadTag getTag(Long tagId) {
+    public ThreadTag getTag(Long tagId) {
         return repository.findById(tagId).orElse(null);
     }
 

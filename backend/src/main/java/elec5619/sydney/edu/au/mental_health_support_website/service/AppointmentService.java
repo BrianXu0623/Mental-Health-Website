@@ -1,8 +1,6 @@
 package elec5619.sydney.edu.au.mental_health_support_website.service;
 
-import elec5619.sydney.edu.au.mental_health_support_website.db.entities.AppThread;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Appointment;
-import elec5619.sydney.edu.au.mental_health_support_website.db.repository.AppThreadRepository;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.AppointmentRepository;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;

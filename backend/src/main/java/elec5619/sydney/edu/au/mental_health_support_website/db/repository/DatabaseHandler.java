@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-
 public class DatabaseHandler {
     static String jdbcUrl = "jdbc:mysql://localhost:3306/my_local_db";
     static String username = "simon";
     static String password = "#Hello12345";
+
     public static void connect() {
 
         try {

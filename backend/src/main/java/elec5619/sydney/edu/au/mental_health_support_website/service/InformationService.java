@@ -1,6 +1,5 @@
 package elec5619.sydney.edu.au.mental_health_support_website.service;
 
-import elec5619.sydney.edu.au.mental_health_support_website.controller.res.InfoRes;
 import elec5619.sydney.edu.au.mental_health_support_website.db.entities.Information;
 import elec5619.sydney.edu.au.mental_health_support_website.db.repository.InformationRepository;
 import jakarta.annotation.Resource;

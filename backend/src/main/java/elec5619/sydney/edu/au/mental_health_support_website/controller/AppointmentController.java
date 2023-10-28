@@ -32,7 +32,7 @@ public class AppointmentController {
 
     @GetMapping("/test-create")
     public Appointment testCreate() {
-        Appointment obj  = Appointment.builder()
+        Appointment obj = Appointment.builder()
                 .appointmentTopic("Social Anxiety Disorder")
                 .date(LocalDate.now())
                 .time(LocalTime.now())
@@ -42,11 +42,13 @@ public class AppointmentController {
                 .build();
 
         return appointmentService.makeAppointment(
-            obj
+                obj
         );
     }
+
     /**
      * Post method for making an appointment
+     *
      * @param appointment the appointment object that encapsulates all required information
      * @return the appointment object
      */
@@ -72,8 +74,9 @@ public class AppointmentController {
 
     /**
      * Put method for cancelling appointment
+     *
      * @param appointmentId the id of the appointment
-     * @param token token of user requested to cancel the appointment
+     * @param token         token of user requested to cancel the appointment
      * @return TRUE if the operation was successful otherwise FALSE
      */
     @PutMapping("/cancel/{appointmentID}")
@@ -83,7 +86,7 @@ public class AppointmentController {
     ) {
         String userName = TokenUtil.getUsernameFromToken(token);
         Users user = userService.getUserByUsername(userName);
-        if (user != null && isUserEligibleToCancelAppointment(user.getId(), appointmentId) ) {
+        if (user != null && isUserEligibleToCancelAppointment(user.getId(), appointmentId)) {
             appointmentService.editStatusAppointment("cancelled", appointmentService.getAppointment(appointmentId));
             return true;
         }
@@ -92,8 +95,9 @@ public class AppointmentController {
 
     /**
      * PUT method for completing the appointment
+     *
      * @param appointmentId the id of the appointment to be completed
-     * @param token the token of user requested
+     * @param token         the token of user requested
      * @return TRUE if the operation was successful otherwise FALSE
      */
     @PutMapping("/complete/{appointmentID}")
@@ -103,7 +107,7 @@ public class AppointmentController {
     ) {
         String userName = TokenUtil.getUsernameFromToken(token);
         Users user = userService.getUserByUsername(userName);
-        if (user != null && isUserEligibleToCompleteAppointment(user.getId(), appointmentId) ) {
+        if (user != null && isUserEligibleToCompleteAppointment(user.getId(), appointmentId)) {
             appointmentService.editStatusAppointment("completed", appointmentService.getAppointment(appointmentId));
             return true;
         }
@@ -112,6 +116,7 @@ public class AppointmentController {
 
     /**
      * Get method for getting the appointment information
+     *
      * @param appointmentId the id of the appointment requested
      * @return the appointment object associated with the id
      */
@@ -131,6 +136,7 @@ public class AppointmentController {
 
     /**
      * GET a list of appointments given a list of appointments' id
+     *
      * @param appointmentIds a list of appointment ids
      * @return a list of appointment object associated a list of ids
      */
@@ -144,18 +150,19 @@ public class AppointmentController {
             Appointment appointment = appointmentService.getAppointment(id);
             Users professional = userService.getUserByUserId(appointment.getProfessionalUserId());
             objs.add(
-                   AppointmentInfo.builder()
-                           .appointment(appointment)
-                           .professionalName(professional.getUsername())
-                           .availability(professional.getAvailableHours())
-                           .clinic(professional.getClinic()).build()
-           );
+                    AppointmentInfo.builder()
+                            .appointment(appointment)
+                            .professionalName(professional.getUsername())
+                            .availability(professional.getAvailableHours())
+                            .clinic(professional.getClinic()).build()
+            );
         }
         return objs;
     }
 
     /**
      * Get method for getting a list of appointments associated with a user id
+     *
      * @param token the token of the user requested
      * @return a list of appointment info if found, otherwise an empty list
      */
@@ -169,12 +176,12 @@ public class AppointmentController {
         for (Appointment appointment : appointmentService.getAppointmentByUserId(userId)) {
             Users professional = userService.getUserByUserId(appointment.getProfessionalUserId());
             objs.add(
-                   AppointmentInfo.builder()
-                           .appointment(appointment)
-                           .professionalName(professional.getUsername())
-                           .availability(professional.getAvailableHours())
-                           .clinic(professional.getClinic())
-                           .build()
+                    AppointmentInfo.builder()
+                            .appointment(appointment)
+                            .professionalName(professional.getUsername())
+                            .availability(professional.getAvailableHours())
+                            .clinic(professional.getClinic())
+                            .build()
             );
         }
         return objs;
@@ -182,6 +189,7 @@ public class AppointmentController {
 
     /**
      * Get method for getting a list of appointments associated with a professional user id
+     *
      * @param token the token of the user requested
      * @return a list of appointment info if found, otherwise an empty list
      */
@@ -212,9 +220,10 @@ public class AppointmentController {
 
     /**
      * Put method for modifying the appointment objects
+     *
      * @param appointmentId the id of the appointment to be edited
-     * @param token the user token requested
-     * @param apm the newly updated appointment to be updated
+     * @param token         the user token requested
+     * @param apm           the newly updated appointment to be updated
      * @return TRUE if the operation was successful otherwise FALSE
      */
     @PutMapping("/edit/{appointmentId}")
@@ -225,7 +234,7 @@ public class AppointmentController {
     ) {
         String userName = TokenUtil.getUsernameFromToken(token);
         Users user = userService.getUserByUsername(userName);
-        if (user != null && isUserEligibleToCancelAppointment(user.getId(), appointmentId) ) {
+        if (user != null && isUserEligibleToCancelAppointment(user.getId(), appointmentId)) {
             appointmentService.editAppointment(apm);
             return true;
         }
@@ -234,8 +243,9 @@ public class AppointmentController {
 
     /**
      * Delete mapping for removing appointment
+     *
      * @param appointmentId the id of the appointment to be removed
-     * @param token the user token requested
+     * @param token         the user token requested
      * @return TRUE if the operation was successful otherwise FALSE
      */
     @DeleteMapping("/delete/{appointmentId}")
@@ -254,7 +264,8 @@ public class AppointmentController {
 
     /**
      * method to check if the user is eligible to complete an appointment - changing it to complete
-     * @param userId the id of the user requested
+     *
+     * @param userId        the id of the user requested
      * @param appointmentId the id of the appointment to be verified
      * @return TRUE if the user is eligible otherwise FALSE
      */
@@ -273,7 +284,8 @@ public class AppointmentController {
 
     /**
      * method to check if the user is eligible to cancel an appointment - changing it to cancel
-     * @param userId the id of the user requested
+     *
+     * @param userId        the id of the user requested
      * @param appointmentId the id of the appointment to be verified
      * @return TRUE if the user is eligible otherwise FALSE
      */
@@ -284,7 +296,7 @@ public class AppointmentController {
             return false;
         } else if (user.getUserType().equals("admin")) {
             return true;
-        } else if (!(apm.getProfessionalUserId().equals(userId)||apm.getUserId().equals(userId))) {
+        } else if (!(apm.getProfessionalUserId().equals(userId) || apm.getUserId().equals(userId))) {
             return false;
         }
         return true;

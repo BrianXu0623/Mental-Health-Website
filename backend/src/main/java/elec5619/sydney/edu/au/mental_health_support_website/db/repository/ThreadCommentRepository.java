@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ThreadCommentRepository extends JpaRepository<ThreadComment, Long> {
     List<ThreadComment> findAllByThreadId(Long threadId);
+
     Long countCommentsByThreadId(Long threadId);
 }
