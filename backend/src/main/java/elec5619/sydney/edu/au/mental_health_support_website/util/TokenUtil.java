@@ -23,8 +23,13 @@ public class TokenUtil {
     }
 
     public static String getUsernameFromToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(KEY).parseClaimsJws(token).getBody();
-        String username = claims.getSubject();
-        return username;
+        try {
+            Claims claims = Jwts.parser().setSigningKey(KEY).parseClaimsJws(token).getBody();
+            String username = claims.getSubject();
+            return username;
+        }
+        catch (Exception e) {
+            return "";
+        }
     }
 }
