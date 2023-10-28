@@ -170,21 +170,26 @@ public class AppointmentController {
     public List<AppointmentInfo> getAppointmentsByUserToken(
             @RequestHeader("token") String token
     ) {
-        String username = TokenUtil.getUsernameFromToken(token);
-        Long userId = userService.getUserByUsername(username).getId();
-        List<AppointmentInfo> objs = new ArrayList<>();
-        for (Appointment appointment : appointmentService.getAppointmentByUserId(userId)) {
-            Users professional = userService.getUserByUserId(appointment.getProfessionalUserId());
-            objs.add(
-                    AppointmentInfo.builder()
-                            .appointment(appointment)
-                            .professionalName(professional.getUsername())
-                            .availability(professional.getAvailableHours())
-                            .clinic(professional.getClinic())
-                            .build()
-            );
+        try {
+            String username = TokenUtil.getUsernameFromToken(token);
+            Long userId = userService.getUserByUsername(username).getId();
+            List<AppointmentInfo> objs = new ArrayList<>();
+            for (Appointment appointment : appointmentService.getAppointmentByUserId(userId)) {
+                Users professional = userService.getUserByUserId(appointment.getProfessionalUserId());
+                objs.add(
+                        AppointmentInfo.builder()
+                                .appointment(appointment)
+                                .professionalName(professional.getUsername())
+                                .availability(professional.getAvailableHours())
+                                .clinic(professional.getClinic())
+                                .build()
+                );
+            }
+            return objs;
         }
-        return objs;
+        catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     /**
