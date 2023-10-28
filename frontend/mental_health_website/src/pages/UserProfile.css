@@ -110,7 +110,49 @@ button {
     color: white;
 }
 
-.profile-header-left{
+
+.appointment-container { 
+    margin: 10px;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.appointment-small-container {
     display: flex;
+    background-color: white;
     flex-direction: column;
+    padding-bottom: 10px;
+    border-radius: 8px;
+    color: black;
+    border: 2px solid black;
+
+}
+
+.item-name { 
+    padding: 10px;
+    font-weight: bold;
+    font-family: "Space Grotesk";
+    background-color: #0074DD;
+    color: white;
+}
+
+.item-clinic { 
+    padding-top: 5px;
+    padding-left: 10px;
+    margin: 2px;
+    font-family: "Space Grotesk";
+    margin-left: 0px;
+    font-size: 20px;
+    color: black; 
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+.item-date { 
+    padding-top: 5px;
+    padding-left: 10px;
+    margin: 2px;
+    width: 100%;
+    height: 100%;
+    font-family: "Space Grotesk";
 }
