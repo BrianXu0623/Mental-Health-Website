@@ -140,10 +140,12 @@ const UserProfile = () => {
                 <div className='appointment-container'>
                     <h3>My Appointment:</h3>
                     <ul className="appointment-list">
-                        {myAppointments.map((item, index) => (
-                            <li key={index}>
+                    
+                    {myAppointments.map((item, index) => (
+                        <li className="appointment-container" key={index}>
+                            <div className="appointment-small-container">
                                 <div className='item-name'>
-                                    {item.professionalName}
+                                    <h2>{item.professionalName}</h2>
                                 </div>
                                 <div className='item-clinic'>
                                     {item.clinic}
@@ -153,6 +155,7 @@ const UserProfile = () => {
                                     {item.appointment.time}
                                 </div>
                             
+                            </div>
                         </li>))}
                     </ul>
                 </div>
