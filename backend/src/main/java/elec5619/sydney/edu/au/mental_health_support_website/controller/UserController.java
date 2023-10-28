@@ -234,6 +234,7 @@ public class UserController {
         Users p = userService.getUserByUsername(pName);
         p.setTotalRating(p.getTotalRating() + professionalRatingRequest.getRating());
         p.setRateTimes(p.getRateTimes() + 1);
+        userService.saveUser(p);
         return p.getTotalRating() / p.getRateTimes();
     }
 

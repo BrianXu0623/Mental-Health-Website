@@ -163,6 +163,10 @@ public class UserService {
         return false;
     }
 
+    public boolean saveUser(Users user) {
+        userRepository.save(user);
+    }
+
     public Users getUserByUserId(Long userId) {
         return userRepository.findById(userId).orElse(null);
     }
