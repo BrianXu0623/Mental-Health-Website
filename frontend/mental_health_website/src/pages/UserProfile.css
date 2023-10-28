@@ -74,20 +74,20 @@ ul{
     height: 40px;
     margin: 10px;
     background-color: #0074DD;
-    color: white; 
+    color: white;
     border-radius: 12px;
     border: 2px solid;
-    font-size: 20px; 
+    font-size: 20px;
 }
 
 button:hover {
     background-color: lightblue;
-    color: black; 
+    color: black;
 
 }
 
 button {
-    min-width: 250px; 
+    min-width: 250px;
     min-height: 30px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -113,7 +113,7 @@ button {
 }
 
 
-.appointment-container { 
+.appointment-container {
     margin: 10px;
     border-radius: 8px;
     padding: 10px;
@@ -131,7 +131,7 @@ button {
     margin-bottom: 10px;
 }
 
-.item-name { 
+.item-name {
     padding: 10px;
     font-weight: bold;
     font-family: "Space Grotesk";
@@ -139,19 +139,19 @@ button {
     color: white;
 }
 
-.item-clinic { 
+.item-clinic {
     padding-top: 5px;
     padding-left: 10px;
     margin: 2px;
     font-family: "Space Grotesk";
     margin-left: 0px;
     font-size: 20px;
-    color: black; 
+    color: black;
     width: 100%;
     height: 100%;
     background-size: cover;
 }
-.item-date { 
+.item-date {
     padding-top: 5px;
     padding-left: 10px;
     margin: 2px;

@@ -70,27 +70,25 @@ const ProfilePage = (props) => {
                 <div className='profile-title'>
                     
                     <p className='profile-name'>{data.username}</p>
+                    <p className='current-rating'>Current Rating: {currentRating}</p>
                     <p className='profile-institude'>{data.clinic}</p>
                     <p className='profile-available'>{data.availableHours}</p>
                     <a href={`/appointment/make/${data.id}`}>Make an appointment now</a>
                 </div>
-                <div className='profile-rating'>
-                    <p className='current-rating'>Current Rating: {currentRating}</p>
-                    <form onSubmit={handleSubmit}>
-                        <label>
-                            Rate Me (0 - 100):
-                            <input
-                            type="number"
-                            min="0"
-                            max="100"
-                            value={rating}
-                            onChange={handleRatingChange}
-                            />
-                        </label>
-                        <button type="submit">Submit Rating</button>
-                        </form>
-                </div>
             </div>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Rate Me (0 - 100):
+                    <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        value={rating}
+                        onChange={handleRatingChange}
+                    />
+                </label>
+                <button type="submit">Submit Rating</button>
+            </form>
             <div className='profile-body'>
                 <h3>Experience</h3>
                 <p>{data.experience}</p>

@@ -19,7 +19,7 @@ const UserProfile = () => {
     };
 
     const handleImageUpload = (event) => {
-        
+
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
@@ -42,12 +42,12 @@ const UserProfile = () => {
                 },
                 body: JSON.stringify({ avatar: base64String }),
             });
-    
+
             const data = await response.json();
         } catch (error) {
             console.error("There was an error uploading the image:", error);
         }
-    };    
+    };
 
     const handleUpdateEmail = () => {
 
@@ -67,7 +67,7 @@ const UserProfile = () => {
         .then(data => {
           if(data.success) {
             console.log(data.email)
-            
+
           } else {
             console.error('Failed to update email');
           }
@@ -117,7 +117,7 @@ const UserProfile = () => {
         setUsername (user.username);
 
         }
-    
+
     , []);
 
 
@@ -129,11 +129,11 @@ const UserProfile = () => {
                     <img className="icon" src={`data:image/jpeg;base64,${avatarString}`} alt="User Avatar" />
                     <input type="file" onChange={handleImageUpload} />
                 </div>
-                
+
 
                 <div className='profile-header-middle'>
                     <div className='name'>
-                        
+
                         <div>
                             <h1 className="name">{username}</h1>
                         </div>
@@ -150,17 +150,17 @@ const UserProfile = () => {
                                     />
                                     <button type="submit" onClick={handleUpdateEmail}>Save</button>
                                 </>
-                                    
+
                             ) : (
                                 <div>
                                     <h1 className="email">{newEmail}</h1>
-                                    <button className="default-button" onClick={() => setIsEditingEmail(true)}>edit</button>
+                                    <button className="default-button" onClick={() => setIsEditingEmail(true)}>update email</button>
                                 </div>
                             )}
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
             <div className="lists-container">
@@ -178,11 +178,11 @@ const UserProfile = () => {
                     </ul>
                     </div>
                 </div>
-                
+
                 <div className='post-container'>
                     <h3>My Appointment:</h3>
                     <ul className="appointment-list-">
-                    
+
                     {myAppointments.map((item, index) => (
                         <li key={index}>
                             <div className="appointment-small-container">
@@ -194,14 +194,15 @@ const UserProfile = () => {
                                 </div>
                                 <div className='item-date'>
                                     {item.appointment.date}
+                                    {"    "}
                                     {item.appointment.time}
                                 </div>
-                            
+
                             </div>
                         </li>))}
                     </ul>
                 </div>
-                
+
             </div>
 
             <button className='logout-button' onClick={handleLogout}> log out </button>

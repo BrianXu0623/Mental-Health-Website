@@ -29,4 +29,15 @@
     border-radius: 20px;
 }
 
+.password-hint {
+    color: gray;
+}
+
+
+.password-mismatch-error,
+.registration-error {
+    color: red;
+}
+
+
 

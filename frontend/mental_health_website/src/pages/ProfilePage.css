@@ -26,16 +26,23 @@
     }
 
     .profile-name {
-        font-size: 24px;
+        font-size:26px;
+        columns: #333;
+        font-weight: 600;
+    }
+
+    .profile-institude{
+        font-size: 20px;
         color: #333;
         margin: 10px 0;
         font-family: sans-serif;
     }
 
-    .profile-institude{
-        font-size:26px;
-        columns: #333;
-        font-weight: 600;
+    .profile-available{
+        font-size: 20px;
+        color: #333;
+        margin: 10px 0;
+        font-family: sans-serif;
     }
 
     .profile-email {
@@ -54,9 +61,17 @@
         margin-left: auto;
         justify-content: center;
         display: flex;
-        flex-direction: column;  
+        flex-direction: column;
         text-align: right;
     }
+
+.current-rating {
+    font-size: 20px;
+    color: #333;
+    margin: 10px 0;
+    font-family: sans-serif;
+    font-weight: bold;
+}
 
 .profile-body{
     display: flex;

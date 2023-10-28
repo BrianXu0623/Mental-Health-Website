@@ -50,6 +50,8 @@ export default function Register() {
             <div className="loginPageTitle">USYD Mental Health Support</div>
             <div className="loginForm">
                 <Form onSubmit={handleSubmit}>
+                    <p className="password-hint">Password must be at least 10 characters and include at least one</p>
+                    <p className="password-hint">uppercase letter, one lowercase letter, one digit, and one special character.</p>
                     <Form.Group controlId="formTable" className="form-container">
                         <table className="form-table">
                             <tbody>
@@ -107,12 +109,13 @@ export default function Register() {
                             </tr>
                             </tbody>
                         </table>
+
                     </Form.Group>
 
                     {!passwordsMatch && <p className="password-mismatch-error">Passwords do not match.</p>}
                     {registrationError && <p className="registration-error">{registrationError}</p>}
 
-                    <div className="button-container">
+                    <div className="register-button">
                         <div>
                             <Button type="submit" variant="primary" className="btn btn-lg">
                                 REGISTER
