@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Component } from 'react';
 import './ProfilePage.css';
 import { useParams } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ const ProfilePage = (props) => {
     const { id } = useParams();
     const [rating, setRating] = useState(0);
     const [currentRating, setCurrentRating] = useState(0);
-    const [professionalUsername, setprofessionalUsername] = useState('');
+    const [professionalUserName, setprofessionalUsername] = useState('');
     const [data, setData] = useState({
         avatar: '',
         username: '',
@@ -22,14 +22,14 @@ const ProfilePage = (props) => {
     
       const handleSubmit = async (event) => {
         event.preventDefault();
-        const response = await fetch('https://localhost:8080/api/users/rateProfessional', {
+        const response = await fetch('http://localhost:8080/api/users/rateProfessional', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'token': localStorage.getItem('token')
                 },
                 body: JSON.stringify({
-                    professionalUsername,
+                    professionalUserName,
                     rating: Number(rating)
                 })
             });
@@ -44,8 +44,9 @@ const ProfilePage = (props) => {
         };
       
 
-    componentDidMount(() => {
+    useEffect(() => {
         console.log('useEffect is running');
+        console.log(localStorage.getItem('token'));
         fetch(`http://localhost:8080/api/users/searchProfessional/${id}`, {
             method: 'GET',
           })

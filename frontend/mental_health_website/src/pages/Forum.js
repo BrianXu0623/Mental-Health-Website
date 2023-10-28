@@ -14,13 +14,7 @@ const Forum = () => {
         console.log("Searching for:", event.target.value);
     };
 
-    const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
-          search();
-        }
-      };
-
-    const search = async () => {
+    const handleSubmit = async () => {
         await fetch(`http://localhost:8080/api/threads/search/tag/`, {
             method: 'POST',
             headers: {
@@ -64,13 +58,13 @@ const Forum = () => {
             <Hero />
             <div className='search-bar-container'>
                 <div>
-                    <h1>Search Bar in React</h1>
                     <input
                         type="text"
                         placeholder="Search..."
                         value={searchValue}
                         onChange={handleInputChange}
                     />
+                    <button onClick={handleSubmit} >Submit</button>
                 </div>
             </div>
             {isLoading ? (
