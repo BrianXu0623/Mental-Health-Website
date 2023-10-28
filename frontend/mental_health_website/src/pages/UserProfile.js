@@ -8,6 +8,9 @@ const UserProfile = () => {
     const [myposts, setMyPosts] = useState([]);
     const [myAppointments, setMyAppointments] = useState([]);
     const [username, setUsername] = useState("");
+    const [newEmail, setNewEmail] = useState("");
+    const [isEditingEmail, setIsEditingEmail] = useState(false);
+    const [isEditingIcon, setIsEditingIcon] = useState(false);
     const navigate = useNavigate();
 
     const handleLogout = () =>{
@@ -15,13 +18,16 @@ const UserProfile = () => {
         navigate('/information');
     };
 
-    const handleUpdateEmail = (newEmail) => {
+    const handleUpdateEmail = () => {
 
         console.log(JSON.stringify(newEmail));
+        setIsEditingEmail(false)
 
         fetch('http://localhost:8080/api/users/updateProfile', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json',
+                    'token': localStorage.getItem('token')
+                        },
           body: JSON.stringify({
                 newEmail
             })
@@ -30,8 +36,9 @@ const UserProfile = () => {
         .then(data => {
           if(data.success) {
             console.log(data.email)
+            
           } else {
-            console.error('Failed to update username');
+            console.error('Failed to update email');
           }
         })
         .catch((error) => console.error('Error:', error));
@@ -49,6 +56,7 @@ const UserProfile = () => {
             .then(response => response.json())
             .then((data) => {setUser(data);
                 setUsername(data.username);
+                setNewEmail(data.email);
             })
             .catch(error => console.error('There was an error!', error));
 
@@ -80,9 +88,7 @@ const UserProfile = () => {
     
     , []);
 
-    const [isEditingName, setIsEditingName] = useState(false);
-    const [isEditingEmail, setIsEditingEmail] = useState(false);
-    const [isEditingIcon, setIsEditingIcon] = useState(false);
+
 
     return (
         <div className="profile-container">
@@ -102,14 +108,15 @@ const UserProfile = () => {
                                     <input
                                         type="text"
                                         name="newEmail"
-                                        defaultValue={user.email}
+                                        value={newEmail}
+                                        onChange={e => setNewEmail(e.target.value)}
                                     />
                                     <button type="submit" onClick={handleUpdateEmail}>Save</button>
                                 </>
                                     
                             ) : (
                                 <div>
-                                    <h1 className="email">{user.email}</h1>
+                                    <h1 className="email">{newEmail}</h1>
                                     <button className="default-button" onClick={() => setIsEditingEmail(true)}>edit</button>
                                 </div>
                             )}
