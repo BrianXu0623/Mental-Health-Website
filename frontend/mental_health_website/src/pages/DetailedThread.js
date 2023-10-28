@@ -3,6 +3,11 @@ import { Link, useParams } from 'react-router-dom';
 import './DetailedThread.css';
 
 function DetailedThread() {
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 8c0fb0f167b85eefe404d76906677510e2a5b5fe
     const { id } = useParams();
     const [data, setData] = useState([]);
 
@@ -28,6 +33,7 @@ function DetailedThread() {
                 <p>{data?.thread?.content}</p>
             </div>
 
+<<<<<<< HEAD
             <div className="actions">
                 <Link to={`/addcomment/${data?.thread?.id}`} className="comment-link">
                     + Add a comment
@@ -35,6 +41,13 @@ function DetailedThread() {
                 {/*<button className="favorite-button" onClick={favorite_thread}>*/}
                 {/*    Favorite*/}
                 {/*</button>*/}
+=======
+            
+
+            <div className="buttons">
+                <Link to={`/addcomment/${data?.thread?.id}`}>+ Add a comment</Link>
+                
+>>>>>>> 8c0fb0f167b85eefe404d76906677510e2a5b5fe
             </div>
 
             <div className="comments">

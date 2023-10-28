@@ -66,11 +66,7 @@ const ProfilePage = (props) => {
     return (
         <div className='profile-container'>
             <div className="profile-header">
-                <img 
-                        src={data.avatar}
-                        alt="User Avatar" 
-                        className="profile-picture"
-                    />
+            <img className="icon" src={`data:image/jpeg;base64,${data.avatar}`} alt="User Avatar" />
                 <div className='profile-title'>
                     
                     <p className='profile-name'>{data.username}</p>
