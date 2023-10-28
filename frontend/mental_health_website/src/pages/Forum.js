@@ -14,7 +14,9 @@ const Forum = () => {
         console.log("Searching for:", event.target.value);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
         await fetch(`http://localhost:8080/api/threads/search/tag`, {
             method: 'POST',
             headers: {
@@ -57,15 +59,14 @@ const Forum = () => {
         <div>
             <Hero />
             <div className='search-bar-container'>
-                <div>
+                <form onSubmit={handleSubmit}>
                     <input
                         type="text"
-                        placeholder="Search..."
+                        placeholder="Search a tag ..."
                         value={searchValue}
                         onChange={handleInputChange}
                     />
-                    <button onClick={handleSubmit} >Submit</button>
-                </div>
+                </form>
             </div>
             {isLoading ? (
                 <div>Loading...</div>

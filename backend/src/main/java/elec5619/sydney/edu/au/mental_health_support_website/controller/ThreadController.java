@@ -414,7 +414,13 @@ public class ThreadController {
       @RequestBody Map<String, String> tagMap
     ) {
 
+        if(tagMap.get("tagName").equals("")) {
+            return getAllExistingThreads();
+        }
         ThreadTag tagObj = threadTagService.getTagByName(tagMap.get("tagName"));
+        if(tagObj == null) {
+            return new ArrayList<>();
+        }
         // I need  to find all the relationships
         List<ThreadTagRelationship> tags = threadTagRelationshipService.getThread(tagObj.getId());
 
