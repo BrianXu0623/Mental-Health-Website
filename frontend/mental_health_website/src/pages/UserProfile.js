@@ -16,11 +16,14 @@ const UserProfile = () => {
     };
 
     const handleUpdateEmail = (newEmail) => {
+
+        console.log(JSON.stringify(newEmail));
+
         fetch('http://localhost:8080/api/users/updateProfile', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            newEmail
+                newEmail
             })
         })
         .then(response => response.json())
@@ -45,10 +48,9 @@ const UserProfile = () => {
             })
             .then(response => response.json())
             .then((data) => {setUser(data);
+                setUsername(data.username);
             })
             .catch(error => console.error('There was an error!', error));
-
-        setUsername (user.username);
 
         fetch('http://localhost:8080/api/appointments/get/byUser', {
             method: 'GET',
@@ -60,8 +62,6 @@ const UserProfile = () => {
             .then(response => response.json())
             .then((data) => {setMyAppointments(data);})
             .catch(error => console.error('There was an error!', error));
-
-        setUsername (user.username);
 
         fetch('http://localhost:8080/api/threads/get/byUserToken', {
             method: 'GET',
@@ -95,7 +95,7 @@ const UserProfile = () => {
                             <h1 className="name">{username}</h1>
                         </div>
                     </div>
-                    <p className="email">
+                    <div className="email">
                         <div className='email'>
                             {isEditingEmail ? (
                                 <>
@@ -114,7 +114,7 @@ const UserProfile = () => {
                                 </div>
                             )}
                         </div>
-                    </p>
+                    </div>
                 </div>
                 
             </div>

@@ -159,7 +159,7 @@ public class AppointmentController {
      * @param token the token of the user requested
      * @return a list of appointment info if found, otherwise an empty list
      */
-    @GetMapping("/get/byUser/")
+    @GetMapping("/get/byUser")
     public List<AppointmentInfo> getAppointmentsByUserToken(
             @RequestHeader("token") String token
     ) {
