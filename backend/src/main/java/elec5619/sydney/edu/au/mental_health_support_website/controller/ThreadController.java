@@ -263,6 +263,9 @@ public class ThreadController {
     ) {
         Long authorId = userService.getUserByUsername(TokenUtil.getUsernameFromToken(token)).getId();
         List<AppThread> threads = threadService.findByAuthorID(authorId);
+        if(threads == null || threads.isEmpty()) {
+            return new ArrayList<>();
+        }
         List<AppThreadInfo> threadInfos = new ArrayList<>();
         for (AppThread thread : threads) {
             List<ThreadTag> tags = getThreadTagsFromThreadId(thread.getId());

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import './AddComment.css'; // 确保样式文件存在
 
 function AddComment() {
     const { id } = useParams();
@@ -8,7 +9,6 @@ function AddComment() {
     const navigate = useNavigate();
 
     useEffect(() => {
-
         const userToken = localStorage.getItem('userToken');
         if (userToken) {
             setToken(userToken);
@@ -19,12 +19,10 @@ function AddComment() {
         setComment(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
         const userToken = localStorage.getItem('token');
-        console.log(userToken);
-
-
 
         const ThreadComment = {
             userToken: userToken,
@@ -33,39 +31,40 @@ function AddComment() {
             timestamp: new Date().toISOString(),
         };
 
-        fetch('http://localhost:8080/api/threads/comment/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${userToken}`,
-                'token': `${userToken}`
-            },
-            body: JSON.stringify(ThreadComment),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(userToken);
-
-                console.log('Comment added:', data);
-                navigate(`/forum/${id}`);
-            })
-            .catch((error) => {
-                console.error('Error adding comment:', error);
+        try {
+            const response = await fetch('http://localhost:8080/api/threads/comment/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userToken}`,
+                    'token': `${userToken}`
+                },
+                body: JSON.stringify(ThreadComment),
             });
+
+            if (!response.ok) {
+                throw new Error('Error adding comment');
+            }
+
+            const data = await response.json();
+            console.log('Comment added:', data);
+            navigate(`/forum/${id}`);
+        } catch (error) {
+            console.error('Error adding comment:', error);
+        }
     };
 
-
-
     return (
-        <div>
+        <div className="add-comment-container">
             <h1>Add a Comment</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="comment-form">
                 <div className="form-group">
                     <textarea
                         value={comment}
                         onChange={handleCommentChange}
                         placeholder="Enter your comment"
                         required
+                        className="comment-textarea"
                     />
                 </div>
                 <div className="button-container">
